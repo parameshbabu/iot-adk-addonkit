@@ -45,7 +45,7 @@ md "%MOUNTDIR%"
 echo Copying WinPE from Install directory
 copy "%WINPE_ROOT%\%BSP_ARCH%\en-us\winpe.wim" "%WINPEDIR%" >nul
 copy "%IOTADK_ROOT%\Templates\recovery\startrecovery.cmd" %WINPEDIR%\startrecovery.cmd >nul
-copy "%IOTADK_ROOT%\Templates\recovery\Recovery.WinPE.pkg.xml" %WINPEDIR%\Recovery.WinPE.pkg.xml >nul
+copy "%IOTADK_ROOT%\Templates\recovery\Recovery.WinPE.wm.xml" %WINPEDIR%\Recovery.WinPE.wm.xml >nul
 echo Mounting WinPE at %MOUNTDIR%
 dism /mount-wim /wimfile:%WINPEDIR%\winpe.wim /index:1 /mountdir:%MOUNTDIR%
 

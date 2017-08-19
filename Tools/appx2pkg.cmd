@@ -115,16 +115,17 @@ if defined LICENSE_FILE (
     echo. LicenseProductID : !LICENSE_ID!
 )
 
-echo. Authoring %COMP_NAME%.%SUB_NAME%.pkg.xml
+echo. Authoring %COMP_NAME%.%SUB_NAME%.wm.xml
 if exist "%FILE_PATH%\%COMP_NAME%.%SUB_NAME%.pkg.xml" (del "%FILE_PATH%\%COMP_NAME%.%SUB_NAME%.pkg.xml" )
 call :CREATE_PKGFILE
 
 if exist "%FILE_PATH%\%COMP_NAME%.%SUB_NAME%.pkg.xml" (
     call convertpkg.cmd "%FILE_PATH%\%COMP_NAME%.%SUB_NAME%.pkg.xml" >nul 2>nul
+    del /q /f "%FILE_PATH%\%COMP_NAME%.%SUB_NAME%.pkg.xml" >nul 2>nul
 )
 
 set SRC_INFO_FILE=%OUTPUT_PATH%\SourceDetails.txt
-echo Source Appx: %FILE_PATH%%FILE_NAME%.appx>> "%SRC_INFO_FILE%"
+echo Source Appx: %FILE_PATH%%FILE_NAME%.appx> "%SRC_INFO_FILE%"
 echo Dependencies :>> "%SRC_INFO_FILE%"
 
 REM Renaming files to shorten the names
@@ -152,7 +153,7 @@ call :CREATE_CUSTFILE
 
 copy "%FILE_PATH%\%FILE_NAME%.appx" "%OUTPUT_PATH%\%SHORT_FILE_NAME%.appx" >nul 2>nul
 move "%FILE_PATH%\%CUSTOMIZATIONS%.xml" "%OUTPUT_PATH%\%CUSTOMIZATIONS%.xml" >nul 2>nul
-move "%FILE_PATH%\%COMP_NAME%.%SUB_NAME%.pkg.xml" "%OUTPUT_PATH%\%COMP_NAME%.%SUB_NAME%.pkg.xml" >nul 2>nul
+REM move "%FILE_PATH%\%COMP_NAME%.%SUB_NAME%.pkg.xml" "%OUTPUT_PATH%\%COMP_NAME%.%SUB_NAME%.pkg.xml" >nul 2>nul
 move "%FILE_PATH%\%COMP_NAME%.%SUB_NAME%.wm.xml" "%OUTPUT_PATH%\%COMP_NAME%.%SUB_NAME%.wm.xml" >nul 2>nul
 
 if defined LICENSE_FILE (

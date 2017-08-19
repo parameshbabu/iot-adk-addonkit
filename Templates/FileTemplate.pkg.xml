@@ -5,21 +5,21 @@
    <Components>
       <OSComponent>
          <RegKeys>
-             <!-- Specify your registry settings here
+             <!-- Specify your registry settings here             -->
              <RegKey KeyName="$(hklm.software)\$(OEMNAME)\Test">
                 <RegValue Name="StringValue" Value="Test string" Type="REG_SZ"/>
                 <RegValue Name="DWordValue" Value="12AB34CD" Type="REG_DWORD"/>
                 <RegValue Name="BinaryValue" Value="12,AB,CD,EF" Type="REG_BINARY"/>
              </RegKey>
              <RegKey KeyName="$(hklm.software)\$(OEMNAME)\EmptyKey"/>
-             -->
+
          </RegKeys>
          <Files>
-            <!-- Specify your files for inclusion here. Default destination for this is default windows/system32
+            <!-- Specify your files for inclusion here. Default destination for this is default windows/system32         -->
             <File Source="filename.txt" />
             <File Source="filename2.txt"
                 DestinationDir="$(runtime.root)\OEMInstall" Name="filename2.txt"/>
-        -->
+
          </Files>
       </OSComponent>
    </Components>

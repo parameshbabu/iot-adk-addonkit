@@ -61,9 +61,6 @@ if /I [%1] == [All] (
     dir %BSPSRC_DIR%\*.pkg.xml /S /b > %PKGLOG_DIR%\packagelist.txt
 
     call :SUB_PROCESSLIST %PKGLOG_DIR%\packagelist.txt
-) else if /I [%1] == [Clean] (
-    echo. Deleting all .wm.xml files
-    del /S /Q %IOTADK_ROOT%\*.wm.xml >nul 2>nul
 ) else (
     if [%~x1] == [.xml] (
         echo %1 > %PKGLOG_DIR%\packagelist.txt
@@ -107,7 +104,7 @@ REM ----------------------------------------------------------------------------
 REM
 REM SUB_PROCESSLIST <filename>
 REM
-REM Processes the file list, calls createpkg for each item in the list
+REM Processes the file list, calls pkggen /convert:pkg2wm for each item in the list
 REM
 REM -------------------------------------------------------------------------------
 :SUB_PROCESSLIST
