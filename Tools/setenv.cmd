@@ -69,13 +69,14 @@ if not defined BSPPKG_DIR (
     set BSPPKG_DIR=%PKGBLD_DIR%
 )
 
-REM Temporary fix to support RS2 ADK while migrating to next release
-if /i "%ADK_VERSION%" LSS "16190" (
-    set CUSTOMIZATIONS=customizations_RS2
-) else (
-    set CUSTOMIZATIONS=customizations
-    set UNIVERSAL_BSP=1
+REM Check ADK version 
+if /i "%ADK_VERSION%" LSS "16261" (
+    echo.%CLRRED%Error: ADK version %ADK_VERSION% is not supported with this tools version. Require version greater than 16262%CLREND%
+    pause
+    exit /b 1
 )
+
+set CUSTOMIZATIONS=customizations
 
 call setversion.cmd
 

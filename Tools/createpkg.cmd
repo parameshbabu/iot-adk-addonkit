@@ -80,23 +80,13 @@ if exist "%CUSTOMIZATIONS%.xml" (
    )
 )
 
-if defined UNIVERSAL_BSP (
-    if /i "%ADK_VERSION%" LSS "16211" (
-        echo.%CLRRED%Error: ADK version %ADK_VERSION% does not support this. This feature is supported from ADK version 16212 or above.%CLREND%
-        goto :Error
-    )
-    if not exist "%INPUT%.wm.xml" (
-        call convertpkg.cmd "%INPUT_FILE%"
-    )
-    call pkggen.exe "%INPUT%.wm.xml" /output:"%PKGBLD_DIR%" /version:%PKG_VER% /build:fre /cpu:%BSP_ARCH% /variables:"_RELEASEDIR=%RELEASE_DIR%\;PROD=%PRODUCT%;PRJDIR=%SRC_DIR%;COMDIR=%COMMON_DIR%;BSPVER=%PKG_VER%;BSPARCH=%BSP_ARCH%;OEMNAME=%OEM_NAME%" /onecore /universalbsp
-) else (
-    call pkggen.exe "%INPUT_FILE%" /config:"%PKG_CONFIG_XML%" /output:"%PKGBLD_DIR%" /version:%PKG_VER% /build:fre /cpu:%BSP_ARCH% /variables:"_RELEASEDIR=%RELEASE_DIR%\;PROD=%PRODUCT%;PRJDIR=%SRC_DIR%;COMDIR=%COMMON_DIR%;BSPVER=%PKG_VER%;BSPARCH=%BSP_ARCH%;OEMNAME=%OEM_NAME%" /onecore
+if not exist "%INPUT%.wm.xml" (
+    call convertpkg.cmd "%INPUT_FILE%"
 )
+
+call pkggen.exe "%INPUT%.wm.xml" /output:"%PKGBLD_DIR%" /version:%PKG_VER% /build:fre /cpu:%BSP_ARCH% /variables:"_RELEASEDIR=%RELEASE_DIR%\;PROD=%PRODUCT%;PRJDIR=%SRC_DIR%;COMDIR=%COMMON_DIR%;BSPVER=%PKG_VER%;BSPARCH=%BSP_ARCH%;OEMNAME=%OEM_NAME%" /onecore /universalbsp
+
 if errorlevel 0 (
-    if not defined UNIVERSAL_BSP (
-        REM remove unused .spkg files
-        del %PKGBLD_DIR%\*.spkg >nul 2>nul
-    )
     echo Package creation completed
 ) else (
     echo Package creation failed with error %ERRORLEVEL%
