@@ -73,6 +73,12 @@
         </FeatureIDs>
       </PackageFile>
 
+      <PackageFile Path="%PKGBLD_DIR%" Name="%OEM_NAME%.Registry.AzureDM.cab">
+        <FeatureIDs>
+          <FeatureID>AZUREDM_REGISTRY</FeatureID>
+        </FeatureIDs>
+      </PackageFile>
+
     </OEM>
     <OEMFeatureGroups/>
   </Features>
