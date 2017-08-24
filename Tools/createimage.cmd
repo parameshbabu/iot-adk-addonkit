@@ -54,6 +54,12 @@ if exist %PRODSRC_DIR%\prov\%CUSTOMIZATIONS%.xml (
     call buildpkg.cmd Provisioning.Auto
 )
 
+if exist %PRODSRC_DIR%\OCPUpdate (
+    echo.Building DeviceTargeting packages
+    call buildpkg.cmd %PRODSRC_DIR%\OCPUpdate
+    call buildfm.cmd ocp %PRODUCT%
+)
+
 if exist %PRODSRC_DIR%\imagecustomizations.xml (
     set IMGAPP_CUST=/OEMCustomizationXML:"%PRODSRC_DIR%\imagecustomizations.xml" /OEMVersion:"%BSP_VERSION%"
 )

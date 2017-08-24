@@ -59,7 +59,7 @@ if [%BSP_ARCH%] == [arm] (
         )
         del %BSPDIR%\driverlist.txt
     ) else (
-       echo %BSPDIR% does not exist,no drivers added. Provide BSP source directory.
+       echo No drivers added. Provide valid BSP source directory to add drivers.
     )
 )
 echo Copying files into WinPE

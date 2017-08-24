@@ -84,7 +84,9 @@ if not exist "%INPUT%.wm.xml" (
     call convertpkg.cmd "%INPUT_FILE%"
 )
 
-call pkggen.exe "%INPUT%.wm.xml" /output:"%PKGBLD_DIR%" /version:%PKG_VER% /build:fre /cpu:%BSP_ARCH% /variables:"_RELEASEDIR=%RELEASE_DIR%\;PROD=%PRODUCT%;PRJDIR=%SRC_DIR%;COMDIR=%COMMON_DIR%;BSPVER=%PKG_VER%;BSPARCH=%BSP_ARCH%;OEMNAME=%OEM_NAME%" /onecore /universalbsp
+set BUILDTIME=%date:~-2,2%%date:~4,2%%date:~7,2%-%time:~0,2%%time:~3,2%
+
+call pkggen.exe "%INPUT%.wm.xml" /output:"%PKGBLD_DIR%" /version:%PKG_VER% /build:fre /cpu:%BSP_ARCH% /variables:"_RELEASEDIR=%RELEASE_DIR%\;PROD=%PRODUCT%;PRJDIR=%SRC_DIR%;COMDIR=%COMMON_DIR%;BSPVER=%PKG_VER%;BSPARCH=%BSP_ARCH%;OEMNAME=%OEM_NAME%;BUILDTIME=%BUILDTIME%;" /onecore /universalbsp
 
 if errorlevel 0 (
     echo Package creation completed
