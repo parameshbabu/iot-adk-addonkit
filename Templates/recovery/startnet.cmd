@@ -12,8 +12,11 @@ set RECOVERYDRIVE=R
 set DATADRIVE=D
 set DPPDRIVE=P
 
-REM Apply EFIESP partition WIM files
+REM Apply EFIESP partition WIM file
 dism /apply-image /ImageFile:%RECOVERYDRIVE%:\efiesp.wim /index:1 /ApplyDir:%EFIDRIVE%:\
+REM This will reset BCD to defaults, so immediately reset recovery parameter in case of power loss
+bcdedit /store %EFIDRIVE%:\EFI\microsoft\boot\bcd /set {bootmgr} bootsequence {a5935ff2-32ba-4617-bf36-5ac314b3f9bf}
+
 REM Apply the MainOS and Data partition WIM files. The order below is important - do not change
 dism /apply-image /ImageFile:%RECOVERYDRIVE%:\data.wim /index:1 /ApplyDir:%DATADRIVE%:\ /Compact
 dism /apply-image /ImageFile:%RECOVERYDRIVE%:\mainos.wim /index:1 /ApplyDir:%MAINOSDRIVE%:\ /Compact
