@@ -19,6 +19,10 @@
                 name="Version"
                 type="REG_SZ"
                 value="$(BSPVER)" />
+            <regValue
+                name="BuildTime"
+                type="REG_SZ"
+                value="$(BUILDTIME)" />
         </regKey>
     </regKeys>
 </identity>
