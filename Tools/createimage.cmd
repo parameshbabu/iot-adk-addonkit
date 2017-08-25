@@ -45,6 +45,8 @@ echo Creating %1 %2 Image
 echo Build Start Time : %TIME%
 
 echo Building Packages with product specific contents
+call buildpkg.cmd Registry.Version
+
 if exist %PRODSRC_DIR%\oemcustomization.cmd (
     call buildpkg.cmd Custom.Cmd
 )
