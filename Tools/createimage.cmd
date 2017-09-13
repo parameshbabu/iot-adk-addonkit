@@ -56,9 +56,9 @@ if exist %PRODSRC_DIR%\prov\%CUSTOMIZATIONS%.xml (
     call buildpkg.cmd Provisioning.Auto
 )
 
-if exist %PRODSRC_DIR%\OCPUpdate (
+if exist %PRODSRC_DIR%\CUSConfig (
     echo.Building DeviceTargeting packages
-    call buildpkg.cmd %PRODSRC_DIR%\OCPUpdate
+    call buildpkg.cmd %PRODSRC_DIR%\CUSConfig
     call buildfm.cmd ocp %PRODUCT%
 )
 

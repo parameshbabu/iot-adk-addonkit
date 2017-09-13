@@ -5,29 +5,29 @@
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 >
   <BasePackages>
-    <PackageFile Path="%PKGBLD_DIR%" Name="%OEM_NAME%.OCPUpdate.DeviceTargetingData.cab"/>
+    <PackageFile Path="%PKGBLD_DIR%" Name="%OEM_NAME%.CUSConfig.OCPInfo.cab"/>
   </BasePackages>
 
   <Features>
     <Microsoft />
     <MSFeatureGroups />
     <OEM>
-      <PackageFile Path="%PKGBLD_DIR%" Name="%OEM_NAME%.OCPUpdate.DeviceTargetingRing.cab" >
+      <PackageFile Path="%PKGBLD_DIR%" Name="%OEM_NAME%.CUSConfig.DeviceInfo.cab" >
         <FeatureIDs>
-          <FeatureID>OCP_TARGET_RING</FeatureID>
+          <FeatureID>CUS_DEVICE_INFO</FeatureID>
         </FeatureIDs>
       </PackageFile>
     </OEM>
     <OEMFeatureGroups>
         <FeatureGroup Constraint="OneAndOnlyOne">
             <FeatureIDs>
-                <FeatureID>OEM_OCP_TARGET_RING</FeatureID>
+                <FeatureID>OEM_CUS_DEVICE_INFO</FeatureID>
                 <FeatureID>MS_IOT_DEFAULT_POP</FeatureID>
             </FeatureIDs>
         </FeatureGroup>
     </OEMFeatureGroups>
     <OEMConditionalFeatures>
-      <ConditionalFeature FeatureID="OEM_OCP_TARGET_RING" UpdateAction="NoUpdate" />
+      <ConditionalFeature FeatureID="OEM_CUS_DEVICE_INFO" UpdateAction="NoUpdate" />
     </OEMConditionalFeatures>
   </Features>
 </FeatureManifest>
