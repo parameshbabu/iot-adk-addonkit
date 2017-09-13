@@ -7,7 +7,7 @@ goto START
 
 :Usage
 echo Usage: newappxpkg filename.appx [fga/bgt/none] [CompName.SubCompName] [skipcert]
-echo    filename.appx........... Required, Input appx package. Expects dependencies in a sub folder
+echo    filename.appx........... Required, Input appx package/appxbundle. Expects dependencies in a sub folder
 echo    fga/bgt/none............ Required, Startup ForegroundApp / Startup BackgroundTask / No startup
 echo    CompName.SubCompName.... Optional, default is Appx.AppxName; Mandatory if you want to specify skipcert
 echo    skipcert................ Optional, specify this to skip adding cert information to pkg xml file
@@ -32,14 +32,11 @@ set FILE_TYPE=%~x1
 set FILE_NAME=%~n1
 set "FILE_PATH=%~dp1"
 
-if [%FILE_TYPE%] == [.appx] (
-    set COMP_NAME=Appx
-    for /f "tokens=1 delims=_" %%i in ("%FILE_NAME%") do (
-        set SUB_NAME=%%i
+if not [%FILE_TYPE%] == [.appx] (
+    if not [%FILE_TYPE%] == [.appxbundle] (
+        echo. Unsupported filetype.
+        goto Usage
     )
-) else (
-    echo. Unsupported filetype.
-    goto Usage
 )
 
 set STARTUP_OPTIONS=fga bgt none
@@ -59,6 +56,11 @@ if not [%3] == [] (
         set SUB_NAME=%%j
     )
     if /I [%4] == [skipcert] ( set SKIPCERT=1)
+) else (
+    set COMP_NAME=Appx
+    for /f "tokens=1 delims=_" %%i in ("%FILE_NAME%") do (
+        set SUB_NAME=%%i
+    )
 )
 
 if not defined SRC_DIR (

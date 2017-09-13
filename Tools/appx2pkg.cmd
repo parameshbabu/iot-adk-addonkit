@@ -6,13 +6,14 @@ goto START
 
 :Usage
 echo Usage: appx2pkg input.appx [fga/bgt/none] [CompName.SubCompName] [skipcert]
-echo    input.appx.............. Required, input .appx file
+echo    input.appx.............. Required, input .appx file or .appxbundle
 echo    fga/bgt/none............ Required, Startup ForegroundApp / Startup BackgroundTask / No startup
 echo    CompName.SubCompName.... Optional, default is Appx.AppxName; Mandatory if you want to specify skipcert
 echo    skipcert................ Optional, specify this to skip adding cert information to pkg xml file
 echo    [/?].................... Displays this usage string.
 echo    Example:
 echo        appx2pkg C:\test\sample_1.0.0.0_arm.appx none
+echo        appx2pkg C:\test\sample_1.0.0.0_arm.appxbundle none
 endlocal
 exit /b 1
 
@@ -26,7 +27,11 @@ if [%1] == [-?] goto Usage
 if [%1] == [] goto Usage
 if [%2] == [] goto Usage
 
-if not [%~x1] == [.appx] goto Usage
+set FILE_TYPE=%~x1
+if not [%FILE_TYPE%] == [.appx] (
+    if not [%FILE_TYPE%] == [.appxbundle] goto Usage
+)
+
 set LONG_NAME=%~n1
 set FILE_NAME=%~n1
 set "FILE_PATH=%~dp1"
@@ -40,7 +45,10 @@ for /f "tokens=1 delims=_" %%i in ("%FILE_NAME%") do (
 
 call %TOOLS_DIR%\GetAppxInfo.exe "%1" > "%FILE_PATH%\appx_info.txt" 2>nul
 for /f "tokens=1,2,3 delims=:,!, " %%i in (%FILE_PATH%\appx_info.txt) do (
-    set APPX_%%i=%%j
+    REM set APPX_%%i=%%j
+    if [%%i] == [Version] (
+        set APPX_Version=%%j
+    )
     if [%%i] == [AppUserModelId] (
         set PACKAGE_FNAME=%%j
         set ENTRY=%%k
@@ -125,7 +133,7 @@ if exist "%FILE_PATH%\%COMP_NAME%.%SUB_NAME%.pkg.xml" (
 )
 
 set SRC_INFO_FILE=%OUTPUT_PATH%\SourceDetails.txt
-echo Source Appx: %FILE_PATH%%FILE_NAME%.appx> "%SRC_INFO_FILE%"
+echo Source Appx: %FILE_PATH%%FILE_NAME%%FILE_TYPE%>> "%SRC_INFO_FILE%"
 echo Dependencies :>> "%SRC_INFO_FILE%"
 
 REM Renaming files to shorten the names
@@ -151,7 +159,7 @@ set /p NEWGUID=<%PRODSRC_DIR%\uuid.txt
 del %PRODSRC_DIR%\uuid.txt
 call :CREATE_CUSTFILE
 
-copy "%FILE_PATH%\%FILE_NAME%.appx" "%OUTPUT_PATH%\%SHORT_FILE_NAME%.appx" >nul 2>nul
+copy "%FILE_PATH%\%FILE_NAME%%FILE_TYPE%" "%OUTPUT_PATH%\%SHORT_FILE_NAME%%FILE_TYPE%" >nul 2>nul
 move "%FILE_PATH%\%CUSTOMIZATIONS%.xml" "%OUTPUT_PATH%\%CUSTOMIZATIONS%.xml" >nul 2>nul
 REM move "%FILE_PATH%\%COMP_NAME%.%SUB_NAME%.pkg.xml" "%OUTPUT_PATH%\%COMP_NAME%.%SUB_NAME%.pkg.xml" >nul 2>nul
 move "%FILE_PATH%\%COMP_NAME%.%SUB_NAME%.wm.xml" "%OUTPUT_PATH%\%COMP_NAME%.%SUB_NAME%.wm.xml" >nul 2>nul
@@ -263,7 +271,7 @@ REM Printing APP Install
 call :PRINT_TO_CUSTFILE "        <UniversalAppInstall>"
 call :PRINT_TO_CUSTFILE "          <UserContextApp>"
 call :PRINT_TO_CUSTFILE "            <Application PackageFamilyName="%PACKAGE_FNAME%" Name="%PACKAGE_FNAME%">"
-call :PRINT_TO_CUSTFILE "              <ApplicationFile>%SHORT_FILE_NAME%.appx</ApplicationFile>"
+call :PRINT_TO_CUSTFILE "              <ApplicationFile>%SHORT_FILE_NAME%%FILE_TYPE%</ApplicationFile>"
 REM Printing Dependencies
 for %%B in ("%FILE_PATH%\appx_deplist_trim.txt") do if %%~zB gtr 0 (
     call :PRINT_TO_CUSTFILE "              <DependencyAppxFiles>"
