@@ -108,7 +108,6 @@ if %~z1 gtr 0 (
        call pkggen.exe "%%i" /convert:pkg2wm /output:"!NAME!.wm.xml" /useLegacyName:true /foroempkg:true /variables:"%PKGGEN_VAR%" >nul
        if not errorlevel 0 ( echo.%CLRRED%Error : Failed to create package. See %PKGLOG_DIR%\%%~ni.log%CLREND%)
     )
-) else (
-    echo. convertpkg:No package definition files found.
 )
+
 exit /b
