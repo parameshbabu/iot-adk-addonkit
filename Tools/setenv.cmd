@@ -53,7 +53,8 @@ set SIGN_WITH_TIMESTAMP=0
 
 
 REM Local project settings
-set MSPKG_DIR=%KITSROOT%MSPackages\Retail\%BSP_ARCH%\fre
+if not defined MSPACKAGE ( set "MSPACKAGE=%KITSROOT%MSPackages" )
+set MSPKG_DIR=%MSPACKAGE%\Retail\%BSP_ARCH%\fre
 set COMMON_DIR=%IOTADK_ROOT%\Common
 set SRC_DIR=%IOTADK_ROOT%\Source-%1
 set PKGSRC_DIR=%SRC_DIR%\Packages

@@ -31,7 +31,11 @@ if NOT DEFINED COMMON_DIR (
     echo Environment not defined. Call setenv
     goto End
 )
-SET NEWPKG_DIR=%COMMON_DIR%\Packages\%1
+if defined USEUPDATE (
+    set NEWPKG_DIR=%SRC_DIR%\Updates\%USEUPDATE%\%1
+) else (
+    set NEWPKG_DIR=%COMMON_DIR%\Packages\%1
+)
 
 :: Error Checks
 if /i EXIST %NEWPKG_DIR% (
