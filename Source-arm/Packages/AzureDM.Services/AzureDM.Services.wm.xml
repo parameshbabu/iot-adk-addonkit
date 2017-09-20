@@ -17,7 +17,7 @@
             source="SystemConfigurator.exe" />
     </files>
     <service
-        name="AzureDMSC"
+        name="SystemConfigurator"
         start="auto"
         type="win32OwnProcess"
         objectName="LocalSystem"

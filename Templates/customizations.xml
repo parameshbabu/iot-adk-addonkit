@@ -12,7 +12,7 @@
       <Common>
         <!--Accounts>
           <ComputerAccount>
-            <ComputerName>{Product}</ComputerName>
+            <ComputerName>iot-%RAND:7%</ComputerName>
           </ComputerAccount>
         </Accounts-->
         <Policies>

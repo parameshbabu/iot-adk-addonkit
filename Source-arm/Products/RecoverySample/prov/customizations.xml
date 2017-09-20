@@ -10,11 +10,11 @@
   <Settings xmlns="urn:schemas-microsoft-com:windows-provisioning">
     <Customizations>
       <Common>
-        <!--Accounts>
+        <Accounts>
           <ComputerAccount>
-            <ComputerName>RecoverySample</ComputerName>
+            <ComputerName>iot-%RAND:7%</ComputerName>
           </ComputerAccount>
-        </Accounts-->
+        </Accounts>
         <Policies>
           <ApplicationManagement>
             <AllowAppStoreAutoUpdate>Allowed</AllowAppStoreAutoUpdate>
