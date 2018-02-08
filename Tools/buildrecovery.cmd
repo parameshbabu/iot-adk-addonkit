@@ -103,13 +103,27 @@ for /f "tokens=3,4,* skip=9 delims= " %%i in (%OUTPUTDIR%\mountlog.txt) do (
 
 echo Mounted at %MOUNT_PATH% as %DISK_DRIVE%..
 set DISK_NR=%DISK_DRIVE:~-1%
-set MMOSDIR=%MOUNT_PATH%\mmos
-if not exist "%MMOSDIR%" (
+
+call %WINPEDIR%\pc_setdrives.cmd
+
+powershell -Command "(gc %WINPEDIR%\pc_diskpart_assign.txt) -replace 'DISKNR', '%DISK_NR%' | Out-File %WINPEDIR%\diskpart_assign.txt -Encoding utf8"
+powershell -Command "(gc %WINPEDIR%\pc_diskpart_remove.txt) -replace 'DISKNR', '%DISK_NR%' | Out-File %WINPEDIR%\diskpart_remove.txt -Encoding utf8"
+
+echo. Assigning drive letters
+diskpart < %WINPEDIR%\diskpart_assign.txt > %OUTPUTDIR%\buildrecoverydiskpart.log
+if %errorlevel% neq 0 (
+    REM something went wrong. So try diskpart remove and proceed to exit.
+    echo.%CLRRED%Diskpart failed. Please check %OUTPUTDIR%\buildrecoverydiskpart.log.%CLREND%
+    diskpart < %WINPEDIR%\diskpart_remove.txt >> %OUTPUTDIR%\buildrecoverydiskpart.log
+    goto Error
+)
+
+if not defined DL_MMOS (
     echo.%CLRRED%Error: Recovery partition MMOS missing in device layout.%CLREND%
     goto Error
 )
 
-call %WINPEDIR%\pc_setdrives.cmd
+set MMOSDIR=%DL_MMOS%:\
 
 if /I [%WIMMODE%] == [Import] (
     REM Wimfiles provided. Copy the wim files from that directory
@@ -121,19 +135,6 @@ if /I [%WIMMODE%] == [Import] (
 
 ) else (
     REM wim files not provided. Extract the wim files from the FFU itself.
-
-    powershell -Command "(gc %WINPEDIR%\pc_diskpart_assign.txt) -replace 'DISKNR', '%DISK_NR%' | Out-File %WINPEDIR%\diskpart_assign.txt -Encoding utf8"
-    powershell -Command "(gc %WINPEDIR%\pc_diskpart_remove.txt) -replace 'DISKNR', '%DISK_NR%' | Out-File %WINPEDIR%\diskpart_remove.txt -Encoding utf8"
-
-    echo. Assigning drive letters
-    diskpart < %WINPEDIR%\diskpart_assign.txt > %OUTPUTDIR%\buildrecoverydiskpart.log
-    if %errorlevel% neq 0 (
-        REM something went wrong. So try diskpart remove and proceed to exit.
-        echo.%CLRRED%Diskpart failed. Please check %OUTPUTDIR%\buildrecoverydiskpart.log.%CLREND%
-        diskpart < %WINPEDIR%\diskpart_remove.txt >> %OUTPUTDIR%\buildrecoverydiskpart.log
-        goto Error
-    )
-
     echo Extracting EFIESP wim from %DL_EFIESP%:\
     dism /Capture-Image /ImageFile:%OUTPUTDIR%\efiesp.wim /CaptureDir:%DL_EFIESP%:\ /Name:"EFIESP"
 
@@ -142,9 +143,6 @@ if /I [%WIMMODE%] == [Import] (
 
     echo Extracting MainOS wim, this can take a while too..
     dism /Capture-Image /ImageFile:%OUTPUTDIR%\mainos.wim /CaptureDir:%MOUNT_PATH% /Name:"MainOS" /Compress:max
-
-    echo Removing drive letters
-    diskpart < %WINPEDIR%\diskpart_remove.txt >> %OUTPUTDIR%\buildrecoverydiskpart.log
 
     echo %BSP_VERSION% > %OUTPUTDIR%\RecoveryImageVersion.txt
     copy %OUTPUTDIR%\efiesp.wim %MMOSDIR% >nul
@@ -170,6 +168,9 @@ if exist %SRC_DIR%\BSP\%BSP%\tools\br_addfiles.cmd (
    echo. Adding %BSP% specifics 
    call %SRC_DIR%\BSP\%BSP%\tools\br_addfiles.cmd
 )
+
+echo Removing drive letters
+diskpart < %WINPEDIR%\diskpart_remove.txt >> %OUTPUTDIR%\buildrecoverydiskpart.log
 
 echo Unmounting %DISK_DRIVE%
 wpimage dismount -physicaldrive %DISK_DRIVE% -imagepath %IMG_RECOVERY_FILE% -nosign

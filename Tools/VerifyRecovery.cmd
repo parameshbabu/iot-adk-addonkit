@@ -107,11 +107,6 @@ for /f "tokens=3,4,* skip=9 delims= " %%i in (%OUTPUTDIR%\recoverymountlog_verif
 echo Mounted at %MOUNT_PATH% as %DISK_DRIVE%..
 set DISK_NR=%DISK_DRIVE:~-1%
 
-if not exist "%MOUNT_PATH%\mmos\" (
-    echo.%CLRRED%Error: Recovery partition MMOS missing in device layout.%CLREND%
-    goto Error
-)
-
 call %WINPEDIR%\pc_setdrives.cmd
 powershell -Command "(gc %WINPEDIR%\pc_diskpart_assign.txt) -replace 'DISKNR', '%DISK_NR%' | Out-File %WINPEDIR%\diskpart_assign.txt -Encoding utf8"
 powershell -Command "(gc %WINPEDIR%\pc_diskpart_remove.txt) -replace 'DISKNR', '%DISK_NR%' | Out-File %WINPEDIR%\diskpart_remove.txt -Encoding utf8"
