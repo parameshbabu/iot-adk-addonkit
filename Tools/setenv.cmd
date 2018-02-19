@@ -31,19 +31,28 @@ if not defined FOUND (
     echo Configuring for %1 architecture
 )
 set FOUND=
-
-REM Environment configurations
-set PATH=%KITSROOT%tools\bin\i386;%PATH%
-set AKROOT=%KITSROOT%
-set WPDKCONTENTROOT=%KITSROOT%
-set PKG_CONFIG_XML=%KITSROOT%Tools\bin\i386\pkggen.cfg.xml
-set WINPE_ROOT=%KITSROOT%Assessment and Deployment Kit\Windows Preinstallation Environment
-
 set ARCH=%1
 set BSP_ARCH=%1
+echo.KitsRoot       : [%KITSROOT%]
+echo.WDKContentRoot : [%WDKContentRoot%]
 
-set HIVE_ROOT=%KITSROOT%CoreSystem\%WDK_VERSION%\%BSP_ARCH%
-set WIM_ROOT=%KITSROOT%CoreSystem\%WDK_VERSION%\%BSP_ARCH%
+if defined WDKContentRoot (
+    set "TOOLSROOT=%WDKContentRoot%"
+) else (
+    set "TOOLSROOT=%KITSROOT%"
+)
+
+REM Environment configurations
+set PATH=%TOOLSROOT%tools\bin\i386;%PATH%
+set AKROOT=%KITSROOT%
+set WPDKCONTENTROOT=%TOOLSROOT%
+set PKG_CONFIG_XML=%TOOLSROOT%Tools\bin\i386\pkggen.cfg.xml
+set WINPE_ROOT=%KITSROOT%Assessment and Deployment Kit\Windows Preinstallation Environment
+
+
+
+set HIVE_ROOT=%TOOLSROOT%CoreSystem\%WDK_VERSION%\%BSP_ARCH%
+set WIM_ROOT=%TOOLSROOT%CoreSystem\%WDK_VERSION%\%BSP_ARCH%
 
 if /I [%1] == [x64] ( set BSP_ARCH=amd64)
 
@@ -75,7 +84,7 @@ if not defined BSPPKG_DIR (
     set BSPPKG_DIR=%PKGBLD_DIR%
 )
 set MIN_ADK_VERSION=16299
-REM Check ADK version 
+REM Check ADK version
 if /i %ADK_VERSION% LSS %MIN_ADK_VERSION% (
     echo.%CLRRED%Error: ADK version %ADK_VERSION% is not supported with this tools version. Minimum  version required is %MIN_ADK_VERSION%%CLREND%
     pause
@@ -89,6 +98,7 @@ call setversion.cmd
 echo BSP_ARCH    : %BSP_ARCH%
 echo BSP_VERSION : %BSP_VERSION%
 echo BSPPKG_DIR  : %BSPPKG_DIR%
+echo MSPKG_DIR   : %MSPKG_DIR%
 echo.
 
 exit /b 0
