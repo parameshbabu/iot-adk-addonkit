@@ -89,6 +89,12 @@
         </FeatureIDs>
       </PackageFile>
 
+      <PackageFile Path="%PKGBLD_DIR%" Name="%OEM_NAME%.Recovery.WinPE.cab">
+        <FeatureIDs>
+          <FeatureID>RECOVERY_BCD</FeatureID>
+        </FeatureIDs>
+      </PackageFile>
+
     </OEM>
     <OEMFeatureGroups/>
   </Features>

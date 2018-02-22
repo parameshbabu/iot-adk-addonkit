@@ -1,5 +1,45 @@
 @echo off
 
+goto :START
+
+REM Functions here
+
+:ProcessADK
+REM Check for ADK Presence and Launch
+if exist "%KITPATH%\DandISetEnv.bat" (
+    call "%KITPATH%\DandISetEnv.bat"
+    REM Get version number of the deployment tools installed
+    reg query "HKEY_CLASSES_ROOT\Installer\Dependencies\Microsoft.Windows.WindowsDeploymentTools.x86.10" /v Version > %IOTADK_ROOT%\adkversion.txt 2>nul
+    for /F "skip=2 tokens=3" %%r in (%IOTADK_ROOT%\adkversion.txt) do ( set KIT_VERSION=%%r )
+) else (
+    echo.
+    echo.%CLRRED%Error : ADK not found. Please install ADK.%CLREND%
+    echo.
+    pause
+    exit /b
+)
+for /f "tokens=3 delims=." %%A in ("%KIT_VERSION%") do ( set ADK_VERSION=%%A )
+del %IOTADK_ROOT%\adkversion.txt
+REM Remove temporary variables
+set KITPATH=
+set KIT_VERSION=
+
+REM Check for WDK Presence
+if exist "%KITSROOT%\CoreSystem" (
+    dir /B /AD "%KITSROOT%CoreSystem" > %IOTADK_ROOT%\wdkversion.txt
+    set /P WDK_VERSION=<%IOTADK_ROOT%\wdkversion.txt
+    del %IOTADK_ROOT%\wdkversion.txt
+)
+
+if defined WDK_VERSION (
+    for /f "tokens=3 delims=." %%A in ("%WDK_VERSION%") do ( set WDK_VERSION=%%A )
+) else (
+    set WDK_VERSION=NotFound
+)
+exit /b
+
+
+:START
 set CLRRED=[91m
 set CLRYEL=[93m
 set CLREND=[0m
@@ -61,38 +101,7 @@ if defined Version_Number (
     for /f "tokens=3 delims=." %%A in ("%Version_Number%") do ( set ADK_VERSION=%%A )
     set WDK_VERSION=%Version_Number%
 ) else (
-    REM Check for ADK Presence and Launch
-    if exist "%KITPATH%\DandISetEnv.bat" (
-        call "%KITPATH%\DandISetEnv.bat"
-        REM Get version number of the deployment tools installed
-        reg query "HKEY_CLASSES_ROOT\Installer\Dependencies\Microsoft.Windows.WindowsDeploymentTools.x86.10" /v Version > %IOTADK_ROOT%\adkversion.txt 2>nul
-        for /F "skip=2 tokens=3" %%r in (%IOTADK_ROOT%\adkversion.txt) do ( set KIT_VERSION=%%r )
-    ) else (
-        echo.
-        echo.%CLRRED%Error : ADK not found. Please install ADK.%CLREND%
-        echo.
-        pause
-        exit /b
-    )
-    for /f "tokens=3 delims=." %%A in ("%KIT_VERSION%") do ( set ADK_VERSION=%%A )
-    del %IOTADK_ROOT%\adkversion.txt
-
-    REM Remove temporary variables
-    set KITPATH=
-    set KIT_VERSION=
-
-    REM Check for WDK Presence
-    if exist "%KITSROOT%\CoreSystem" (
-        dir /B /AD "%KITSROOT%CoreSystem" > %IOTADK_ROOT%\wdkversion.txt
-        set /P WDK_VERSION=<%IOTADK_ROOT%\wdkversion.txt
-        del %IOTADK_ROOT%\wdkversion.txt
-    )
-
-    if defined WDK_VERSION (
-        for /f "tokens=3 delims=." %%A in ("%WDK_VERSION%") do ( set WDK_VERSION=%%A )
-    ) else (
-        set WDK_VERSION=NotFound
-    )
+    call :ProcessADK
 )
 
 REM Check for Corekit packages
