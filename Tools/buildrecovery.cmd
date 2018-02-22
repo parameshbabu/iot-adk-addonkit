@@ -74,6 +74,7 @@ echo. Processing %SOCNAME% device layout in %BSP% bsp...
 REM Creating WinPE script always to ensure that there is no stale generated files
 echo Creating WinPE.wim
 call newwinpe.cmd %BSP% %SOCNAME%
+if not exist %BLD_DIR%\%PRODUCT% ( mkdir %BLD_DIR%\%PRODUCT% )
 move %WINPEDIR%\winpe.wim %BLD_DIR%\%PRODUCT%\winpe.wim
 if %errorlevel% neq 0 goto END
 
