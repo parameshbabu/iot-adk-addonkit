@@ -75,6 +75,7 @@ REM Creating WinPE script always to ensure that there is no stale generated file
 echo Creating WinPE.wim
 call newwinpe.cmd %BSP% %SOCNAME%
 if not exist %BLD_DIR%\%PRODUCT% ( mkdir %BLD_DIR%\%PRODUCT% )
+if exist %BLD_DIR%\%PRODUCT%\winpe.wim ( del %BLD_DIR%\%PRODUCT%\winpe.wim )
 move %WINPEDIR%\winpe.wim %BLD_DIR%\%PRODUCT%\winpe.wim
 if %errorlevel% neq 0 goto END
 

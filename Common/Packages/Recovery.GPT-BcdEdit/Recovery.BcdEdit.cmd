@@ -11,6 +11,9 @@ if not exist C:\Data\Wimfiles\winpe_update.wim (
 )
 REM WinPE update file found. Mount MMOS partition and process copying.
 setlocal ENABLEDELAYEDEXPANSION
+REM Check if MMOS exists already ( will be mounted if its a NTFS partition)
+if exist C:\MMOS ( goto :MMOSFound )
+
 mountvol > C:\Data\Wimfiles\mountpoints.txt
 set FOUND=0
 for /f "tokens=1,* delims=? " %%i in (C:\Data\Wimfiles\mountpoints.txt) do (
@@ -51,8 +54,11 @@ if exist C:\MMOS\winpe_update.wim (
         del C:\MMOS\winpe_bak.wim
     )
 )
-echo. Unmounting MMOS
-rmdir C:\MMOS
-del C:\Data\Wimfiles\mountpoints.txt
+if defined VOL_GUID (
+    REM delete the MMOS link only if it was mounted by the script
+    echo. Unmounting MMOS
+    rmdir C:\MMOS
+    del C:\Data\Wimfiles\mountpoints.txt
+)
 endlocal
 exit /b 0
