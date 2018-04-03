@@ -66,6 +66,8 @@ if defined USEUPDATE (
     set PKG_VER=%BSP_VERSION%
 )
 
+if not exist %PRODBLD_DIR% ( mkdir %PRODBLD_DIR% )
+
 echo Building Packages with product specific contents with version %PKG_VER%
 
 REM Invoke BSP specific build hooks

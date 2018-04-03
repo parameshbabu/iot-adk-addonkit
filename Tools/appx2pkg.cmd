@@ -55,9 +55,7 @@ for /f "tokens=1,2,3 delims=:,!, " %%i in (%FILE_PATH%\appx_info.txt) do (
     )
 )
 
-if not defined PROV_VERSION if /i "%ADK_VERSION%" LSS "16190" (
-     set PROV_VERSION=1.0
-) else (
+if not defined PROV_VERSION (
     set PROV_VERSION=%APPX_Version%
 )
 
