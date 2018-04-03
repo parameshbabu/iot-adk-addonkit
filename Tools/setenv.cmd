@@ -49,11 +49,6 @@ set WPDKCONTENTROOT=%TOOLSROOT%
 set PKG_CONFIG_XML=%TOOLSROOT%Tools\bin\i386\pkggen.cfg.xml
 set WINPE_ROOT=%KITSROOT%Assessment and Deployment Kit\Windows Preinstallation Environment
 
-
-
-set HIVE_ROOT=%TOOLSROOT%CoreSystem\%WDK_VERSION%\%BSP_ARCH%
-set WIM_ROOT=%TOOLSROOT%CoreSystem\%WDK_VERSION%\%BSP_ARCH%
-
 if /I [%1] == [x64] ( set BSP_ARCH=amd64)
 
 REM The following variables ensure the package is appropriately signed
