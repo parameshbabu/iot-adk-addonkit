@@ -55,7 +55,6 @@ REM The following variables ensure the package is appropriately signed
 set SIGN_OEM=1
 set SIGN_WITH_TIMESTAMP=0
 
-
 REM Local project settings
 if not defined MSPACKAGE ( set "MSPACKAGE=%KITSROOT%MSPackages" )
 set MSPKG_DIR=%MSPACKAGE%\Retail\%BSP_ARCH%\fre
