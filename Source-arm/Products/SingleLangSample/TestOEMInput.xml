@@ -54,7 +54,6 @@
       <Feature>IOT_SSH</Feature>
       <Feature>IOT_SIREP</Feature>
       <!-- Enabling Test images -->
-      <Feature>IOT_DISABLE_UMCI</Feature>
       <Feature>IOT_ENABLE_TESTSIGNING</Feature>
       <Feature>IOT_TOOLKIT</Feature>
       <!-- Debug Features -->
