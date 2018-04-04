@@ -66,7 +66,6 @@
       <Feature>IOT_POWERSHELL</Feature>
       <Feature>IOT_DIRECTX_TOOLS</Feature>
       <Feature>IOT_ENABLE_TESTSIGNING</Feature>
-      <Feature>IOT_DISABLE_UMCI</Feature>
       <Feature>IOT_CRT140</Feature>
       <Feature>IOT_APP_TOOLKIT</Feature>
       <Feature>IOT_CP210x_MAKERDRIVER</Feature>

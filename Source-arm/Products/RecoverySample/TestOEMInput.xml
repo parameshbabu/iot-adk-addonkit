@@ -41,7 +41,6 @@
       <Feature>IOT_KDUSB_SETTINGS</Feature>
       <Feature>IOT_EFIESP_BCD</Feature>
       <Feature>IOT_DISABLEBASICDISPLAYFALLBACK</Feature>
-      <Feature>IOT_HWN_CLASS_EXTENSION</Feature>
       <Feature>IOT_USBFN_CLASS_EXTENSION</Feature>
       <Feature>IOT_GENERIC_POP</Feature>
       <Feature>IOT_APPLICATIONS</Feature>
@@ -57,7 +56,6 @@
       <Feature>IOT_DIRECTX_TOOLS</Feature>
       <Feature>IOT_ALLJOYN_APP</Feature>
       <Feature>IOT_ENABLE_TESTSIGNING</Feature>
-      <Feature>IOT_DISABLE_UMCI</Feature>
       <Feature>IOT_CRT140</Feature>
       <Feature>IOT_BERTHA</Feature>
       <Feature>IOT_APP_TOOLKIT</Feature>
