@@ -35,7 +35,7 @@ if /i [%1] == [On] (
     if /i [%1] == [Off] (
         REM remove cross cert information in the env variables
         set SIGN_WITH_TIMESTAMP=0
-        set SIGNTOOL_OEM_SIGN=
+        set SIGNTOOL_OEM_SIGN=/a /s my /i "Windows OEM Intermediate 2017 (TEST ONLY)" /n "Windows OEM Test Cert 2017 (TEST ONLY)" /fd SHA256
         echo Retail Signing disabled
         set PROMPT=IoTCoreShellv%IOT_ADDON_VERSION% %BSP_ARCH% %BSP_VERSION%$_$P$G
         TITLE IoTCoreShellv%IOT_ADDON_VERSION% %BSP_ARCH% %BSP_VERSION%
