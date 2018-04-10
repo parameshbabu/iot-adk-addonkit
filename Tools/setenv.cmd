@@ -88,6 +88,7 @@ if /i %ADK_VERSION% LSS %MIN_ADK_VERSION% (
 set CUSTOMIZATIONS=customizations
 
 call setversion.cmd
+call retailsign.cmd Off
 
 echo BSP_ARCH    : %BSP_ARCH%
 echo BSP_VERSION : %BSP_VERSION%
