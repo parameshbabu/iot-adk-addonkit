@@ -4,11 +4,9 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns="http://schemas.microsoft.com/embedded/2004/10/ImageUpdate">
   <Description>Contoso Windows 10 IoT Core Retail FFU with RPi2 BSP</Description>
-  <SOC>RPi2</SOC>
-  <!-- For recovery, use SOC: RPi2-R -->
+  <SOC>RPi2-R</SOC>
   <SV>RASPBERRY PI</SV>
-  <Device>RPi2</Device>
-  <!-- For recovery, use Device: RPi2-R -->
+  <Device>RPi2-R</Device>
   <ReleaseType>Production</ReleaseType>
   <BuildType>fre</BuildType>
   <SupportedLanguages>
@@ -55,8 +53,7 @@
       <!-- Include OEM features -->
       <Feature>OEM_CustomCmd</Feature>
       <Feature>OEM_ProvAuto</Feature>
-      <!-- For recovery, include: RECOVERY_BCD_MBR -->
-
+      <Feature>RECOVERY_BCD_MBR</Feature>
     </OEM>
   </Features>
   <Product>Windows 10 IoT Core</Product>
