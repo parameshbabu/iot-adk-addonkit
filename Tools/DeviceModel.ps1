@@ -43,22 +43,22 @@ if (Test-Path $smbioscfg) {
             switch ($parts[1]) {
                 '04' {
                     $Manufacturer = $parts[3] -replace '"', ""
-                    Write-Output "Manufacturer : $Manufacturer"
+                    Write-Host "Manufacturer : $Manufacturer"
                     break
                 }
                 '05' {
                     $ProductName = $parts[3] -replace '"', ""
-                    Write-Output "Product Name : $ProductName"
+                    Write-Host "Product Name : $ProductName"
                     break
                 }
                 '19' {
                     $SKUNumber = $parts[3] -replace '"', ""
-                    Write-Output "SKU Number   : $SKUNumber"
+                    Write-Host "SKU Number   : $SKUNumber"
                     break
                 }
                 '1A' {
                     $Family = $parts[3] -replace '"', ""
-                    Write-Output "Family       : $Family"
+                    Write-Host "Family       : $Family"
                     break
                 }
             }
