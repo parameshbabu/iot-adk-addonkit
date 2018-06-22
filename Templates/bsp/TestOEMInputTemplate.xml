@@ -27,7 +27,7 @@
     <AdditionalFM>%BLD_DIR%\MergedFMs\{BSP}FM.xml</AdditionalFM>
     <!-- Including OEM feature manifest -->
     <AdditionalFM>%BLD_DIR%\MergedFMs\OEMCommonFM.xml</AdditionalFM>
-    <AdditionalFM>%BLD_DIR%\MergedFMs\OEMFM.xml</AdditionalFM>
+    <!--AdditionalFM>%BLD_DIR%\MergedFMs\OEMFM.xml</AdditionalFM-->
 
     <!-- Including the test features -->
     <AdditionalFM>%AKROOT%\FMFiles\{arch}\IoTUAPNonProductionPartnerShareFM.xml</AdditionalFM>
@@ -43,9 +43,8 @@
       <!-- Include BSP Features -->
 
       <!-- Include OEM features -->
-      <Feature>OEM_IoTCoreDefaultApp</Feature>
-      <Feature>OEM_CustomCmd</Feature>
-      <Feature>OEM_ProvAuto</Feature>
+      <Feature>CUSTOM_CMD</Feature>
+      <Feature>PROV_AUTO</Feature>
       
    </OEM>
   </Features>
