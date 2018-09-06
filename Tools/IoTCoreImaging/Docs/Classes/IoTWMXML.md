@@ -130,7 +130,7 @@ A sample use of the class
 # TROUBLESHOOTING NOTE
 
 # SEE ALSO
-* [New-IoTWMWriter](..\New-IoTWMWriter.md)
+* [New-IoTWMWriter](../New-IoTWMWriter.md)
 
 
 # KEYWORDS

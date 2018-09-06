@@ -221,7 +221,7 @@ None
 
 # SEE ALSO
 
-* [New-IoTProvisioningXML](..\New-IoTProvisioningXML.md)
+* [New-IoTProvisioningXML](../New-IoTProvisioningXML.md)
 
 # KEYWORDS
 

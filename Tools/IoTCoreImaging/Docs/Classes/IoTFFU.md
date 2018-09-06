@@ -202,11 +202,11 @@ None
 
 # SEE ALSO
 
-* [Mount-IoTFFUImage](..\Mount-IoTFFUImage.md)
-* [Dismount-IoTFFUImage](..\Dismount-IoTFFUImage.md)
-* [Export-IoTFFUAsWims](..\Export-IoTFFUAsWims.md)
-* [New-IoTFFUCIPolicy](..\New-IoTFFUCIPolicy.md)
-* [Get-IoTFFUDrives](..\Get-IoTFFUDrives.md)
+* [Mount-IoTFFUImage](../Mount-IoTFFUImage.md)
+* [Dismount-IoTFFUImage](../Dismount-IoTFFUImage.md)
+* [Export-IoTFFUAsWims](../Export-IoTFFUAsWims.md)
+* [New-IoTFFUCIPolicy](../New-IoTFFUCIPolicy.md)
+* [Get-IoTFFUDrives](../Get-IoTFFUDrives.md)
 
 # KEYWORDS
 

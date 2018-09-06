@@ -219,7 +219,7 @@ None
 
 # SEE ALSO
 
-* [New-IoTFMXML](..\New-IoTFMXML.md)
+* [New-IoTFMXML](../New-IoTFMXML.md)
 
 # KEYWORDS
 

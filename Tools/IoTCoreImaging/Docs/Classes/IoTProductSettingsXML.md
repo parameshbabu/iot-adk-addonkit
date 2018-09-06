@@ -173,7 +173,7 @@ None
 
 # SEE ALSO
 
-* [New-IoTProductSettingsXML](..\New-IoTProductSettingsXML.md)
+* [New-IoTProductSettingsXML](../New-IoTProductSettingsXML.md)
 
 # KEYWORDS
 

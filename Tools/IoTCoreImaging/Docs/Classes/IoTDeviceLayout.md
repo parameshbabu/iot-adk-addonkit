@@ -110,7 +110,7 @@ None.
 
 
 # SEE ALSO
-The Factory method for this class is [New-IoTDeviceLayout](..\New-IoTDeviceLayout.md)
+The Factory method for this class is [New-IoTDeviceLayout](../New-IoTDeviceLayout.md)
 
 
 # KEYWORDS

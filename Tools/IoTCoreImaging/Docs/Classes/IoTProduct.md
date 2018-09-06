@@ -250,7 +250,7 @@ None
 
 # SEE ALSO
 
-* [New-IoTProduct](..\New-IoTProduct.md)
+* [New-IoTProduct](../New-IoTProduct.md)
 
 # KEYWORDS
 

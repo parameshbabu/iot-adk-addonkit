@@ -214,9 +214,9 @@ None
 
 # SEE ALSO
 The following commands use this class.
-- [Add-IoTAppxPackage](..\Add-IoTAppxPackage.md)
-- [Add-IoTDriverPackage](..\Add-IoTDriverPackage.md)
-- [Add-IoTCommonPackage](..\Add-IoTCommonPackage.md)
+- [Add-IoTAppxPackage](../Add-IoTAppxPackage.md)
+- [Add-IoTDriverPackage](../Add-IoTDriverPackage.md)
+- [Add-IoTCommonPackage](../Add-IoTCommonPackage.md)
 
 # KEYWORDS
 

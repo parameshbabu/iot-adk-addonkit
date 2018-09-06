@@ -231,7 +231,7 @@ None
 
 # SEE ALSO
 
-* [New-IoTOemInputXML](..\New-IoTOemInputXML.md)
+* [New-IoTOemInputXML](../New-IoTOemInputXML.md)
 
 # KEYWORDS
 

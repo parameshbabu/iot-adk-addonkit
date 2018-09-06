@@ -236,8 +236,8 @@ None
 
 # SEE ALSO
  See Workspace related methods
-- [New-IoTWorkspace](..\New-IoTWorkspace.md)
-- [Open-IoTWorkspace](..\Open-IoTWorkspace.md)
+- [New-IoTWorkspace](../New-IoTWorkspace.md)
+- [Open-IoTWorkspace](../Open-IoTWorkspace.md)
 
 # KEYWORDS
 
