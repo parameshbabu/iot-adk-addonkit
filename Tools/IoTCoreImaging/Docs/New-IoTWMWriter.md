@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-IoTWMWriter
 
 ## SYNOPSIS
-Factory method, returing the [IoTWMWriter](.\Classes\IoTWMWriter.md) class object used to write namespace.name.wm.xml file.
+Factory method, returing the [IoTWMWriter](Classes/IoTWMWriter.md) class object used to write namespace.name.wm.xml file.
 
 ## SYNTAX
 
@@ -17,7 +17,7 @@ New-IoTWMWriter [-FileDir] <String> [-Namespace] <String> [[-Name] <String>] [-F
 ```
 
 ## DESCRIPTION
-Factory method, returing the [IoTWMWriter](.\Classes\IoTWMWriter.md) class object.
+Factory method, returing the [IoTWMWriter](Classes/IoTWMWriter.md) class object.
 
 ## EXAMPLES
 

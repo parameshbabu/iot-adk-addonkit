@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-IoTDeviceLayout
 
 ## SYNOPSIS
-Factory method to create a new object of class [IoTDeviceLayout](.\Classes\IoTDeviceLayout.md).
+Factory method to create a new object of class [IoTDeviceLayout](Classes/IoTDeviceLayout.md).
 
 ## SYNTAX
 
@@ -17,7 +17,7 @@ New-IoTDeviceLayout [-FilePath] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This method creates a object of class [IoTDeviceLayout](.\Classes\IoTDeviceLayout.md).
+This method creates a object of class [IoTDeviceLayout](Classes/IoTDeviceLayout.md).
 
 ## EXAMPLES
 
@@ -53,6 +53,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
-See [IoTDeviceLayout](.\Classes\IoTDeviceLayout.md) for more details on the class.
+See [IoTDeviceLayout](Classes/IoTDeviceLayout.md) for more details on the class.
 
 ## RELATED LINKS

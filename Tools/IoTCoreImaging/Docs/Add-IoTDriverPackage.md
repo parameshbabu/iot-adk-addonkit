@@ -97,6 +97,6 @@ See New-IoTCabPackage to build a cab file.
 
 ## RELATED LINKS
 
-[Add-IoTCommonPackage](.\Add-IoTCommonPackage.md)
-[Add-IoTAppxPackage](.\Add-IoTAppxPackage.md)
-[New-IoTCabPackage](.\New-IoTCabPackage.md)
+[Add-IoTCommonPackage](Add-IoTCommonPackage.md)
+[Add-IoTAppxPackage](Add-IoTAppxPackage.md)
+[New-IoTCabPackage](New-IoTCabPackage.md)

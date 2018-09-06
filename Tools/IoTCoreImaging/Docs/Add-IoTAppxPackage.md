@@ -105,6 +105,6 @@ See New-IoTCabPackage to build a cab file.
 
 ## RELATED LINKS
 
-[Add-IoTDriverPackage](.\Add-IoTDriverPackage.md)
-[Add-IoTCommonPackage](.\Add-IoTCommonPackage.md)
-[New-IoTCabPackage](.\New-IoTCabPackage.md)
+[Add-IoTDriverPackage](Add-IoTDriverPackage.md)
+[Add-IoTCommonPackage](Add-IoTCommonPackage.md)
+[New-IoTCabPackage](New-IoTCabPackage.md)

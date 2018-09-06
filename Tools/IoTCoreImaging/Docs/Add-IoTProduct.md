@@ -163,4 +163,4 @@ See BuildFFU for creating FFU image for a given product.
 
 ## RELATED LINKS
 
-[New-IoTFFUImage](.\New-IoTFFUImage.md)
+[New-IoTFFUImage](New-IoTFFUImage.md)

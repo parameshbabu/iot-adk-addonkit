@@ -18,7 +18,7 @@ Constructor. Allows only one instance.
 
 # Properties
 ## DeviceLayout
-[IoTDeviceLayout](.\IoTDeviceLayout.md) object associated with the mounted FFU.
+[IoTDeviceLayout](IoTDeviceLayout.md) object associated with the mounted FFU.
 
 ```yaml
 Name: DeviceLayout

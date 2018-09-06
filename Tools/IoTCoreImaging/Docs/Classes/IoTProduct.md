@@ -78,7 +78,7 @@ Static: False
 ```
 
 ## OemXML
-[IoTOemInputXML](.\IoTOemInputXML.md) object corresponding to the config.
+[IoTOemInputXML](IoTOemInputXML.md) object corresponding to the config.
 
 ```yaml
 Name: OemXML
@@ -88,7 +88,7 @@ Static: False
 ```
 
 ## SettingsXML
-[IoTProductSettingsXML](.\IoTProductSettingsXML.md) object corresponding to this product.
+[IoTProductSettingsXML](IoTProductSettingsXML.md) object corresponding to this product.
 
 ```yaml
 Name: SettingsXML
@@ -144,7 +144,7 @@ Definition: Void ExportOCP()
 ```
 
 ## GetDeviceLayout()
-Returns the [IoTDeviceLayout](.\IoTDeviceLayout.md) object corresponding to this config.
+Returns the [IoTDeviceLayout](IoTDeviceLayout.md) object corresponding to this config.
 
 ```yaml
 Name: GetDeviceLayout

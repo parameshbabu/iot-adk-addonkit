@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-IoTProvisioningXML
 
 ## SYNOPSIS
-Factory method to create a new object of class [IoTProvisioningXML](.\Classes\IoTProvisioningXML.md)
+Factory method to create a new object of class [IoTProvisioningXML](Classes/IoTProvisioningXML.md)
 
 ## SYNTAX
 
@@ -17,7 +17,7 @@ New-IoTProvisioningXML [-InputXML] <String> [-Create] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Factory method to create a new object of class [IoTProvisioningXML](.\Classes\IoTProvisioningXML.md)
+Factory method to create a new object of class [IoTProvisioningXML](Classes/IoTProvisioningXML.md)
 
 ## EXAMPLES
 
@@ -67,6 +67,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
-See [IoTProvisioningXML](.\Classes\IoTProvisioningXML.md) for more details on the class.
+See [IoTProvisioningXML](Classes/IoTProvisioningXML.md) for more details on the class.
 
 ## RELATED LINKS

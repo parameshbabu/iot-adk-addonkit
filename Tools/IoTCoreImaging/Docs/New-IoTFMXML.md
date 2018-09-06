@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-IoTFMXML
 
 ## SYNOPSIS
-Factory method to create a new object of class [IoTFMXML](.\Classes\IoTFMXML.md).
+Factory method to create a new object of class [IoTFMXML](Classes/IoTFMXML.md).
 
 ## SYNTAX
 
@@ -17,7 +17,7 @@ New-IoTFMXML [-InputXML] <String> [-Create] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Factory method to create a new object of class [IoTFMXML](.\Classes\IoTFMXML.md).
+Factory method to create a new object of class [IoTFMXML](Classes/IoTFMXML.md).
 
 ## EXAMPLES
 
@@ -68,6 +68,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
-See [IoTFMXML](.\Classes\IoTFMXML.md) for more details on the class.
+See [IoTFMXML](Classes/IoTFMXML.md) for more details on the class.
 
 ## RELATED LINKS

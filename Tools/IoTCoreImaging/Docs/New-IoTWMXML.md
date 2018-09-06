@@ -67,6 +67,6 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## OUTPUTS
 
 ## NOTES
-See \[IoTWMXML\](.\Classes\IoTWMXML.md) for more details on the class.
+See \[IoTWMXML\](Classes/IoTWMXML.md) for more details on the class.
 
 ## RELATED LINKS

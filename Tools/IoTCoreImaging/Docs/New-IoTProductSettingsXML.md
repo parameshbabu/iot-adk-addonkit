@@ -164,6 +164,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
-See [IoTProductSettingsXML](.\Classes\IoTProductSettingsXML.md) for more details on the class.
+See [IoTProductSettingsXML](Classes/IoTProductSettingsXML.md) for more details on the class.
 
 ## RELATED LINKS

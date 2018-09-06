@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-IoTProduct
 
 ## SYNOPSIS
-Factory method to create a new object of class [IoTProduct](.\Classes\IoTProduct.md)
+Factory method to create a new object of class [IoTProduct](Classes/IoTProduct.md)
 
 ## SYNTAX
 
@@ -17,7 +17,7 @@ New-IoTProduct [-Product] <String> [-Config] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Factory method to create a new object of class [IoTProduct](.\Classes\IoTProduct.md)
+Factory method to create a new object of class [IoTProduct](Classes/IoTProduct.md)
 
 ## EXAMPLES
 
@@ -69,6 +69,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
-See [IoTProduct](.\Classes\IoTProduct.md) for more details on the class.
+See [IoTProduct](Classes/IoTProduct.md) for more details on the class.
 
 ## RELATED LINKS

@@ -55,5 +55,5 @@ See Add-IoTProduct for creating new product directory.
 
 ## RELATED LINKS
 
-[Add-IoTProduct](.\Add-IoTProduct.md)
-[New-IoTCabPackage](.\New-IoTCabPackage.md)
+[Add-IoTProduct](Add-IoTProduct.md)
+[New-IoTCabPackage](New-IoTCabPackage.md)
