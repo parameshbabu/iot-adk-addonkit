@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FeatureManifest 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  xmlns="http://schemas.microsoft.com/embedded/2004/10/ImageUpdate">
+  <BasePackages>
+    <!-- System Information package for providing system details , required for DM enrollment etc -->
+    <PackageFile Path="%PKGBLD_DIR%" Name="%OEM_NAME%.Device.SystemInformation.cab"/>
+    <!-- UEFI for the silicon packaged in Bootfirmware : None -->
+    <!-- Drivers required for boot/reading partitions for UpdateOS: Not required -->
+    <!-- GPT BCD Settings : Include IOT_EFIESP_BCD in OEMInput xml file-->
+    <!-- Device Info/ Device Targeting Info : Include IOT_GENERIC_POP in OEMInput xml-->
+    <!-- Mandatory device drivers : None -->
+    <!-- Device specific customisations if any : -->
+    <PackageFile Path="%PKGBLD_DIR%" Name="%OEM_NAME%.MBMx64.Customization.cab" />
+  </BasePackages>
+  <OEMDevicePlatformPackages>
+    <!-- GPT 4GB layout  -->
+    <PackageFile Device="CustomMBMx64" Path="%PKGBLD_DIR%" Name="%OEM_NAME%.DeviceLayout.GPT4GB.cab"/>
+    <!-- GPT 8GB layout - select this by specifying the SOC field in the OEMInput xml file -->
+    <PackageFile Device="CustomMBMx64-R" Path="%PKGBLD_DIR%" Name="%OEM_NAME%.DeviceLayout.GPT8GB-R.cab"/>
+  </OEMDevicePlatformPackages>
+  <DeviceLayoutPackages>
+    <!-- GPT 4GB layout  -->
+    <PackageFile SOC="CustomMBMx64" Path="%PKGBLD_DIR%" Name="%OEM_NAME%.DeviceLayout.GPT4GB.cab"/>
+    <!-- GPT 8GB layout - select this by specifying the SOC field in the OEMInput xml file -->
+    <PackageFile SOC="CustomMBMx64-R" Path="%PKGBLD_DIR%" Name="%OEM_NAME%.DeviceLayout.GPT8GB-R.cab"/>
+  </DeviceLayoutPackages>
+  <Features>
+    <Microsoft />
+    <MSFeatureGroups />
+    <OEM>
+      <!-- Optional Device Drivers -->
+      <PackageFile Path="%BSPPKG_DIR%" Name="Intel.MBMx64.GPIO.cab">
+        <FeatureIDs>
+          <FeatureID>MBM_X64_GPIO_DRIVER</FeatureID>
+        </FeatureIDs>
+      </PackageFile>
+      <PackageFile Path="%PKGBLD_DIR%" Name="%OEM_NAME%.CustomMBMx64.GPIO.cab">
+        <FeatureIDs>
+          <FeatureID>CustomMBMx64_GPIO_DRIVER</FeatureID>
+          <FeatureID>CustomMBMx64_DRIVERS</FeatureID>
+        </FeatureIDs>
+      </PackageFile>
+      <PackageFile Path="%BSPPKG_DIR%" Name="Intel.MBMx64.UART.cab">
+        <FeatureIDs>
+          <FeatureID>MBMx64_DRIVERS</FeatureID>
+        </FeatureIDs>
+      </PackageFile>
+      <PackageFile Path="%BSPPKG_DIR%" Name="Intel.MBMx64.I2C.cab">
+        <FeatureIDs>
+          <FeatureID>MBMx64_DRIVERS</FeatureID>
+        </FeatureIDs>
+      </PackageFile>
+      <PackageFile Path="%BSPPKG_DIR%" Name="Intel.MBMx64.SPI.cab">
+        <FeatureIDs>
+          <FeatureID>MBMx64_DRIVERS</FeatureID>
+        </FeatureIDs>
+      </PackageFile>
+      <PackageFile Path="%BSPPKG_DIR%" Name="Intel.MBMx64.GRFX.cab">
+        <FeatureIDs>
+          <FeatureID>MBMx64_DRIVERS</FeatureID>
+        </FeatureIDs>
+      </PackageFile>
+    </OEM>
+    <OEMFeatureGroups />
+  </Features>
+</FeatureManifest>
