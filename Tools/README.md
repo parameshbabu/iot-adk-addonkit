@@ -279,73 +279,73 @@ The supported functionality are listed below in logical groups.
 | Function Name | Alias      |  CmdTools  | Remarks |
 | :------------ |:-----------|:----------------|:--------|
 | **Workspace Functions** | - | - | - |
-|[New-IoTWorkspace](.\IoTCoreImaging\Docs\New-IoTWorkspace.md) | new-ws | new-ws.cmd | New functionality added|
-|[Open-IoTWorkspace](.\IoTCoreImaging\Docs\Open-IoTWorkspace.md) | open-ws | open-ws.cmd | New functionality added|
-|[Redo-IoTWorkspace](.\IoTCoreImaging\Docs\Redo-IoTWorkspace.md) | migrate | migrate.cmd | New functionality added|
-|[Import-IoTOEMPackage](.\IoTCoreImaging\Docs\Import-IoTOEMPackage.md) | importpkg | importpkg.cmd | New functionality added|
-|[Import-IoTProduct](.\IoTCoreImaging\Docs\Import-IoTProduct.md) | importproduct | importproduct.cmd | New functionality added|
-|[Import-IoTBSP](.\IoTCoreImaging\Docs\Import-IoTBSP.md) | importbsp | importbsp.cmd | New functionality added|
-|[Import-IoTCertificate](.\IoTCoreImaging\Docs\Import-IoTCertificate.md) | - | - | Imports the certificate for security functions|
-|[Copy-IoTOEMPackage](.\IoTCoreImaging\Docs\Copy-IoTOEMPackage.md) | copypkg | TBD | New functionality added|
-|[Copy-IoTProduct](.\IoTCoreImaging\Docs\Copy-IoTProduct.md) | copyproduct | TBD | New functionality added|
-|[Copy-IoTBSP](.\IoTCoreImaging\Docs\Copy-IoTBSP.md) | copybsp | copybsp.cmd | New functionality added|
-|[Add-IoTAppxPackage](.\IoTCoreImaging\Docs\Add-IoTAppxPackage.md) | newappxpkg | newappxpkg.cmd | Adds the feature id to the FM file automatically |
-|[Add-IoTDriverPackage](.\IoTCoreImaging\Docs\Add-IoTDriverPackage.md) | newdrvpkg | newdrvpkg.cmd | Adds the feature id to the FM file automatically |
-|[Add-IoTCommonPackage](.\IoTCoreImaging\Docs\Add-IoTCommonPackage.md) | newcommonpkg | newcommonpkg.cmd | Adds the feature id to the FM file automatically |
-|[Add-IoTFilePackage](.\IoTCoreImaging\Docs\Add-IoTFilePackage.md) | - | - | Adds a file package and adds the feature id to the FM file automatically |
-|[Add-IoTRegistryPackage](.\IoTCoreImaging\Docs\Add-IoTRegistryPackage.md) | - | - | Adds a registry package and adds the feature id to the FM file automatically |
-|[Add-IoTProvisioningPackage](.\IoTCoreImaging\Docs\Add-IoTProvisioningPackage.md) | newprovpkg | newprovpkg.cmd | New functionality added |
-|[Add-IoTBSP](.\IoTCoreImaging\Docs\Add-IoTBSP.md) | newbsp | newbsp.cmd | Adds new bsp based on a template |
-|[Add-IoTProduct](.\IoTCoreImaging\Docs\Add-IoTProduct.md) | newproduct | newproduct.cmd | Adds new product  |
-|[Add-IoTSecurityPackages](.\IoTCoreImaging\Docs\Add-IoTSecurityPackages.md) | -  | - | Adds security packages for the product  |
-|[Get-IoTWorkspaceProducts](.\IoTCoreImaging\Docs\Get-IoTWorkspaceProducts.md) | gwsproducts | gwsproducts.cmd | Gets the list of product names in the workspace |
-|[Get-IoTWorkspaceBSPs](.\IoTCoreImaging\Docs\Get-IoTWorkspaceBSPs.md) | gwsbsps | gwsbsps.cmd | Gets the list of BSP names in the workspace |
+|[New-IoTWorkspace](IoTCoreImaging/Docs/New-IoTWorkspace.md) | new-ws | new-ws.cmd | New functionality added|
+|[Open-IoTWorkspace](IoTCoreImaging/Docs/Open-IoTWorkspace.md) | open-ws | open-ws.cmd | New functionality added|
+|[Redo-IoTWorkspace](IoTCoreImaging/Docs/Redo-IoTWorkspace.md) | migrate | migrate.cmd | New functionality added|
+|[Import-IoTOEMPackage](IoTCoreImaging/Docs/Import-IoTOEMPackage.md) | importpkg | importpkg.cmd | New functionality added|
+|[Import-IoTProduct](IoTCoreImaging/Docs/Import-IoTProduct.md) | importproduct | importproduct.cmd | New functionality added|
+|[Import-IoTBSP](IoTCoreImaging/Docs/Import-IoTBSP.md) | importbsp | importbsp.cmd | New functionality added|
+|[Import-IoTCertificate](IoTCoreImaging/Docs/Import-IoTCertificate.md) | - | - | Imports the certificate for security functions|
+|[Copy-IoTOEMPackage](IoTCoreImaging/Docs/Copy-IoTOEMPackage.md) | copypkg | TBD | New functionality added|
+|[Copy-IoTProduct](IoTCoreImaging/Docs/Copy-IoTProduct.md) | copyproduct | TBD | New functionality added|
+|[Copy-IoTBSP](IoTCoreImaging/Docs/Copy-IoTBSP.md) | copybsp | copybsp.cmd | New functionality added|
+|[Add-IoTAppxPackage](IoTCoreImaging/Docs/Add-IoTAppxPackage.md) | newappxpkg | newappxpkg.cmd | Adds the feature id to the FM file automatically |
+|[Add-IoTDriverPackage](IoTCoreImaging/Docs/Add-IoTDriverPackage.md) | newdrvpkg | newdrvpkg.cmd | Adds the feature id to the FM file automatically |
+|[Add-IoTCommonPackage](IoTCoreImaging/Docs/Add-IoTCommonPackage.md) | newcommonpkg | newcommonpkg.cmd | Adds the feature id to the FM file automatically |
+|[Add-IoTFilePackage](IoTCoreImaging/Docs/Add-IoTFilePackage.md) | - | - | Adds a file package and adds the feature id to the FM file automatically |
+|[Add-IoTRegistryPackage](IoTCoreImaging/Docs/Add-IoTRegistryPackage.md) | - | - | Adds a registry package and adds the feature id to the FM file automatically |
+|[Add-IoTProvisioningPackage](IoTCoreImaging/Docs/Add-IoTProvisioningPackage.md) | newprovpkg | newprovpkg.cmd | New functionality added |
+|[Add-IoTBSP](IoTCoreImaging/Docs/Add-IoTBSP.md) | newbsp | newbsp.cmd | Adds new bsp based on a template |
+|[Add-IoTProduct](IoTCoreImaging/Docs/Add-IoTProduct.md) | newproduct | newproduct.cmd | Adds new product  |
+|[Add-IoTSecurityPackages](IoTCoreImaging/Docs/Add-IoTSecurityPackages.md) | -  | - | Adds security packages for the product  |
+|[Get-IoTWorkspaceProducts](IoTCoreImaging/Docs/Get-IoTWorkspaceProducts.md) | gwsproducts | gwsproducts.cmd | Gets the list of product names in the workspace |
+|[Get-IoTWorkspaceBSPs](IoTCoreImaging/Docs/Get-IoTWorkspaceBSPs.md) | gwsbsps | gwsbsps.cmd | Gets the list of BSP names in the workspace |
 | **Build Functions** | - | - | - |
-|[Set-IoTCabVersion](.\IoTCoreImaging\Docs\Set-IoTCabVersion.md) | setversion | setversion.cmd | Stores the version in the IoTWorkspace.xml |
-|[New-IoTCabPackage](.\IoTCoreImaging\Docs\New-IoTCabPackage.md) | buildpkg | buildpkg.cmd | Creates `.cab` files  |
-|[New-IoTProvisioningPackage](.\IoTCoreImaging\Docs\New-IoTProvisioningPackage.md)| buildppkg | buildppkg.cmd | Creates `.ppkg` files |
-|[New-IoTFIPPackage](.\IoTCoreImaging\Docs\New-IoTFIPPackage.md)| buildfm | buildfm.cmd | Creates FIP packages and merged FM files |
-|[New-IoTFFUImage](.\IoTCoreImaging\Docs\New-IoTFFUImage.md)| buildimage | buildimage.cmd | Creates regular FFU |
-|[New-IoTRecoveryImage](.\IoTCoreImaging\Docs\New-IoTRecoveryImage.md)| buildrecovery | buildrecovery.cmd | Creates recovery FFU |
-|[New-IoTWindowsImage](.\IoTCoreImaging\Docs\New-IoTWindowsImage.md)| createwinpe | createwinpe.cmd | Creates custom winpe with bsp drivers / recovery scripts |
-|[Test-IoTRecoveryImage](.\IoTCoreImaging\Docs\Test-IoTRecoveryImage.md)| verifyrecovery | verifyrecovery.cmd | Verifies if the wim files in the recovery ffu are proper |
+|[Set-IoTCabVersion](IoTCoreImaging/Docs/Set-IoTCabVersion.md) | setversion | setversion.cmd | Stores the version in the IoTWorkspace.xml |
+|[New-IoTCabPackage](IoTCoreImaging/Docs/New-IoTCabPackage.md) | buildpkg | buildpkg.cmd | Creates `.cab` files  |
+|[New-IoTProvisioningPackage](IoTCoreImaging/Docs/New-IoTProvisioningPackage.md)| buildppkg | buildppkg.cmd | Creates `.ppkg` files |
+|[New-IoTFIPPackage](IoTCoreImaging/Docs/New-IoTFIPPackage.md)| buildfm | buildfm.cmd | Creates FIP packages and merged FM files |
+|[New-IoTFFUImage](IoTCoreImaging/Docs/New-IoTFFUImage.md)| buildimage | buildimage.cmd | Creates regular FFU |
+|[New-IoTRecoveryImage](IoTCoreImaging/Docs/New-IoTRecoveryImage.md)| buildrecovery | buildrecovery.cmd | Creates recovery FFU |
+|[New-IoTWindowsImage](IoTCoreImaging/Docs/New-IoTWindowsImage.md)| createwinpe | createwinpe.cmd | Creates custom winpe with bsp drivers / recovery scripts |
+|[Test-IoTRecoveryImage](IoTCoreImaging/Docs/Test-IoTRecoveryImage.md)| verifyrecovery | verifyrecovery.cmd | Verifies if the wim files in the recovery ffu are proper |
 | **Env Functions** | - | - | - |
-|[Set-IoTEnvironment](.\IoTCoreImaging\Docs\Set-IoTEnvironment.md) | setenv | setenv.cmd | Sets environment settings based on the config values in IoTWorkspace.xml  |
-|[Convert-IoTPkg2Wm](.\IoTCoreImaging\Docs\Convert-IoTPkg2Wm.md) | convertpkg | convertpkg.cmd | Converts pkg.xml files to wm.xml files  |
-|[Get-IoTProductFeatureIDs](.\IoTCoreImaging\Docs\Get-IoTProductFeatureIDs.md)| gpfids | gpfids.cmd | Gets features IDs supported in the IoTCore OS |
-|[Get-IoTProductPackagesForFeature](.\IoTCoreImaging\Docs\Get-IoTProductPackagesForFeature.md)| gpfidpkgs | gpfidpkgs.cmd | Gets OS packages corresponding to features ID |
+|[Set-IoTEnvironment](IoTCoreImaging/Docs/Set-IoTEnvironment.md) | setenv | setenv.cmd | Sets environment settings based on the config values in IoTWorkspace.xml  |
+|[Convert-IoTPkg2Wm](IoTCoreImaging/Docs/Convert-IoTPkg2Wm.md) | convertpkg | convertpkg.cmd | Converts pkg.xml files to wm.xml files  |
+|[Get-IoTProductFeatureIDs](IoTCoreImaging/Docs/Get-IoTProductFeatureIDs.md)| gpfids | gpfids.cmd | Gets features IDs supported in the IoTCore OS |
+|[Get-IoTProductPackagesForFeature](IoTCoreImaging/Docs/Get-IoTProductPackagesForFeature.md)| gpfidpkgs | gpfidpkgs.cmd | Gets OS packages corresponding to features ID |
 | **DUC Functions** | - | - | - |
-|[Export-IoTDeviceModel](.\IoTCoreImaging\Docs\Export-IoTDeviceModel.md) | exportidm | exportidm.cmd | Exports the IoT Device Model for DUC registration |
-|[Import-IoTDUCConfig](.\IoTCoreImaging\Docs\Import-IoTDUCConfig.md) | importcfg | importcfg.cmd | Imports the CUSConfig.zip into the product directory |
-|[Export-IoTDUCCab](.\IoTCoreImaging\Docs\Export-IoTDUCCab.md) | exportpkgs | exportpkgs.cmd | Exports the update cab for DUC upload |
+|[Export-IoTDeviceModel](IoTCoreImaging/Docs/Export-IoTDeviceModel.md) | exportidm | exportidm.cmd | Exports the IoT Device Model for DUC registration |
+|[Import-IoTDUCConfig](IoTCoreImaging/Docs/Import-IoTDUCConfig.md) | importcfg | importcfg.cmd | Imports the CUSConfig.zip into the product directory |
+|[Export-IoTDUCCab](IoTCoreImaging/Docs/Export-IoTDUCCab.md) | exportpkgs | exportpkgs.cmd | Exports the update cab for DUC upload |
 | **FFU Functions** | - | - | - |
-|[Mount-IoTFFUImage](.\IoTCoreImaging\Docs\Mount-IoTFFUImage.md) | ffum | - | Mounts the FFU image |
-|[Dismount-IoTFFUImage](.\IoTCoreImaging\Docs\Dismount-IoTFFUImage.md) | ffud | - | Dismounts the FFU image  |
-|[Export-IoTFFUAsWims](.\IoTCoreImaging\Docs\Export-IoTFFUAsWims.md) | ffue | - | Exports the EFIESP/MainOS/Data partitions as Wims  |
-|[New-IoTFFUCIPolicy](.\IoTCoreImaging\Docs\New-IoTFFUCIPolicy.md) | ffus | - | Scans the MainOS partition and generates CI policy (`initialpolicy.xml`) |
-|[Get-IoTFFUDrives](.\IoTCoreImaging\Docs\Get-IoTFFUDrives.md) | ffugd | - | Returns a hashtable of the drive letters for the mounted partitions |
+|[Mount-IoTFFUImage](IoTCoreImaging/Docs/Mount-IoTFFUImage.md) | ffum | - | Mounts the FFU image |
+|[Dismount-IoTFFUImage](IoTCoreImaging/Docs/Dismount-IoTFFUImage.md) | ffud | - | Dismounts the FFU image  |
+|[Export-IoTFFUAsWims](IoTCoreImaging/Docs/Export-IoTFFUAsWims.md) | ffue | - | Exports the EFIESP/MainOS/Data partitions as Wims  |
+|[New-IoTFFUCIPolicy](IoTCoreImaging/Docs/New-IoTFFUCIPolicy.md) | ffus | - | Scans the MainOS partition and generates CI policy (`initialpolicy.xml`) |
+|[Get-IoTFFUDrives](IoTCoreImaging/Docs/Get-IoTFFUDrives.md) | ffugd | - | Returns a hashtable of the drive letters for the mounted partitions |
 | **Signing/Test Functions** | - | - | - |
-|[Set-IoTSignature](.\IoTCoreImaging\Docs\Set-IoTSignature.md) | setsignature | setsignature.cmd | Sets the Certificate info used for signing |
-|[Test-IoTSignature](.\IoTCoreImaging\Docs\Test-IoTSignature.md) | TBD | - | Tests if the file is signed for the given config  |
-|[Test-IoTCabSignature](.\IoTCoreImaging\Docs\Test-IoTCabSignature.md) | TBD | - | Tests if the Cab package and its contents are signed for the given config  |
-|[Test-IoTPackages](.\IoTCoreImaging\Docs\Test-IoTPackages.md) | TBD | - | Tests all packages and its contents are signed, for the given product / config  |
-|[Test-IoTFeatures](.\IoTCoreImaging\Docs\Test-IoTFeatures.md) | TBD | - | Tests if all feature ids are defined, for the given product / config  |
-|[Add-IoTSignature](.\IoTCoreImaging\Docs\Add-IoTSignature.md) | signbinaries | signbinaries.cmd | Signs files with the cert set via Set-IoTSignature  |
-|[Redo-IoTCabSignature](.\IoTCoreImaging\Docs\Redo-IoTCabSignature.md) | re-signcabs | re-signcabs.cmd | Resigns cab and its contents using Add-IoTSignature  |
+|[Set-IoTSignature](IoTCoreImaging/Docs/Set-IoTSignature.md) | setsignature | setsignature.cmd | Sets the Certificate info used for signing |
+|[Test-IoTSignature](IoTCoreImaging/Docs/Test-IoTSignature.md) | TBD | - | Tests if the file is signed for the given config  |
+|[Test-IoTCabSignature](IoTCoreImaging/Docs/Test-IoTCabSignature.md) | TBD | - | Tests if the Cab package and its contents are signed for the given config  |
+|[Test-IoTPackages](IoTCoreImaging/Docs/Test-IoTPackages.md) | TBD | - | Tests all packages and its contents are signed, for the given product / config  |
+|[Test-IoTFeatures](IoTCoreImaging/Docs/Test-IoTFeatures.md) | TBD | - | Tests if all feature ids are defined, for the given product / config  |
+|[Add-IoTSignature](IoTCoreImaging/Docs/Add-IoTSignature.md) | signbinaries | signbinaries.cmd | Signs files with the cert set via Set-IoTSignature  |
+|[Redo-IoTCabSignature](IoTCoreImaging/Docs/Redo-IoTCabSignature.md) | re-signcabs | re-signcabs.cmd | Resigns cab and its contents using Add-IoTSignature  |
 
 ### Class Documentation
 
 | Class Name |  Factory Method | Remarks |
 | :------------ |:--------|:--------|
-|[IoTDeviceLayout](.\IoTCoreImaging\Docs\Classes\IoTDeviceLayout.md) |[New-IoTDeviceLayout](.\IoTCoreImaging\Docs\New-IoTDeviceLayout.md) | Class for managing Device Layout xml   |
-|[IoTFMXML](.\IoTCoreImaging\Docs\Classes\IoTFMXML.md) |[New-IoTFMXML](.\IoTCoreImaging\Docs\New-IoTFMXML.md)| Class for managing Feature Manifest xml  |
-|[IoTProvisioningXML](.\IoTCoreImaging\Docs\Classes\IoTProvisioningXML.md)|[New-IoTProvisioningXML](.\IoTCoreImaging\Docs\New-IoTProvisioningXML.md) | Class for managing Provisioning XML (Customisations.xml)  |
-|[IoTWorkspaceXML](.\IoTCoreImaging\Docs\Classes\IoTWorkspaceXML.md)| [New-IoTWorkspaceXML](.\IoTCoreImaging\Docs\New-IoTWorkspaceXML.md) | Class for managing Workspace xml  |
-|[IoTOemInputXML](.\IoTCoreImaging\Docs\Classes\IoTOemInputXML.md)|[New-IoTOemInputXML](.\IoTCoreImaging\Docs\New-IoTOemInputXML.md)| Class for managing OEMInput.xml  |
-|[IoTProductSettingsXML](.\IoTCoreImaging\Docs\Classes\IoTProductSettingsXML.md) |[New-IoTProductSettingsXML](.\IoTCoreImaging\Docs\New-IoTProductSettingsXML.md)| Class for managing IoT Product settings xml |
-|[IoTWMXML](.\IoTCoreImaging\Docs\Classes\IoTWMXML.md)|[New-IoTWMXML](.\IoTCoreImaging\Docs\New-IoTWMXML.md) | Class for managing windows manifest xml  |
-|[IoTWMWriter](.\IoTCoreImaging\Docs\Classes\IoTWMWriter.md)|[New-IoTWMWriter](.\IoTCoreImaging\Docs\New-IoTWMWriter.md) | Class for writing windows manifest xml  |
-|[IoTProduct](.\IoTCoreImaging\Docs\Classes\IoTProduct.md) |[New-IoTProduct](.\IoTCoreImaging\Docs\New-IoTProduct.md)| Class for managing IoT Product configuration  |
+|[IoTDeviceLayout](IoTCoreImaging/Docs/Classes/IoTDeviceLayout.md) |[New-IoTDeviceLayout](IoTCoreImaging/Docs/New-IoTDeviceLayout.md) | Class for managing Device Layout xml   |
+|[IoTFMXML](IoTCoreImaging/Docs/Classes/IoTFMXML.md) |[New-IoTFMXML](IoTCoreImaging/Docs/New-IoTFMXML.md)| Class for managing Feature Manifest xml  |
+|[IoTProvisioningXML](IoTCoreImaging/Docs/Classes/IoTProvisioningXML.md)|[New-IoTProvisioningXML](IoTCoreImaging/Docs/New-IoTProvisioningXML.md) | Class for managing Provisioning XML (Customisations.xml)  |
+|[IoTWorkspaceXML](IoTCoreImaging/Docs/Classes/IoTWorkspaceXML.md)| [New-IoTWorkspaceXML](IoTCoreImaging/Docs/New-IoTWorkspaceXML.md) | Class for managing Workspace xml  |
+|[IoTOemInputXML](IoTCoreImaging/Docs/Classes/IoTOemInputXML.md)|[New-IoTOemInputXML](IoTCoreImaging/Docs/New-IoTOemInputXML.md)| Class for managing OEMInput.xml  |
+|[IoTProductSettingsXML](IoTCoreImaging/Docs/Classes/IoTProductSettingsXML.md) |[New-IoTProductSettingsXML](IoTCoreImaging/Docs/New-IoTProductSettingsXML.md)| Class for managing IoT Product settings xml |
+|[IoTWMXML](IoTCoreImaging/Docs/Classes/IoTWMXML.md)|[New-IoTWMXML](IoTCoreImaging/Docs/New-IoTWMXML.md) | Class for managing windows manifest xml  |
+|[IoTWMWriter](IoTCoreImaging/Docs/Classes/IoTWMWriter.md)|[New-IoTWMWriter](IoTCoreImaging/Docs/New-IoTWMWriter.md) | Class for writing windows manifest xml  |
+|[IoTProduct](IoTCoreImaging/Docs/Classes/IoTProduct.md) |[New-IoTProduct](IoTCoreImaging/Docs/New-IoTProduct.md)| Class for managing IoT Product configuration  |
 
 ## Certificates
 See [Windows Secure Boot Key Creation and Management Guidance](https://docs.microsoft.com/windows-hardware/manufacture/desktop/windows-secure-boot-key-creation-and-management-guidance)
