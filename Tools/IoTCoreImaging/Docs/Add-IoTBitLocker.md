@@ -8,7 +8,7 @@ schema: 2.0.0
 # Add-IoTBitLocker
 
 ## SYNOPSIS
-Generates the Bitlocker contents based on the workspace specifications.
+Generates the Bitlocker package (Security.BitLocker) contents based on the workspace specifications.
 
 ## SYNTAX
 
@@ -17,28 +17,24 @@ Add-IoTBitLocker
 ```
 
 ## DESCRIPTION
-Generates the Bitlocker contents based on the workspace specifications.
+Generates the Bitlocker package (Security.BitLocker) contents based on the workspace specifications.
+You will need to import the required certificates into the workspace before using this command.
+For Bitlocker, DataRecoveryAgent certificate is mandatory.
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> Add-IoTBitLocker
+### EXAMPLE 1
 ```
-
-Generates the Bitlocker contents based on the workspace specifications.
+Add-IoTBitLocker
+```
 
 ## PARAMETERS
 
 ## INPUTS
 
-### None
-
-
 ## OUTPUTS
 
-### None
-
 ## NOTES
+See Import-IoTCertificate before using this function.
 
 ## RELATED LINKS

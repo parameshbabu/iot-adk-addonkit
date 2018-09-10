@@ -181,8 +181,7 @@ function Add-IoTSignature {
         [ValidateNotNullOrEmpty()]
         [String]$Path,
         [Parameter(Position = 1, Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
-        [String[]]$Type
+        [String[]]$Type = $null
     )
     $types = @('*.exe', '*.sys', '*.dll', '*.cat')
     if (Test-Path $Path -PathType Container) {

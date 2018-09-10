@@ -12,6 +12,19 @@ importpkg *
 importbsp RPi2
 importproduct RPiRecovery
 
+# Import required certificates
+Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-PK.cer PlatformKey
+Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-UEFISB.cer KeyExchangeKey
+# DataRecoveryAgent mandatory for Bitlocker
+Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-DRA.cer DataRecoveryAgent
+# Update mandatory for Device Guard
+Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-PAUTH.cer Update
+Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-UMCI.cer User
+Add-IoTSecurityPackages -Test
+# generate the retail versions (excluding Test certs)
+Add-IoTSecureBoot
+Add-IoTDeviceGuard
+
 $product = "RPiRecovery"
 $config = "Test"
 

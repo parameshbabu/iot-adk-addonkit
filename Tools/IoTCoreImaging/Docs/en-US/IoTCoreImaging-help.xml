@@ -151,11 +151,11 @@
       <command:verb>Add</command:verb>
       <command:noun>IoTBitLocker</command:noun>
       <maml:description>
-        <maml:para>Generates the Bitlocker contents based on the workspace specifications.</maml:para>
+        <maml:para>Generates the Bitlocker package (Security.BitLocker) contents based on the workspace specifications.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Generates the Bitlocker contents based on the workspace specifications.</maml:para>
+      <maml:para>Generates the Bitlocker package (Security.BitLocker) contents based on the workspace specifications. You will need to import the required certificates into the workspace before using this command. For Bitlocker, DataRecoveryAgent certificate is mandatory.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -163,37 +163,19 @@
       </command:syntaxItem>
     </command:syntax>
     <command:parameters />
-    <command:inputTypes>
-      <command:inputType>
-        <dev:type>
-          <maml:name>None</maml:name>
-        </dev:type>
-        <maml:description>
-          <maml:para></maml:para>
-        </maml:description>
-      </command:inputType>
-    </command:inputTypes>
-    <command:returnValues>
-      <command:returnValue>
-        <dev:type>
-          <maml:name>None</maml:name>
-        </dev:type>
-        <maml:description>
-          <maml:para></maml:para>
-        </maml:description>
-      </command:returnValue>
-    </command:returnValues>
+    <command:inputTypes />
+    <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>See Import-IoTCertificate before using this function.</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Add-IoTBitLocker</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Add-IoTBitLocker</dev:code>
         <dev:remarks>
-          <maml:para>Generates the Bitlocker contents based on the workspace specifications.</maml:para>
+          <maml:para></maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -349,74 +331,55 @@
       <command:verb>Add</command:verb>
       <command:noun>IoTDeviceGuard</command:noun>
       <maml:description>
-        <maml:para>Generates the device guard package contents based on the workspace specifications.</maml:para>
+        <maml:para>Generates the device guard package (Security.DeviceGuard) contents based on the workspace specifications.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Generates the device guard package contents based on the workspace specifications. If Test is specified, then it includes test certificates from the specification.</maml:para>
+      <maml:para>Generates the device guard package (Security.DeviceGuard) contents based on the workspace specifications. If Test is specified, then it includes test certificates from the specification and generates Security.DeviceGuardTest package. You will need to import the required certificates into the workspace before using this command. For Device Guard, Update certificate is mandatory.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
         <maml:name>Add-IoTDeviceGuard</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Test</maml:name>
           <maml:Description>
-            <maml:para>Boolean to specify whether to include test certificates.</maml:para>
+            <maml:para>Switch parameter, to include test certificates in the device guard package.</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
-            <maml:name>Boolean</maml:name>
+            <maml:name>SwitchParameter</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Test</maml:name>
         <maml:Description>
-          <maml:para>Boolean to specify whether to include test certificates.</maml:para>
+          <maml:para>Switch parameter, to include test certificates in the device guard package.</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
-          <maml:name>Boolean</maml:name>
+          <maml:name>SwitchParameter</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
     </command:parameters>
-    <command:inputTypes>
-      <command:inputType>
-        <dev:type>
-          <maml:name>None</maml:name>
-        </dev:type>
-        <maml:description>
-          <maml:para></maml:para>
-        </maml:description>
-      </command:inputType>
-    </command:inputTypes>
-    <command:returnValues>
-      <command:returnValue>
-        <dev:type>
-          <maml:name>None</maml:name>
-        </dev:type>
-        <maml:description>
-          <maml:para></maml:para>
-        </maml:description>
-      </command:returnValue>
-    </command:returnValues>
+    <command:inputTypes />
+    <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>For validating the device guard policy, you can as well scan the built ffu using New-IoTFFUCIPolicy and compare the policy files. See Import-IoTCertificate before using this function.</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Add-IoTDeviceGuard</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Add-IoTDeviceGuard -Test</dev:code>
         <dev:remarks>
-          <maml:para>Generates the device guard package contents based on the workspace specifications.</maml:para>
+          <maml:para></maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -707,15 +670,15 @@
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Generates a new product directory under Source-arch\Products\ based on the OEMInputSamples specified in the BSP directory Source-arch\BSP\&lt;BSPName&gt;\OEMInputSamples. This will also prompt to gather the SMBIOS values for the device.</maml:para>
+      <maml:para>Generates a new product directory under Source-arch\Products\ based on the OEMInputSamples specified in the BSP directory Source-arch\BSP\&lt;BSPName&gt;\OEMInputSamples</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
         <maml:name>Add-IoTProduct</maml:name>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>ProductName</maml:name>
           <maml:Description>
-            <maml:para>{{Fill ProductName Description}}</maml:para>
+            <maml:para>Mandatory parameter, specify the product name.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -724,7 +687,7 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>BSPName</maml:name>
           <maml:Description>
             <maml:para>Mandatory paramter, specify the BSP used in the product.</maml:para>
@@ -736,22 +699,10 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>OemName</maml:name>
           <maml:Description>
-            <maml:para>{{Fill OemName Description}}</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
-          <maml:name>FamilyName</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill FamilyName Description}}</maml:para>
+            <maml:para>Mandatory parameter, specify the OEM name for the SMBIOS.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -761,9 +712,9 @@
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
-          <maml:name>SkuNumber</maml:name>
+          <maml:name>FamilyName</maml:name>
           <maml:Description>
-            <maml:para>{{Fill SkuNumber Description}}</maml:para>
+            <maml:para>Mandatory parameter, specify the Family name for the SMBIOS.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -773,9 +724,9 @@
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
-          <maml:name>BaseboardManufacturer</maml:name>
+          <maml:name>SkuNumber</maml:name>
           <maml:Description>
-            <maml:para>{{Fill BaseboardManufacturer Description}}</maml:para>
+            <maml:para>Mandatory parameter, specify the SkuNumber for the SMBIOS.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -785,9 +736,9 @@
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
-          <maml:name>BaseboardProduct</maml:name>
+          <maml:name>BaseboardManufacturer</maml:name>
           <maml:Description>
-            <maml:para>{{Fill BaseboardProduct Description}}</maml:para>
+            <maml:para>Mandatory parameter, specify the BaseboardManufacturer for the SMBIOS.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -797,9 +748,21 @@
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+          <maml:name>BaseboardProduct</maml:name>
+          <maml:Description>
+            <maml:para>Mandatory parameter, specify the BaseboardProduct for the SMBIOS.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
           <maml:name>PkgDir</maml:name>
           <maml:Description>
-            <maml:para>{{Fill PkgDir Description}}</maml:para>
+            <maml:para>Optional parameter, specify the BSP package path for the build configurations.</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -812,6 +775,18 @@
     </command:syntax>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>ProductName</maml:name>
+        <maml:Description>
+          <maml:para>Mandatory parameter, specify the product name.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>BSPName</maml:name>
         <maml:Description>
           <maml:para>Mandatory paramter, specify the BSP used in the product.</maml:para>
@@ -823,70 +798,10 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
-        <maml:name>BaseboardManufacturer</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill BaseboardManufacturer Description}}</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
-        <maml:name>BaseboardProduct</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill BaseboardProduct Description}}</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
-        <maml:name>FamilyName</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill FamilyName Description}}</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>OemName</maml:name>
         <maml:Description>
-          <maml:para>{{Fill OemName Description}}</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
-        <maml:name>PkgDir</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill PkgDir Description}}</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
-        <maml:name>ProductName</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill ProductName Description}}</maml:para>
+          <maml:para>Mandatory parameter, specify the OEM name for the SMBIOS.</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -896,9 +811,57 @@
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+        <maml:name>FamilyName</maml:name>
+        <maml:Description>
+          <maml:para>Mandatory parameter, specify the Family name for the SMBIOS.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
         <maml:name>SkuNumber</maml:name>
         <maml:Description>
-          <maml:para>{{Fill SkuNumber Description}}</maml:para>
+          <maml:para>Mandatory parameter, specify the SkuNumber for the SMBIOS.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+        <maml:name>BaseboardManufacturer</maml:name>
+        <maml:Description>
+          <maml:para>Mandatory parameter, specify the BaseboardManufacturer for the SMBIOS.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+        <maml:name>BaseboardProduct</maml:name>
+        <maml:Description>
+          <maml:para>Mandatory parameter, specify the BaseboardProduct for the SMBIOS.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
+        <maml:name>PkgDir</maml:name>
+        <maml:Description>
+          <maml:para>Optional parameter, specify the BSP package path for the build configurations.</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -918,18 +881,13 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Add-IoTProduct SampleA RPi2</dev:code>
+        <dev:code>Add-IoTProduct SampleA RPi2 OEMName ProdFamily ProdSKU1 Fabrikam RPiCustom2</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks>
-      <maml:navigationLink>
-        <maml:linkText>New-IoTFFUImage</maml:linkText>
-        <maml:uri></maml:uri>
-      </maml:navigationLink>
-    </command:relatedLinks>
+    <command:relatedLinks />
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
@@ -1107,74 +1065,55 @@
       <command:verb>Add</command:verb>
       <command:noun>IoTSecureBoot</command:noun>
       <maml:description>
-        <maml:para>Generates the secure boot package contents based on the workspace specifications. If Test is specified, then it includes test certificates from the specification.</maml:para>
+        <maml:para>Generates the secure boot package (Security.SecureBoot) contents based on the workspace specifications. If Test is specified, then it includes test certificates from the specification.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Generates the secure boot package contents based on the workspace specifications. If Test is specified, then it includes test certificates from the specification.</maml:para>
+      <maml:para>Generates the secure boot package (Security.SecureBoot) contents based on the workspace specifications. If Test is specified, then it includes test certificates from the specification and generates Security.SecureBootTest package. You will need to import the required certificates into the workspace before using this command. For Secure Boot, PlatformKey and KeyExchangeKey certificates are mandatory.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
         <maml:name>Add-IoTSecureBoot</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Test</maml:name>
           <maml:Description>
-            <maml:para>Boolean to specify whether to include test certificates.</maml:para>
+            <maml:para>Switch parameter, to include test certificates in the secure boot package.</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
-            <maml:name>Boolean</maml:name>
+            <maml:name>SwitchParameter</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Test</maml:name>
         <maml:Description>
-          <maml:para>Boolean to specify whether to include test certificates.</maml:para>
+          <maml:para>Switch parameter, to include test certificates in the secure boot package.</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
-          <maml:name>Boolean</maml:name>
+          <maml:name>SwitchParameter</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
     </command:parameters>
-    <command:inputTypes>
-      <command:inputType>
-        <dev:type>
-          <maml:name>None</maml:name>
-        </dev:type>
-        <maml:description>
-          <maml:para></maml:para>
-        </maml:description>
-      </command:inputType>
-    </command:inputTypes>
-    <command:returnValues>
-      <command:returnValue>
-        <dev:type>
-          <maml:name>System.Object</maml:name>
-        </dev:type>
-        <maml:description>
-          <maml:para></maml:para>
-        </maml:description>
-      </command:returnValue>
-    </command:returnValues>
+    <command:inputTypes />
+    <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>See Import-IoTCertificate before using this function.</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Add-IoTSecureBoot</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Add-IoTSecureBoot -Test</dev:code>
         <dev:remarks>
-          <maml:para>Generates the secure boot package contents based on the workspace specifications.</maml:para>
+          <maml:para></maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1186,11 +1125,11 @@
       <command:verb>Add</command:verb>
       <command:noun>IoTSecurityPackages</command:noun>
       <maml:description>
-        <maml:para>Creates the security packages for the specified product/config</maml:para>
+        <maml:para>Creates the security packages based on the settings in workspace configuration.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Creates the security packages such as DeviceGuard, SecureBoot and BitLocker based on the security settings specified in the product configuration xml file.</maml:para>
+      <maml:para>Creates the security packages such as DeviceGuard, SecureBoot and BitLocker based on the security settings specified in the workspace configuration xml file.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -1226,13 +1165,13 @@
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>You will need to build an image and create an ffu before you call this function as it requires to scan the FFU image to get the device guard policy.</maml:para>
+        <maml:para>For validating the device guard policy, you can as well scan the built ffu using New-IoTFFUCIPolicy and compare the policy files.</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Add-IoTSecurityPackages SampleA Retail</dev:code>
+        <dev:code>Add-IoTSecurityPackages -Test</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -2994,11 +2933,11 @@
       <command:verb>New</command:verb>
       <command:noun>IoTDeviceLayout</command:noun>
       <maml:description>
-        <maml:para>Factory method to create a new object of class IoTDeviceLayout (.\Classes\IoTDeviceLayout.md).</maml:para>
+        <maml:para>Factory method to create a new object of class IoTDeviceLayout (Classes/IoTDeviceLayout.md).</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>This method creates a object of class IoTDeviceLayout (.\Classes\IoTDeviceLayout.md).</maml:para>
+      <maml:para>This method creates a object of class IoTDeviceLayout (Classes/IoTDeviceLayout.md).</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -3035,7 +2974,7 @@
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>See IoTDeviceLayout (.\Classes\IoTDeviceLayout.md)for more details on the class.</maml:para>
+        <maml:para>See IoTDeviceLayout (Classes/IoTDeviceLayout.md)for more details on the class.</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -3299,11 +3238,11 @@ $dlobj.DriveLetters</dev:code>
       <command:verb>New</command:verb>
       <command:noun>IoTFMXML</command:noun>
       <maml:description>
-        <maml:para>Factory method to create a new object of class IoTFMXML (.\Classes\IoTFMXML.md).</maml:para>
+        <maml:para>Factory method to create a new object of class IoTFMXML (Classes/IoTFMXML.md).</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Factory method to create a new object of class IoTFMXML (.\Classes\IoTFMXML.md).</maml:para>
+      <maml:para>Factory method to create a new object of class IoTFMXML (Classes/IoTFMXML.md).</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -3363,7 +3302,7 @@ $dlobj.DriveLetters</dev:code>
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>See IoTFMXML (.\Classes\IoTFMXML.md)for more details on the class.</maml:para>
+        <maml:para>See IoTFMXML (Classes/IoTFMXML.md)for more details on the class.</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -3447,7 +3386,7 @@ $dlobj.DriveLetters</dev:code>
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>See IoTOemInputXML (.\Classes\IoTOemInputXML.md)for more details on the class.</maml:para>
+        <maml:para>See IoTOemInputXML (Classes/IoTOemInputXML.md)for more details on the class.</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -3467,11 +3406,11 @@ $dlobj.DriveLetters</dev:code>
       <command:verb>New</command:verb>
       <command:noun>IoTProduct</command:noun>
       <maml:description>
-        <maml:para>Factory method to create a new object of class IoTProduct (.\Classes\IoTProduct.md)</maml:para>
+        <maml:para>Factory method to create a new object of class IoTProduct (Classes/IoTProduct.md)</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Factory method to create a new object of class IoTProduct (.\Classes\IoTProduct.md)</maml:para>
+      <maml:para>Factory method to create a new object of class IoTProduct (Classes/IoTProduct.md)</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -3532,7 +3471,7 @@ $dlobj.DriveLetters</dev:code>
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>See IoTProduct (.\Classes\IoTProduct.md)for more details on the class.</maml:para>
+        <maml:para>See IoTProduct (Classes/IoTProduct.md)for more details on the class.</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -3590,9 +3529,9 @@ $prod.ValidatePackages()</dev:code>
           <maml:Description>
             <maml:para>Specify the System Manufacturer Name for the SMBIOS setting</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
-            <maml:name>Object</maml:name>
+            <maml:name>String</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -3602,9 +3541,9 @@ $prod.ValidatePackages()</dev:code>
           <maml:Description>
             <maml:para>Specify the System Family Name for the SMBIOS setting</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
-            <maml:name>Object</maml:name>
+            <maml:name>String</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -3614,9 +3553,9 @@ $prod.ValidatePackages()</dev:code>
           <maml:Description>
             <maml:para>Specify the System SKU Number for the SMBIOS setting</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
-            <maml:name>Object</maml:name>
+            <maml:name>String</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -3626,9 +3565,9 @@ $prod.ValidatePackages()</dev:code>
           <maml:Description>
             <maml:para>Specify the Baseboard Manufacturer Name for the SMBIOS setting</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
-            <maml:name>Object</maml:name>
+            <maml:name>String</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -3638,14 +3577,14 @@ $prod.ValidatePackages()</dev:code>
           <maml:Description>
             <maml:para>Specify the Baseboard Product for the SMBIOS setting</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
-            <maml:name>Object</maml:name>
+            <maml:name>String</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
           <maml:name>pkgDir</maml:name>
           <maml:Description>
             <maml:para>Specify the location where the prebuilt packages for the bsp are available</maml:para>
@@ -3689,9 +3628,9 @@ $prod.ValidatePackages()</dev:code>
         <maml:Description>
           <maml:para>Specify the System Manufacturer Name for the SMBIOS setting</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
-          <maml:name>Object</maml:name>
+          <maml:name>String</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
@@ -3701,9 +3640,9 @@ $prod.ValidatePackages()</dev:code>
         <maml:Description>
           <maml:para>Specify the System Family Name for the SMBIOS setting</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
-          <maml:name>Object</maml:name>
+          <maml:name>String</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
@@ -3713,9 +3652,9 @@ $prod.ValidatePackages()</dev:code>
         <maml:Description>
           <maml:para>Specify the System SKU Number for the SMBIOS setting</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
-          <maml:name>Object</maml:name>
+          <maml:name>String</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
@@ -3725,9 +3664,9 @@ $prod.ValidatePackages()</dev:code>
         <maml:Description>
           <maml:para>Specify the Baseboard Manufacturer Name for the SMBIOS setting</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
-          <maml:name>Object</maml:name>
+          <maml:name>String</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
@@ -3737,14 +3676,14 @@ $prod.ValidatePackages()</dev:code>
         <maml:Description>
           <maml:para>Specify the Baseboard Product for the SMBIOS setting</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
-          <maml:name>Object</maml:name>
+          <maml:name>String</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
         <maml:name>pkgDir</maml:name>
         <maml:Description>
           <maml:para>Specify the location where the prebuilt packages for the bsp are available</maml:para>
@@ -3761,7 +3700,7 @@ $prod.ValidatePackages()</dev:code>
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>See IoTProductSettingsXML (.\Classes\IoTProductSettingsXML.md)for more details on the class.</maml:para>
+        <maml:para>See IoTProductSettingsXML (Classes/IoTProductSettingsXML.md)for more details on the class.</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -3866,11 +3805,11 @@ $prod.ValidatePackages()</dev:code>
       <command:verb>New</command:verb>
       <command:noun>IoTProvisioningXML</command:noun>
       <maml:description>
-        <maml:para>Factory method to create a new object of class IoTProvisioningXML (.\Classes\IoTProvisioningXML.md)</maml:para>
+        <maml:para>Factory method to create a new object of class IoTProvisioningXML (Classes/IoTProvisioningXML.md)</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Factory method to create a new object of class IoTProvisioningXML (.\Classes\IoTProvisioningXML.md)</maml:para>
+      <maml:para>Factory method to create a new object of class IoTProvisioningXML (Classes/IoTProvisioningXML.md)</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -3930,7 +3869,7 @@ $prod.ValidatePackages()</dev:code>
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>See IoTProvisioningXML (.\Classes\IoTProvisioningXML.md)for more details on the class.</maml:para>
+        <maml:para>See IoTProvisioningXML (Classes/IoTProvisioningXML.md)for more details on the class.</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -4217,11 +4156,11 @@ $prod.ValidatePackages()</dev:code>
       <command:verb>New</command:verb>
       <command:noun>IoTWMWriter</command:noun>
       <maml:description>
-        <maml:para>Factory method, returing the IoTWMWriter (.\Classes\IoTWMWriter.md)class object used to write namespace.name.wm.xml file.</maml:para>
+        <maml:para>Factory method, returing the IoTWMWriter (Classes/IoTWMWriter.md)class object used to write namespace.name.wm.xml file.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Factory method, returing the IoTWMWriter (.\Classes\IoTWMWriter.md)class object.</maml:para>
+      <maml:para>Factory method, returing the IoTWMWriter (Classes/IoTWMWriter.md)class object.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -4416,7 +4355,7 @@ $wmwriter.Finish()</dev:code>
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>See \ IoTWMXML\ (.\Classes\IoTWMXML.md)for more details on the class.</maml:para>
+        <maml:para>See \ IoTWMXML\ (Classes/IoTWMXML.md)for more details on the class.</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>

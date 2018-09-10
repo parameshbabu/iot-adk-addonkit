@@ -46,10 +46,12 @@ function New-IoTCabPackage {
         [String]$PkgFile,
 
         [Parameter(Position = 1, Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
-        [String] $Product = "Default"
+        [String] $Product = $null
     )
     New-DirIfNotExist $env:PKGLOG_DIR
+    if ([string]::IsNullOrWhiteSpace($Product)){
+        $Product = "Default"
+    }
     $filestoprocess = @()
     # Process special keywords first
     if ($PkgFile -ieq "All") {

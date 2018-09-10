@@ -800,7 +800,30 @@ function Add-IoTSecurityPackages {
     return
 }
 
-function Add-IoTDeviceGuard([Boolean] $Test) {
+function Add-IoTDeviceGuard {
+    <#
+    .SYNOPSIS
+    Generates the device guard package (Security.DeviceGuard) contents based on the workspace specifications.
+
+    .DESCRIPTION
+    Generates the device guard package (Security.DeviceGuard) contents based on the workspace specifications. If Test is specified, then it includes test certificates from the specification and generates Security.DeviceGuardTest package. You will need to import the required certificates into the workspace before using this command. For Device Guard, Update certificate is mandatory.
+
+    .PARAMETER Test
+    Switch parameter, to include test certificates in the device guard package.
+
+    .EXAMPLE
+    Add-IoTDeviceGuard -Test
+
+    .NOTES
+    For validating the device guard policy, you can as well scan the built ffu using New-IoTFFUCIPolicy and compare the policy files.
+    See Import-IoTCertificate before using this function.
+    #>
+    [CmdletBinding()]
+    Param
+    (
+        [Parameter(Position = 0, Mandatory = $false)]
+        [Switch]$Test
+    )    
 
     if ($null -eq $env:IoTWsXml) {
         Publish-Error "IoTWorkspace is not opened. Use Open-IoTWorkspace" 
@@ -973,7 +996,30 @@ function Add-IoTDeviceGuard([Boolean] $Test) {
     return $retval
 }
 
-function Add-IoTSecureBoot([Boolean] $Test) {
+function Add-IoTSecureBoot {
+    <#
+    .SYNOPSIS
+    Generates the secure boot package (Security.SecureBoot) contents based on the workspace specifications. If Test is specified, then it includes test certificates from the specification.
+
+    .DESCRIPTION
+    Generates the secure boot package (Security.SecureBoot) contents based on the workspace specifications. If Test is specified, then it includes test certificates from the specification and generates Security.SecureBootTest package. You will need to import the required certificates into the workspace before using this command. For Secure Boot, PlatformKey and KeyExchangeKey certificates are mandatory.
+
+    .PARAMETER Test
+    Switch parameter, to include test certificates in the secure boot package. 
+
+    .EXAMPLE
+    Add-IoTSecureBoot -Test
+
+    .NOTES
+    See Import-IoTCertificate before using this function.
+    #>
+    [CmdletBinding()]
+    Param
+    (
+        [Parameter(Position = 0, Mandatory = $false)]
+        [Switch]$Test
+    ) 
+
     if ($null -eq $env:IoTWsXml) {
         Publish-Error "IoTWorkspace is not opened. Use Open-IoTWorkspace" 
     }
@@ -1095,7 +1141,21 @@ function Add-IoTSecureBoot([Boolean] $Test) {
     Pop-Location
 }
 
-function Add-IoTBitLocker() {
+function Add-IoTBitLocker {
+    <#
+    .SYNOPSIS
+    Generates the Bitlocker package (Security.BitLocker) contents based on the workspace specifications.
+
+    .DESCRIPTION
+    Generates the Bitlocker package (Security.BitLocker) contents based on the workspace specifications. You will need to import the required certificates into the workspace before using this command. For Bitlocker, DataRecoveryAgent certificate is mandatory.
+
+    .EXAMPLE
+    Add-IoTBitLocker
+
+    .NOTES
+    See Import-IoTCertificate before using this function.
+    #>
+     
     if ($null -eq $env:IoTWsXml) {
         Publish-Error "IoTWorkspace is not opened. Use Open-IoTWorkspace" 
     }

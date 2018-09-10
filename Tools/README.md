@@ -110,6 +110,7 @@ To build an retail image, you will need to retail sign all your packages and the
     New-IoTCabPackage All
     (or) buildpkg all
     ```
+    Note : If you are using security packages, ensure to generate the retail version of the packages (without -Test flag) and include the corresponding feature id in the RetailOEMInput.xml file.
 4. If you have prebuilt cab packages, re-sign them using
     ```powershell
     Redo-IoTCabSignature <srccabdir> <dstcabdir>
@@ -172,23 +173,25 @@ Steps to add new common package, appx package, driver package and finally a new 
     ```
 7. Create the product specific packages using 
     ```powershell
-    # install test certificates from the sample workspace before running this
-    #configure the certificates
+    # install test certificates from the sample workspace before running this ( see certs\private for the corresponding pfx files )
+    # PlatformKey and KeyExchangeKey mandatory for SecureBoot
     Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-PK.cer PlatformKey
     Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-UEFISB.cer KeyExchangeKey
+    # DataRecoveryAgent mandatory for Bitlocker
     Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-DRA.cer DataRecoveryAgent
+    # Update mandatory for Device Guard
     Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-PAUTH.cer Update
     Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-UMCI.cer User
     Add-IoTSecurityPackages -Test
     ```
     This is the automated process for the detailed steps defined in [Turnkey Security on IoT Core](https://docs.microsoft.com/windows/iot-core/secure-your-device/securebootandbitlocker#turnkey-security-on-iot-core)
-8. Now that the new security packages are created, include the Security features `Sec_BitLocker`,`Sec_SecureBoot` and `Sec_DeviceGuard` in the oeminputxml file and regenerate the FFU as per step 6. 
+8. Now that the new security packages are created, include the Security features `Sec_BitLocker`,`Sec_SecureBootTest` and `Sec_DeviceGuardTest` in the oeminputxml file and regenerate the FFU as per step 6. 
     ```powershell
     $product = New-IoTProduct MyProduct Test
     # specify the feature id with IsOEM true and $AllConfig true
     $product.AddFeatureID("Sec_BitLocker",$true,$true)
-    $product.AddFeatureID("Sec_SecureBoot",$true,$true)
-    $product.AddFeatureID("Sec_DeviceGuard",$true,$true)
+    $product.AddFeatureID("Sec_SecureBootTest",$true,$true)
+    $product.AddFeatureID("Sec_DeviceGuardTest",$true,$true)
     # build the image
     New-IoTFFUImage MyProduct Test
     ```

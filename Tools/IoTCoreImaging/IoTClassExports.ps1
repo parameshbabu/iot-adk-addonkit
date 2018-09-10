@@ -286,8 +286,7 @@ function New-IoTWMWriter {
         [String]$Namespace,
         # Validate packages option
         [Parameter(Position = 2, Mandatory = $false)]
-        [ValidateNotNullOrEmpty()]
-        [String]$Name,
+        [String]$Name = $null,
         [Parameter(Position = 3, Mandatory = $false)]
         [Switch]$Force        
     )

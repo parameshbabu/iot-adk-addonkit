@@ -8,7 +8,7 @@ schema: 2.0.0
 # Add-IoTSecurityPackages
 
 ## SYNOPSIS
-Creates the security packages for the specified product/config
+Creates the security packages based on the settings in workspace configuration.
 
 ## SYNTAX
 
@@ -17,19 +17,21 @@ Add-IoTSecurityPackages [-Test] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Creates the security packages such as DeviceGuard, SecureBoot and BitLocker based on the security settings specified in the product configuration xml file.
+Creates the security packages such as DeviceGuard, SecureBoot and BitLocker based on the security settings specified in the workspace configuration xml file.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Add-IoTSecurityPackages SampleA Retail
+Add-IoTSecurityPackages -Test
 ```
 
 ## PARAMETERS
 
 ### -Test
-Switch parameter , if defined includes test certificates in the security packages.```yaml
+Switch parameter , if defined includes test certificates in the security packages.
+
+```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
@@ -42,13 +44,14 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
-You will need to build an image and create an ffu before you call this function as it requires to scan the FFU image to get the device guard policy.
+For validating the device guard policy, you can as well scan the built ffu using New-IoTFFUCIPolicy and compare the policy files.
 
 ## RELATED LINKS
