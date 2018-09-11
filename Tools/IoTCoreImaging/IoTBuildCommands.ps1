@@ -108,35 +108,39 @@ function New-IoTCabPackage {
     $bldtime = Get-Date -Format "yyyyMMdd-HHmm"
     $pkgvar = "_RELEASEDIR=.\;PROD=$Product;PRJDIR=$env:SRC_DIR;COMDIR=$env:COMMON_DIR;BSPVER=$env:BSP_VERSION;BSPARCH=$env:BSP_ARCH;OEMNAME=$env:OEM_NAME;BUILDTIME=$bldtime;BLDDIR=$env:BLD_DIR"
     $retval = $true
-    foreach ($file in $filestoprocess) {
-        $filedir = Split-Path -Path $file -Parent
-        $name = Split-Path -Path $file -Leaf
-        Publish-Status "Processing $name"
-        $name = $name.Replace(".wm.xml", "") # get rid of the .wm.xml
-        Set-Location $filedir
+    try {
+        foreach ($file in $filestoprocess) {
+            $filedir = Split-Path -Path $file -Parent
+            $name = Split-Path -Path $file -Leaf
+            Publish-Status "Processing $name"
+            $name = $name.Replace(".wm.xml", "") # get rid of the .wm.xml
+            Set-Location $filedir
 
-        # If customizations.xml file exists, build the provpackage
-        if (Test-Path -Path $filedir\customizations.xml) {
-            $ppkgname = "$env:BLD_DIR\ppkgs\$name" + ".ppkg"
-            $retval = New-IoTProvisioningPackage $filedir\customizations.xml $ppkgname
-        }
-        if ($retval) {
-            if ($VerbosePreference -ieq "Continue") {
-                pkggen "$file" /output:"$env:PKGBLD_DIR" /version:$env:BSP_VERSION /build:fre /cpu:$env:BSP_ARCH /variables:$pkgvar /onecore /universalbsp
+            # If customizations.xml file exists, build the provpackage
+            if (Test-Path -Path $filedir\customizations.xml) {
+                $ppkgname = "$env:BLD_DIR\ppkgs\$name" + ".ppkg"
+                $retval = New-IoTProvisioningPackage $filedir\customizations.xml $ppkgname
             }
-            else {
-                pkggen "$file" /output:"$env:PKGBLD_DIR" /version:$env:BSP_VERSION /build:fre /cpu:$env:BSP_ARCH /variables:$pkgvar /onecore /universalbsp | Out-File "$env:PKGLOG_DIR\$name.log" -Encoding utf8
-            }
-            if (!($?)) { 
-                Publish-Error "$file pkggen failed"
-                $retval = $false 
-            }
+            if ($retval) {
+                if ($VerbosePreference -ieq "Continue") {
+                    pkggen "$file" /output:"$env:PKGBLD_DIR" /version:$env:BSP_VERSION /build:fre /cpu:$env:BSP_ARCH /variables:$pkgvar /onecore /universalbsp
+                }
+                else {
+                    pkggen "$file" /output:"$env:PKGBLD_DIR" /version:$env:BSP_VERSION /build:fre /cpu:$env:BSP_ARCH /variables:$pkgvar /onecore /universalbsp | Out-File "$env:PKGLOG_DIR\$name.log" -Encoding utf8
+                }
+                if (!($?)) { 
+                    Publish-Error "$file pkggen failed"
+                    $retval = $false 
+                }
 
+            }
+            if (!$retval) { break }
         }
-        if (!$retval) { break }
     }
-    Set-Location $env:IOTWKSPACE
-    Clear-Temp
+    finally {
+        Set-Location $env:IOTWKSPACE
+        Clear-Temp       
+    }
     return $retval
 }
 
