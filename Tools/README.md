@@ -288,6 +288,7 @@ The supported functionality are listed below in logical groups.
 |[Import-IoTOEMPackage](IoTCoreImaging/Docs/Import-IoTOEMPackage.md) | importpkg | importpkg.cmd | New functionality added|
 |[Import-IoTProduct](IoTCoreImaging/Docs/Import-IoTProduct.md) | importproduct | importproduct.cmd | New functionality added|
 |[Import-IoTBSP](IoTCoreImaging/Docs/Import-IoTBSP.md) | importbsp | importbsp.cmd | New functionality added|
+|[New-IoTOEMCerts](IoTCoreImaging/Docs/New-IoTOEMCerts.md) | - | - | Creates new OEM specific certificates |
 |[Import-IoTCertificate](IoTCoreImaging/Docs/Import-IoTCertificate.md) | - | - | Imports the certificate for security functions|
 |[Copy-IoTOEMPackage](IoTCoreImaging/Docs/Copy-IoTOEMPackage.md) | copypkg | TBD | New functionality added|
 |[Copy-IoTProduct](IoTCoreImaging/Docs/Copy-IoTProduct.md) | copyproduct | TBD | New functionality added|

@@ -19,8 +19,8 @@ New-IoTProductSettingsXML [-InputXML] <String> [<CommonParameters>]
 
 ### ConstructionArgs
 ```
-New-IoTProductSettingsXML [-InputXML] <String> [-Create] [-oemName] <Object> [-familyName] <Object>
- [-skuNumber] <Object> [-baseboardManufacturer] <Object> [-baseboardProduct] <Object> [-pkgDir] <Object>
+New-IoTProductSettingsXML [-InputXML] <String> [-Create] [-oemName] <String> [-familyName] <String>
+ [-skuNumber] <String> [-baseboardManufacturer] <String> [-baseboardProduct] <String> [[-pkgDir] <String>]
  [<CommonParameters>]
 ```
 
@@ -70,7 +70,7 @@ Accept wildcard characters: False
 Specify the System Manufacturer Name for the SMBIOS setting
 
 ```yaml
-Type: Object
+Type: String
 Parameter Sets: ConstructionArgs
 Aliases:
 
@@ -85,7 +85,7 @@ Accept wildcard characters: False
 Specify the System Family Name for the SMBIOS setting
 
 ```yaml
-Type: Object
+Type: String
 Parameter Sets: ConstructionArgs
 Aliases:
 
@@ -100,7 +100,7 @@ Accept wildcard characters: False
 Specify the System SKU Number for the SMBIOS setting
 
 ```yaml
-Type: Object
+Type: String
 Parameter Sets: ConstructionArgs
 Aliases:
 
@@ -115,7 +115,7 @@ Accept wildcard characters: False
 Specify the Baseboard Manufacturer Name for the SMBIOS setting
 
 ```yaml
-Type: Object
+Type: String
 Parameter Sets: ConstructionArgs
 Aliases:
 
@@ -130,7 +130,7 @@ Accept wildcard characters: False
 Specify the Baseboard Product for the SMBIOS setting
 
 ```yaml
-Type: Object
+Type: String
 Parameter Sets: ConstructionArgs
 Aliases:
 
@@ -145,11 +145,11 @@ Accept wildcard characters: False
 Specify the location where the prebuilt packages for the bsp are available
 
 ```yaml
-Type: Object
+Type: String
 Parameter Sets: ConstructionArgs
 Aliases:
 
-Required: True
+Required: False
 Position: 8
 Default value: None
 Accept pipeline input: False

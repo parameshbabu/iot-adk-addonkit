@@ -326,7 +326,7 @@ function New-IoTFIPPackage {
         FeatureMerger $env:BLD_DIR\InputFMs\OEMFMFileList.xml $env:PKGBLD_DIR $env:BSP_VERSION $env:BLD_DIR\MergedFMs /InputFMDir:$env:BLD_DIR\InputFMs /Languages:en-us /Resolutions:1024x768 /ConvertToCBS /variables:"_cputype=$env:BSP_ARCH;buildtype=fre;releasetype=production" | Out-File $env:BLD_DIR\FIPPackage_oem.log -Encoding utf8
     }
     if (!($?)) {
-        Publish-Error "New-IoTFIPPackage failed to process OEMFMList"
+        Publish-Error "New-IoTFIPPackage failed to process OEMFMList. See $env:BLD_DIR\FIPPackage_oem.log"
         $retval = $false
     }
     if ($IncludeOCP) {
@@ -342,7 +342,7 @@ function New-IoTFIPPackage {
             FeatureMerger $env:BLD_DIR\InputFMs\OCPUpdateFMFileList.xml $env:PKGBLD_DIR $env:BSP_VERSION $env:BLD_DIR\MergedFMs /InputFMDir:$env:BLD_DIR\InputFMs /Languages:en-us /Resolutions:1024x768 /ConvertToCBS /variables:"_cputype=$env:BSP_ARCH;buildtype=fre;releasetype=production" | Out-File $env:BLD_DIR\FIPPackage_ocp.log -Encoding utf8
         }
         if (!($?)) {
-            Publish-Error "New-IoTFIPPackage failed to process OCPFMList"
+            Publish-Error "New-IoTFIPPackage failed to process OCPFMList. See $env:BLD_DIR\FIPPackage_ocp.log"
             $retval = $false
         }
     }
@@ -393,7 +393,7 @@ function New-IoTFIPPackage {
         FeatureMerger $env:BLD_DIR\InputFMs\$bspfmlist $env:PKGBLD_DIR $env:BSP_VERSION $env:BLD_DIR\MergedFMs /InputFMDir:$env:BLD_DIR\InputFMs /Languages:en-us /Resolutions:1024x768 /ConvertToCBS /variables:"_cputype=$env:BSP_ARCH;buildtype=fre;releasetype=production" | Out-File $env:BLD_DIR\FIPPackage_$BSP.log -Encoding utf8       
     }
     if (!($?)) {
-        Publish-Error "New-IoTFIPPackage failed to process BSPFMList"
+        Publish-Error "New-IoTFIPPackage failed to process BSPFMList. See $env:BLD_DIR\FIPPackage_$BSP.log"
         $retval = $false
     }
 

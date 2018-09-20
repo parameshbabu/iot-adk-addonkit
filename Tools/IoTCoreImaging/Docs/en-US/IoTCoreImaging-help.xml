@@ -887,7 +887,12 @@
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>New-IoTFFUImage</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
@@ -2730,6 +2735,42 @@
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Install-IoTOEMCerts</command:name>
+      <command:verb>Install</command:verb>
+      <command:noun>IoTOEMCerts</command:noun>
+      <maml:description>
+        <maml:para>Installs the OEM certs (pfx files) in the certs\private folder</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Installs the OEM certs (pfx files) in the certs\private folder</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Install-IoTOEMCerts</maml:name>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters />
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>See also Import-IoTCertificate and New-IoTOEMCerts.</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Install-IoTOEMCerts</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>Mount-IoTFFUImage</command:name>
       <command:verb>Mount</command:verb>
       <command:noun>IoTFFUImage</command:noun>
@@ -3311,6 +3352,42 @@ $dlobj.DriveLetters</dev:code>
         <dev:code>$fmobj = New-IoTFMXML $env:PKGSRC_DIR\OEMFM.xml"</dev:code>
         <dev:remarks>
           <maml:para>Loads the OEMFM.xml file</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>New-IoTOEMCerts</command:name>
+      <command:verb>New</command:verb>
+      <command:noun>IoTOEMCerts</command:noun>
+      <maml:description>
+        <maml:para>Generates the required OEM certificates.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Generates the OEM certificates required for the secure boot, bit locker and the device guard features. This will prompt for the password when creating each certificate.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>New-IoTOEMCerts</maml:name>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters />
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>See also Import-IoTCertificate.</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>New-IoTOEMCerts</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

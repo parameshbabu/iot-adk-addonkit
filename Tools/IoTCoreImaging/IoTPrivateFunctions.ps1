@@ -4,7 +4,12 @@ This contains various helper commands for imaging
 
 # Helper methods - Write Output for piping and Host for the screen
 function Publish-Error([string] $message) {
-    Write-Error $message
+    if (($null -ne $host) -and ($null -ne $host.ui)){
+        Write-Host "Error: $message" -ForegroundColor Red
+    }
+    else {
+        Write-Error $message
+    }   
 }
 function Publish-Success() {
     Write-Host $args  -ForegroundColor Green
@@ -13,7 +18,12 @@ function Publish-Status () {
     Write-Host $args
 }
 function Publish-Warning ([string] $message) {
-    Write-Warning $message
+    if (($null -ne $host) -and ($null -ne $host.ui)){
+        Write-Host "Warning: $message" -ForegroundColor Yellow
+    }
+    else {
+        Write-Warning $message
+    } 
 }
 
 function New-DirIfNotExist ([string] $path, [switch]$force) {

@@ -10,7 +10,9 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 }
 
 #Set tool version
-$host.ui.RawUI.WindowTitle = "IoTCorePShell"
+if (($host -ne $null) -and ($host.ui -ne $null) -and ($host.ui.RawUI -ne $null) -and ($host.ui.RawUI.WindowTitle -ne $null)) {
+     $host.ui.RawUI.WindowTitle = "IoTCorePShell"
+}
 $toolsroot = [string] $PSScriptRoot
 $Global:ToolsRoot = $toolsroot.Replace("\Tools\IoTCoreImaging", "")
 $Global:OrigPath = $env:Path
@@ -34,6 +36,7 @@ Write-Debug "Orig Path : $($Global:OrigPath)"
 . $PSScriptRoot\IoTTestCommands.ps1
 . $PSScriptRoot\IoTAddCommands.ps1
 . $PSScriptRoot\IoTRecovery.ps1
+. $PSScriptRoot\IoTSecurity.ps1
 . $PSScriptRoot\IoTWorkspace.ps1
 . $PSScriptRoot\IoTClassExports.ps1
 

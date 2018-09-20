@@ -201,7 +201,7 @@ function New-IoTProductSettingsXML {
         [Parameter(Position=4, ParameterSetName='ConstructionArgs', Mandatory=$true)][String] $skuNumber,
         [Parameter(Position=5, ParameterSetName='ConstructionArgs', Mandatory=$true)][String] $baseboardManufacturer,
         [Parameter(Position=6, ParameterSetName='ConstructionArgs', Mandatory=$true)][String] $baseboardProduct,
-        [Parameter(Position=7, ParameterSetName='ConstructionArgs', Mandatory=$false)] $pkgDir = $null
+        [Parameter(Position=7, ParameterSetName='ConstructionArgs', Mandatory=$false)][String] $pkgDir = $null
     )
 
     $bCreate = $true

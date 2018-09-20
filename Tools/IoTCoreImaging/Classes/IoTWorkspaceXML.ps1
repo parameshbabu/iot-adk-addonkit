@@ -274,7 +274,10 @@ class IoTWorkspaceXML {
 
         #Copy the cert to the cert dir
         $DirName = Split-Path -Path $this.FileName -Parent
-        Copy-Item -Path $certfile -Destination $DirName\Certs\
+        $srcpath = Split-Path -Path $certfile -Parent
+        if ($srcpath -ne $DirName){
+            Copy-Item -Path $certfile -Destination $DirName\Certs\
+        }
         $node = $this.XmlDoc.GetElementsByTagName("$certnode")
         if ($null -eq $node){
             Publish-Error "Unsupported CertNode : $certnode."
