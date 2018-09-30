@@ -551,3 +551,106 @@ function Get-IoTProductPackagesForFeature {
     Publish-Error "$FeatureID not present"
     return $null
 }
+
+function Add-IoTProductFeature {
+    <#
+    .SYNOPSIS
+    Adds feature id to the specified product's oeminput xml file.
+    
+    .DESCRIPTION
+    Adds feature id (oem feature or Microsoft feature) to the specified product's oeminput xml file for the given configuration.
+    
+    .PARAMETER Product
+    Mandatory parameter, specify the product name.
+    
+    .PARAMETER Config
+    Mandatory paramter, specify the config. Supported values : Test,Retail and All
+    
+    .PARAMETER FeatureID
+    Mandatory parameter, specify the featureId to be added.
+    
+    .PARAMETER OEM
+    Optional switch parameter, to specify that the featuretype is OEM. Default featuretype is Microsoft
+
+    .EXAMPLE
+    Add-IoTProductFeature SampleA Test CUSTOM_CMD OEM
+    Adds CUSTOM_CMD feature to the SampleA TestOEMInput.xml file.
+
+    .EXAMPLE
+    Add-IoTProductFeature SampleA All CUSTOM_CMD OEM
+    Adds CUSTOM_CMD feature to the SampleA TestOEMInput.xml and RetailOEMInput.xml files.
+
+    .NOTES
+    See Remove-IoTProductFeature also.
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Position=0, Mandatory=$true)][ValidateNotNullOrEmpty()][String]$Product,
+        [Parameter(Position=1, Mandatory=$true)][ValidateNotNullOrEmpty()][String]$Config,
+        [Parameter(Position=2, Mandatory=$true)][ValidateNotNullOrEmpty()][String]$FeatureID,
+        [Parameter(Position=3, Mandatory=$false)][Switch]$OEM
+    )
+    $ProdConfig = $Config
+    $AllConfig = $false
+    if ($Config -ieq "All"){
+        $ProdConfig = "Test"
+        $AllConfig = $true
+    }
+    try {
+        $iotprod = New-IoTProduct $Product $ProdConfig
+        $iotprod.AddFeatureID($FeatureID,$OEM,$AllConfig)
+    }
+    catch {
+        $msg = $_.Exception.Message
+        Publish-Error "$msg"; return
+    }
+}
+function Remove-IoTProductFeature {
+    <#
+    .SYNOPSIS
+    Removes feature id from the specified product's oeminput xml file.
+    
+    .DESCRIPTION
+    Removes feature id (oem feature or Microsoft feature) from the specified product's oeminput xml file for the given configuration.
+    
+    .PARAMETER Product
+    Mandatory parameter, specify the product name.
+    
+    .PARAMETER Config
+    Mandatory paramter, specify the config. Supported values : Test,Retail and All
+    
+    .PARAMETER FeatureID
+    Mandatory parameter, specify the featureId to be removed.
+
+    .EXAMPLE
+    Remove-IoTProductFeature SampleA Test CUSTOM_CMD
+    Removes CUSTOM_CMD feature to the SampleA TestOEMInput.xml file.
+
+    .EXAMPLE
+    Remove-IoTProductFeature SampleA All CUSTOM_CMD
+    Removes CUSTOM_CMD feature to the SampleA TestOEMInput.xml and RetailOEMInput.xml files.
+
+    .NOTES
+    See Add-IoTProductFeature also.
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Position=0, Mandatory=$true)][ValidateNotNullOrEmpty()][String]$Product,
+        [Parameter(Position=1, Mandatory=$true)][ValidateNotNullOrEmpty()][String]$Config,
+        [Parameter(Position=2, Mandatory=$true)][ValidateNotNullOrEmpty()][String]$FeatureID
+    )
+    $ProdConfig = $Config
+    $AllConfig = $false
+    if ($Config -ieq "All"){
+        $ProdConfig = "Test"
+        $AllConfig = $true
+    }
+    try {
+        $iotprod = New-IoTProduct $Product $ProdConfig
+        $iotprod.RemoveFeatureID($FeatureID,$AllConfig)
+    }
+    catch {
+        $msg = $_.Exception.Message
+        Publish-Error "$msg"; return
+    }
+}

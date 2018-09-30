@@ -62,8 +62,8 @@ function New-IoTWorkspace {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Position=0, Mandatory=$true)][String]$DirName,
-        [Parameter(Position=1, Mandatory=$true)][String]$OemName,
+        [Parameter(Position=0, Mandatory=$true)][ValidateNotNullOrEmpty()][String]$DirName,
+        [Parameter(Position=1, Mandatory=$true)][ValidateNotNullOrEmpty()][String]$OemName,
         [Parameter(Position=2, Mandatory=$true)][String]$Arch
     )
     if (-not (Test-Path $DirName -PathType Container)) {
@@ -129,6 +129,7 @@ function Open-IoTWorkspace {
     Param
     (
         [Parameter(Position = 0, Mandatory = $true)]
+		[ValidateNotNullOrEmpty()]
         [String]$WsXML
     )
     if (Test-Path $WsXML -PathType Leaf){
@@ -175,6 +176,7 @@ function Add-IoTEnvironment {
     Param
     (
         [Parameter(Position = 0, Mandatory = $true)]
+		[ValidateNotNullOrEmpty()]
         [String]$Arch
     )
     $IoTWsXml = $env:IOTWSXML
@@ -636,7 +638,7 @@ function Copy-IoTOEMPackage {
             else { Write-Verbose "$pkgname is not added to feature manifest"}
         }  
     }
-    if ($copydone) { Write-Verbose "Package copy completed" }
+    Publish-Success "Package copy completed" 
 }
 
 function Import-IoTOEMPackage {
@@ -696,27 +698,27 @@ function Import-IoTOEMPackage {
 function Copy-IoTBSP {
     <#
     .SYNOPSIS
-    Copies a BSP folder to the destination workspace from a source workspace.
+    Copies a BSP folder to the destination workspace from a source workspace or a source bsp directory.
     
     .DESCRIPTION
     Copies a BSP folder to the destination workspace from a source workspace. 
  
     .PARAMETER Source
-    Mandatory parameter specifying the source workspace directory.
+    Mandatory parameter specifying the source workspace or a source bsp directory.
     
     .PARAMETER Destination
     Mandatory parameter specifying the destination workspace directory.
 
     .PARAMETER BSPName
-    Mandatory parameter, specifying the BSP, wild card supported
+    Mandatory parameter, specifying the BSP name, wildcards supported.
   
     .EXAMPLE
     Copy-IoTBSP C:\MyWorkspace $env:IOTWKSPACE RPi
-    Copies RPi BSP from SampleWkspace to current workspace
-
+    Copies RPi BSP from C:\MyWorkspace to current workspace
+   
     .EXAMPLE
-    Copy-IoTBSP C:\MyWorkspace C:\Destinationwkspace -All
-    Copies all bsps from SampleWkspace to Destinationwkspace
+    Copy-IoTBSP C:\MyBspDir C:\MyWorkspace MyBSP
+    Copies MyBSP from C:\MyBspDir to C:\MyWorkspace
     
     .NOTES
     See Add-IoT* and Import-IoT* methods.
@@ -725,7 +727,7 @@ function Copy-IoTBSP {
     Param
     (
         [Parameter(Position = 0, Mandatory = $true)]
-        [ValidateScript( { Test-Path $_\IoTWorkspace.xml -PathType Leaf })]
+        [ValidateNotNullOrEmpty()]
         [String]$Source,
         [Parameter(Position = 1, Mandatory = $true)]
         [ValidateScript( { Test-Path $_\IoTWorkspace.xml -PathType Leaf })]
@@ -734,7 +736,40 @@ function Copy-IoTBSP {
         [ValidateNotNullOrEmpty()]
         [String]$BSPName
     )
-    $srcdir = "$Source\Source-$($env:arch)\BSP"
+
+    if ($Source.EndsWith(".zip")) {
+        $tempdir = "$env:IOTWKSPACE\BSPDIR"
+        # Clean out the temporary folder silently
+        Remove-Item -Recurse -ErrorAction SilentlyContinue -Force $tempdir
+
+        Add-Type -Assembly System.IO.Compression.FileSystem
+        $zip = [IO.Compression.ZipFile]::OpenRead($Source)
+        Write-Host "Extracting BSP zip into the temporary directory $tempdir"
+        [System.IO.Compression.ZipFileExtensions]::ExtractToDirectory($zip, "$tempdir")
+        $zip.Dispose()
+        $fmfiles = (Get-ChildItem -Path "$tempdir" -Filter *FM.xml -Recurse) | foreach-object {$_.FullName}
+        if (!$fmfiles){
+            Publish-Error "No FM files found in $Source." 
+            return
+        }
+        #if more than one fm file, picking up first. 
+        #TODO relook as this logic again
+        if ($fmfiles.Count -gt 1){
+            $fmfilepath  = Split-Path -Path $fmfiles[0] -Parent
+        }
+        else {
+            $fmfilepath = Split-Path -Path $fmfiles -Parent
+        }
+        $bspdir = Split-Path -Path $fmfilepath -Parent
+        $srcdir = Split-Path -Path $bspdir -Parent
+    } 
+    elseif (Test-Path $Source\IoTWorkspace.xml -PathType Leaf){
+        $srcdir = "$Source\Source-$($env:arch)\BSP"
+    }
+    else {
+        $srcdir = "$Source"
+    }
+    # Validate if the bsp is present in the dir
     $destdir = "$Destination\Source-$($env:arch)\BSP"
     $copydone = $false
     $bsps = (Get-ChildItem -Path $srcdir -Directory -Filter $BSPName ) | foreach-object { $_.Name }
@@ -743,31 +778,104 @@ function Copy-IoTBSP {
         return
     }
     foreach ($bsp in $bsps) {
+        Publish-Status "Processing $srcdir\$bsp"
         if (Test-Path -Path $destdir\$bsp -PathType Container) {
-            Publish-Warning "$bsp already exists"        
+            Publish-Warning "$bsp already exists" 
+            continue       
         }
-        else {
-            Write-Debug "Copying $bsp"
-            Copy-Item -Path $srcdir\$bsp -Destination $destdir\ -Recurse | Out-Null
-            $copydone = $true
+        # validate if the folder is a BSP folder
+        $fmfiles = (Get-ChildItem -Path "$srcdir\$bsp" -Filter *FM.xml -Recurse) | foreach-object {$_.FullName}
+        if (!$fmfiles){
+            Publish-Error "No FM files found. $srcdir\$bsp is not a valid BSP directory"
+            continue
         }
+        if (!(Test-Path "$srcdir\$bsp\OEMInputSamples\TestOEMInput.xml")){
+            Publish-Error "$srcdir\$bsp\OEMInputSamples\TestOEMInput.xml not found. $srcdir\$bsp is not a valid BSP directory"
+            continue
+        }
+        if (!(Test-Path "$srcdir\$bsp\Packages\$($bsp)FMFileList.xml")){
+            Publish-Error "$($bsp)FMFileList.xml not found. $srcdir\$bsp is not a valid BSP directory"
+            continue
+        }
+        $xmldoc = [xml] (Get-Content -Path "$srcdir\$bsp\Packages\$($bsp)FMFileList.xml")
+        $arch = $xmldoc.FMCollectionManifest.FMs.FM.CPUType
+        if($env:BSP_ARCH -ne $arch){
+            Publish-Error "Incorrect BSP arch. Found $arch, expected $env:BSP_ARCH"
+            continue
+        }
+
+        Write-Verbose "Copying $bsp"
+        Copy-Item -Path $srcdir\$bsp -Destination $destdir\ -Recurse -Force | Out-Null
+        # Convert pkg xmls to wm xml
+        Write-Verbose "Converting pkg.xml files"
+        $copydone = Convert-IoTPkg2Wm $destdir\$bsp
+        # get rid of the FeatureIdentifierPackage flag in the FM file
+        $fmfiles = (Get-ChildItem -Path "$destdir\$bsp" -Filter *FM.xml -Recurse) | foreach-object {$_.FullName}
+        if (!$fmfiles){
+            # should not occur if the copy succeeded.
+            Publish-Error "BSP copy failed" 
+            continue
+        }
+        # replace the absolute path of the bspFM files to the mergedfm directory , also fixing any naming inconsistencies 
+        foreach($fmfile in $fmfiles){
+            Write-Verbose "Updating $fmfile.." 
+            (Get-Content $fmfile) -replace "FeatureIdentifierPackage=`"true`"", "" | Out-File $fmfile -Encoding utf8
+            #TODO Get rid of the System Information cab as SMBIOS will fill those values.
+            #Get all package names in the directory
+            $list = Get-ChildItem -Path $destdir\$bsp -Recurse -Include *.xml | Select-String "legacyName"
+            $pkgnames = $list | ForEach-Object { $_.Line.Replace("`$(OEMNAME)","%OEM_NAME%").Split('"')[1] + ".cab"}
+            $fmxml = New-IoTFMXML $fmfile
+            $definedpkgs = $fmxml.GetPackageNames()
+            foreach($definedpkg in $definedpkgs){
+                if (-not $pkgnames.contains($definedpkg)) { 
+                    $subcomponentname = $definedpkg.Split(".")[2]
+                    foreach($pkgname in $pkgnames) {
+                        if ($pkgname.contains($subcomponentname)){
+                            $pkgname= $pkgname.Replace(".cab","")
+                            $definedpkg = $definedpkg.Replace(".cab","") 
+                            Publish-Warning "  Replacing $definedpkg with $pkgname"
+                            (Get-Content $fmfile) -replace $definedpkg, $pkgname | Out-File $fmfile -Encoding utf8
+                        }
+                    }
+                }
+            }
+        }
+
+        $oeminputs = (Get-ChildItem -Path "$destdir\$bsp" -Filter *OEMInput.xml -Recurse) | foreach-object {$_.FullName}
+        if (!$oeminputs){
+            # should not occur if the copy succeeded.
+            Publish-Error "BSP copy failed" 
+            continue
+        }
+        # replace the absolute path of the bspFM files to the mergedfm directory
+        foreach($oeminput in $oeminputs){
+            Write-Verbose "Updating $oeminput.." 
+            (Get-Content $oeminput) -replace "%BSPSRC_DIR%\\$($BSPName)\\Packages", "%BLD_DIR%\MergedFMs" | Out-File $oeminput -Encoding utf8
+        }
+        $copydone = $true
     }
-    if ($copydone) { Write-Verbose "BSP copy completed" }
+    if ($Source.EndsWith(".zip")) {
+        # Clean out the temporary folder silently
+        Remove-Item -Recurse -ErrorAction SilentlyContinue -Force $tempdir
+    }
+    if ($copydone){
+        Publish-Success "BSP copy completed"
+    }
 }
 
 function Import-IoTBSP {
     <#
     .SYNOPSIS
-    Imports a BSP folder in to the current workspace from a source workspace.
+    Imports a BSP folder in to the current workspace from a source workspace or a source bsp directory or a source zip file.
     
     .DESCRIPTION
-    Imports a BSP folder in to the current workspace from a source workspace. 
+    Imports a BSP folder in to the current workspace from a source workspace or a source bsp directory or a source zip file. 
 
     .PARAMETER BSPName
-    Mandatory parameter, specifying the BSP, wild card supported
+    Mandatory parameter, specifying the BSP to import, wildcard supported.
     
-    .PARAMETER SourceWkspace
-    Optional parameter specifying the source workspace directory. Default is $env:SAMPLEWKS
+    .PARAMETER Source
+    Optional parameter specifying the source workspace or source bsp directory or a source zip file. Default is $env:SAMPLEWKS
     
     .EXAMPLE
     Import-IoTBSP RPi2 C:\MyWorkspace
@@ -777,6 +885,22 @@ function Import-IoTBSP {
     Import-IoTBSP  *
     Imports all bsps from $env:SAMPLEWKS
     
+    .EXAMPLE
+    Import-IoTBSP MyBSP C:\MyBSPFolder 
+    Imports MyBSP from C:\MyBSPFolder
+
+    .EXAMPLE
+    Import-IoTBSP BYTx64 C:\Downloads\BYT_Win10_IOT_Core_MR1_BSP_337014-003.zip 
+    Imports BYTx64 from C:\Downloads\BYT_Win10_IOT_Core_MR1_BSP_337014-003.zip file
+
+    .EXAMPLE
+    Import-IoTBSP RPi2 C:\RPi_BSP.zip 
+    Imports RPi2 from C:\RPi_BSP.zip
+
+    .EXAMPLE
+    Import-IoTBSP Sabre_iMX6Q_1GB C:\Temp\NXPBSP.zip
+    Imports Sabre_iMX6Q_1GB from C:\Temp\NXPBSP.zip
+
     .NOTES
     See Add-IoT* and Import-IoT* methods.
     #>
@@ -787,18 +911,17 @@ function Import-IoTBSP {
         [ValidateNotNullOrEmpty()]
         [String]$BSPName,
         [Parameter(Position = 1, Mandatory = $false)]
-        [String]$SourceWkspace
+        [String]$Source
     )
 
-    if (([String]::IsNullOrWhiteSpace($SourceWkspace)) -or
-        ((Test-Path $SourceWkspace\IoTWorkspace.xml -PathType Leaf) -eq $false))
+    if ([String]::IsNullOrWhiteSpace($Source))
     {
         if ([String]::IsNullOrWhiteSpace($env:SAMPLEWKS))
         {
             Publish-Error "`$env:SAMPLEWKS is missing"
             return
         }
-        $SourceWkspace = $env:SAMPLEWKS
+        $Source = $env:SAMPLEWKS
     }
 
     if ([String]::IsNullOrWhiteSpace($env:IOTWKSPACE))
@@ -807,7 +930,7 @@ function Import-IoTBSP {
         return
     }
 
-    Copy-IoTBSP $SourceWkspace $env:IOTWKSPACE $BSPName
+    Copy-IoTBSP $Source $env:IOTWKSPACE $BSPName
 }
 
 function Copy-IoTProduct {
@@ -954,7 +1077,7 @@ function Redo-IoTWorkspace {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Position=0, Mandatory=$true)][String]$DirName
+        [Parameter(Position=0, Mandatory=$true)][ValidateNotNullOrEmpty()][String]$DirName
     )
     if (-not (Test-Path $DirName -PathType Container)) {
         throw "$DirName is not an existing directory"
@@ -1127,7 +1250,7 @@ function Redo-IoTWorkspace {
     Convert-IoTPkg2Wm $DirName 
 }
 
-function Get-SMBIOSData ( [string] $file ) {
+function Get-SMBIOSData ( [ValidateNotNullOrEmpty()][string] $file ) {
     $smbios = @{}
     Publish-Status "Parsing $file to get SMBIOS information"
     $doc = Get-Content $file
@@ -1277,4 +1400,102 @@ function Get-IoTWorkspaceBSPs {
 
     $retval += $BSPs
     return $retval
+}
+
+function Import-QCBSP {
+    <#
+    .SYNOPSIS
+    Import QC BSP into your workspace and update the bsp files as required by the latest tools.
+
+    .DESCRIPTION
+    Import QC BSP into your workspace and update the bsp files as required by the latest tools.
+
+    .PARAMETER BSPZipFile
+    Mandatory parameter, BSP Zip file from QC.
+
+    .PARAMETER BSPPkgDir
+    Mandatory parameter, Location where to extract the required BSP cab files.
+
+    .PARAMETER ImportBSP
+    Optional switch parameter, to import the QCDB410C BSP.
+
+    .EXAMPLE
+    Import-QCBSP C:\Temp\db410c_bsp.zip C:\QCBSP -ImportBSP
+
+    .NOTES
+    You will need to download the QC BSP from the QC website first before using this method
+    #>
+    Param
+    (
+        [Parameter(Position = 0, Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [ValidateScript( { Test-Path $_ -PathType Leaf })]
+        [String]$BSPZipFile,
+        [Parameter(Position = 1, Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [String]$BSPPkgDir,
+        [Parameter(Position = 2, Mandatory = $false)]
+        [Switch]$ImportBSP
+    )
+
+    if ($env:ARCH -ine "arm") {
+        Write-Error "Incorrect architecture. setenv arm"
+        return
+    }
+    if ($ImportBSP){
+        Import-IoTBSP QCDB410C
+    }
+    $qcfmxml = "$env:BSPSRC_DIR\QCDB410C\Packages\QCDB410CFM.xml"
+
+    New-DirIfNotExist $BSPPkgDir -Force
+
+    $fmobj = New-IoTFMXML $qcfmxml
+    $pkglist = $fmobj.GetPackageNames()
+    #skipping parsing QCDB410CTestFM.xml. Just one entry hardcoded here.
+    $pkglist += "Qualcomm.QC8916.UEFI.cab" 
+
+    $exceptionlist = @(
+        'Qualcomm.QC8916.OEMDevicePlatform.cab'
+        'Qualcomm.QC8916.qcMagAKM8963.cab'
+        'Qualcomm.QC8916.qcAlsPrxAPDS9900.cab'
+        'Qualcomm.QC8916.qcAlsCalibrationMTP.cab'
+        'Qualcomm.QC8916.qcTouchScreenRegsitry1080p.cab'
+    )
+
+    #Expand-Archive -Path $BSPZipFile -DestinationPath $BSPPkgDir
+    Add-Type -Assembly System.IO.Compression.FileSystem
+    $zip = [IO.Compression.ZipFile]::OpenRead($BSPZipFile)
+    $zip.Entries | Where-Object {$_.Name -like '*.cab'} | ForEach-Object {
+        $filename = Split-Path -Path $_ -Leaf
+        if ($pkglist -contains $filename) {
+            if ($exceptionlist -contains $filename) {
+                Write-Debug "---> Exception $filename"
+                $filepath = Split-Path -Path $_ -Parent
+                $dirname = Split-Path -Path $filepath -Leaf
+                if ($filename -ieq "Qualcomm.QC8916.OEMDevicePlatform.cab") {
+                    if (($dirname -ieq "SBC") -and (!($filepath.Contains("8916")))) {
+                        Write-Host "Extracting $_"
+                        [System.IO.Compression.ZipFileExtensions]::ExtractToFile($_, "$BSPPkgDir\$filename", $true)
+                    }
+                    else { Write-Debug "Skipping $_" }
+                }
+                else {
+                    #For other exception files, take content from MTP directory
+                    if ($dirname -ieq "MTP") {
+                        Write-Host "Extracting $_"
+                        [System.IO.Compression.ZipFileExtensions]::ExtractToFile($_, "$BSPPkgDir\$filename", $true)
+                    }
+                    else { Write-Debug "Skipping $filepath" }
+                }
+            }
+            else {
+                Write-Host "Extracting $_"
+                [System.IO.Compression.ZipFileExtensions]::ExtractToFile($_, "$BSPPkgDir\$filename", $true)
+            }
+        }
+    }
+
+    Publish-Success "BSP import completed"
+
+    $zip.Dispose()
 }

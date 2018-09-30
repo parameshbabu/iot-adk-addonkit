@@ -8,16 +8,16 @@ schema: 2.0.0
 # Import-IoTBSP
 
 ## SYNOPSIS
-Imports a BSP folder in to the current workspace from a source workspace.
+Imports a BSP folder in to the current workspace from a source workspace or a source bsp directory or a source zip file.
 
 ## SYNTAX
 
 ```
-Import-IoTBSP [-BSPName] <String> [[-SourceWkspace] <String>] [<CommonParameters>]
+Import-IoTBSP [-BSPName] <String> [[-Source] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Imports a BSP folder in to the current workspace from a source workspace.
+Imports a BSP folder in to the current workspace from a source workspace or a source bsp directory or a source zip file.
 
 ## EXAMPLES
 
@@ -35,10 +35,38 @@ Import-IoTBSP  *
 
 Imports all bsps from $env:SAMPLEWKS
 
+### EXAMPLE 3
+```
+Import-IoTBSP MyBSP C:\MyBSPFolder
+```
+
+Imports MyBSP from C:\MyBSPFolder
+
+### EXAMPLE 4
+```
+Import-IoTBSP BYTx64 C:\Downloads\BYT_Win10_IOT_Core_MR1_BSP_337014-003.zip
+```
+
+Imports BYTx64 from C:\Downloads\BYT_Win10_IOT_Core_MR1_BSP_337014-003.zip file
+
+### EXAMPLE 5
+```
+Import-IoTBSP RPi2 C:\RPi_BSP.zip
+```
+
+Imports RPi2 from C:\RPi_BSP.zip
+
+### EXAMPLE 6
+```
+Import-IoTBSP Sabre_iMX6Q_1GB C:\Temp\NXPBSP.zip
+```
+
+Imports Sabre_iMX6Q_1GB from C:\Temp\NXPBSP.zip
+
 ## PARAMETERS
 
 ### -BSPName
-Mandatory parameter, specifying the BSP, wild card supported
+Mandatory parameter, specifying the BSP to import, wildcard supported.
 
 ```yaml
 Type: String
@@ -52,8 +80,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -SourceWkspace
-Optional parameter specifying the source workspace directory.
+### -Source
+Optional parameter specifying the source workspace or source bsp directory or a source zip file.
 Default is $env:SAMPLEWKS
 
 ```yaml
@@ -63,7 +91,7 @@ Aliases:
 
 Required: False
 Position: 2
-Default value: $env:SAMPLEWKS
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -49,7 +49,9 @@ function Add-IoTAppxPackage {
         Publish-Error "$AppxFile is not an appx/appxbundle" ; return
     }
 
-    $appxinfo = GetAppxInfo $AppxFile
+    $appxinfo = & "$($PSScriptRoot)\..\GetAppxInfo.exe" $AppxFile
+#   $appxinfo | Out-File "$($env:TEMP)\debugoutput.txt -Append -force
+
     $AppxVersion = "0"
     $AppxName = $fileobj.BaseName
     if ($AppxName.IndexOf("_") -ine -1) {
@@ -120,7 +122,7 @@ function Add-IoTAppxPackage {
     }
     else {
         $deppath = $appxpath
-        $fil = "Microsoft*" + $env:ARCH + "*.appx"
+        $fil = "Microsoft*.appx"
         $depfiles = Get-ChildItem $deppath -Filter $fil -File
     }
 

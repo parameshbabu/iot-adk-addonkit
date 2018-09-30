@@ -8,7 +8,7 @@ schema: 2.0.0
 # Copy-IoTBSP
 
 ## SYNOPSIS
-Copies a BSP folder to the destination workspace from a source workspace.
+Copies a BSP folder to the destination workspace from a source workspace or a source bsp directory.
 
 ## SYNTAX
 
@@ -26,19 +26,19 @@ Copies a BSP folder to the destination workspace from a source workspace.
 Copy-IoTBSP C:\MyWorkspace $env:IOTWKSPACE RPi
 ```
 
-Copies RPi BSP from SampleWkspace to current workspace
+Copies RPi BSP from C:\MyWorkspace to current workspace
 
 ### EXAMPLE 2
 ```
-Copy-IoTBSP C:\MyWorkspace C:\Destinationwkspace -All
+Copy-IoTBSP C:\MyBspDir C:\MyWorkspace MyBSP
 ```
 
-Copies all bsps from SampleWkspace to Destinationwkspace
+Copies MyBSP from C:\MyBspDir to C:\MyWorkspace
 
 ## PARAMETERS
 
 ### -Source
-Mandatory parameter specifying the source workspace directory.
+Mandatory parameter specifying the source workspace or a source bsp directory.
 
 ```yaml
 Type: String
@@ -68,7 +68,7 @@ Accept wildcard characters: False
 ```
 
 ### -BSPName
-Mandatory parameter, specifying the BSP, wild card supported
+Mandatory parameter, specifying the BSP name, wildcards supported.
 
 ```yaml
 Type: String

@@ -34,19 +34,19 @@ function New-IoTWindowsImage {
     }
     catch {
         Publish-Error $_.Exception.Message
-        return
+        return $false
     }
 
     $bsp = $iotprod.BspName
     $bspdir = "$env:BSPSRC_DIR\$bsp"
     if (!(Test-Path $bspdir)) {
         Publish-Error "$bsp not found"
-        return
+        return $false
     }
     $fmfile = "$bspdir\Packages\$bsp" + "FM.xml"
     if (!(Test-Path $fmfile)) {
         Publish-Error "$fmfile file not found"
-        return
+        return $false
     }
     $ffudir = Split-Path -Path $iotprod.FFUName -Parent
     $winpefiles = "$ffudir\recovery"
@@ -63,25 +63,33 @@ function New-IoTWindowsImage {
     $devlayout = $iotprod.GetDeviceLayout()
     if ($devlayout -eq $null) {
         Publish-Error "GetDeviceLayout failed"
-        return 
+        return $false
     }
     if (!$devlayout.ValidateDeviceLayout()) {
         Publish-Error "Device Layout validation failed"
-        return
+        return $false
     }
     $devlayout.ParseDeviceLayout()
     $devlayout.GenerateRecoveryScripts($winpefiles)
 
     # Copy the base winPE
     Publish-Status "Copying WinPE"
-    Copy-Item "$env:WINPE_ROOT\$env:BSP_ARCH\en-us\winpe.wim" -Destination $ffudir
+    $WinPE = "$env:WINPE_ROOT\$env:BSP_ARCH\en-us\winpe.wim"
+    if (Test-Path $WinPE){
+        Copy-Item $WinPE -Destination $ffudir
+    }
+    else {
+        Publish-Error "WinPE Wim not found. Install ADK WinPE Addons"
+        return $false
+    }
+
     Publish-Status "Mounting WinPE"
     try {
         $result = Mount-WindowsImage -ImagePath $ffudir\winpe.wim -Index 1 -Path $mountdir
     }
     catch {
         Publish-Error "Mount-WindowsImage failed"
-        return
+        return $false
     }
 
     # Check and add drivers
@@ -111,6 +119,7 @@ function New-IoTWindowsImage {
     $result = Dismount-WindowsImage -Path $mountdir -Save
     Remove-Item $mountdir -Recurse
     Publish-Success "WinPE is available at $ffudir"
+    return $true
 }
 
 function New-IoTRecoveryImage {
@@ -129,7 +138,7 @@ function New-IoTRecoveryImage {
     .EXAMPLE
     New-IoTRecoveryImage -product ProductA -config Test -wimmode Import -wimdir C:\wimfiles
     .LINK
-    https://docs.microsoft.com/windows/iot-core/build-your-image/addrecovery
+    https://docs.microsoft.com/windows-hardware/service/iot/recovery-mechanism
     #>
     [CmdletBinding()]
     param(
@@ -162,7 +171,13 @@ function New-IoTRecoveryImage {
 
     # If not exist winpe, create winpe
     $winpewim = "$ffudir\winpe.wim"
-    if (!(Test-Path $winpewim)) { New-IoTWindowsImage $product $config }
+    if (!(Test-Path $winpewim)) { 
+        $retval = New-IoTWindowsImage $product $config 
+        if (!$retval) {
+            Publish-Error "WinPE creation failed."
+            return
+        }
+    }
 
     # Mount the ffu
     $retval = Mount-IoTFFUImage $ffufile

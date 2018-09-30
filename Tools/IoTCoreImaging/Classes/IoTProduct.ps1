@@ -123,10 +123,12 @@ class IoTProduct {
             if ($this.AvailableOEMFIDs -notcontains $fid) { Publish-Warning "$fid is not defined" }
             if ($fid -ieq "CUS_DEVICE_INFO") { $cusconfigFound = $true }
         }
-
-        if (!($cusconfigFound -xor $dpopFound)) {
-            Publish-Error "Must include either IOT_GENERIC_POP or CUS_DEVICE_INFO"
-            $retval = $false
+        # 17763 is the major release version for RS5 - October 2018 release. 
+        if ($env:COREKIT_VER -notcontains "17763"){
+            if (!($cusconfigFound -xor $dpopFound)) {
+                Publish-Error "Images with Windows 10 IoT Core versions prior to 1809 must include either IOT_GENERIC_POP or CUS_DEVICE_INFO."
+                $retval = $false
+            }
         }
         return $retval
     }

@@ -18,14 +18,6 @@
         </FeatureIDs>
       </PackageFile>
     </OEM>
-    <OEMFeatureGroups>
-        <FeatureGroup Constraint="OneAndOnlyOne">
-            <FeatureIDs>
-                <FeatureID>OEM_CUS_DEVICE_INFO</FeatureID>
-                <FeatureID>MS_IOT_DEFAULT_POP</FeatureID>
-            </FeatureIDs>
-        </FeatureGroup>
-    </OEMFeatureGroups>
     <OEMConditionalFeatures>
       <ConditionalFeature FeatureID="OEM_CUS_DEVICE_INFO" UpdateAction="NoUpdate" />
     </OEMConditionalFeatures>

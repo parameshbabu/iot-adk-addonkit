@@ -222,8 +222,8 @@ function Install-IoTOEMCerts {
  if ($pfxfiles){
      foreach ($pfxfile in $pfxfiles){
         Publish-Status "Importing $pfxfile"
-        #certutil -p "" -user -importpfx $pfxfile NoRoot
-        certutil -user -importpfx $pfxfile NoRoot
+        #certutil -user -importpfx $pfxfile NoRoot
+        Import-PfxCertificate -FilePath $pfxfile -CertStoreLocation Cert:\CurrentUser\My
      }
      Publish-Success "Importing successful"
  }
