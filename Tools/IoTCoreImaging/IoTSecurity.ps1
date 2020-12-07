@@ -26,15 +26,15 @@ function Import-IoTCertificate {
     Mandatory parameter specifying the cert type. The supported values are
     for secure boot  : "PlatformKey","KeyExchangeKey","Database"
     for bit locker   : "DataRecoveryAgent"
-    for device guard : "Update","User","Kernel"
+    for device guard : "Update","User","Kernel", "Root"
     See IoTWorkspace.xml for the cert definitions.
 
     .PARAMETER Test
     Switch parameter specifying if the certificate is test certificate
 
     .EXAMPLE
-    Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-UEFISB.cer KeyExchangeKey
-    Imports OEM-UEFISB.cer as a KeyExchangeKey certificate for secure boot policy. The cert is also copied to the workspace certs folder.
+    Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-KEK.cer KeyExchangeKey
+    Imports OEM-KEK.cer as a KeyExchangeKey certificate for secure boot policy. The cert is also copied to the workspace certs folder.
 
     .EXAMPLE
     Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-PK.cer PlatformKey
@@ -45,8 +45,8 @@ function Import-IoTCertificate {
     Imports OEM-DRA.cer as a DataRecoveryAgent certificate for bitlocker policy. The cert is also copied to the workspace certs folder.
 
     .EXAMPLE
-    Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-PAUTH.cer Update
-    Imports OEM-PAUTH.cer as a update certificate for device guard policy. The cert is also copied to the workspace certs folder.
+    Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-KEK.cer Update
+    Imports OEM-KEK.cer as a update certificate for device guard policy. The cert is also copied to the workspace certs folder.
 
     .EXAMPLE
     Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-UMCI.cer User
@@ -65,7 +65,7 @@ function Import-IoTCertificate {
         [ValidateNotNullOrEmpty()]
         [String]$CertFile,
         [Parameter(Position = 1, Mandatory = $true)]
-        [ValidateSet("PlatformKey", "KeyExchangeKey", "Database", "DataRecoveryAgent", "Update", "User", "Kernel")]
+        [ValidateSet("PlatformKey", "KeyExchangeKey", "Database", "DataRecoveryAgent", "Update", "User", "Kernel", "Root")]
         [String]$CertType,
         [Parameter(Position = 2, Mandatory = $false)]
         [Switch]$Test
@@ -112,6 +112,7 @@ function New-IoTOEMCerts {
     }
     else {
         Publish-Error "makecert.exe not found. Install Windows 10 SDK for generating certs."
+        return
     }
 
     $MakeCert = "$ToolsDir\makecert.exe"
@@ -127,12 +128,12 @@ function New-IoTOEMCerts {
     $CAPri = "$outputDir\private\$OemName-CA"
     $PCA = "$outputDir\$OemName-PCA"
     $PCAPri = "$outputDir\private\$OemName-PCA"
-    $PK = "$outputDir\$OemName-pk"
-    $PKPri = "$outputDir\private\$OemName-pk"
-    $KEK = "$outputDir\$OemName-UEFISB"
-    $KEKPri = "$outputDir\private\$OemName-UEFISB"
-    $SIPolicySigner = "$outputDir\$OemName-PAUTH"
-    $SIPolicySignerPri = "$outputDir\private\$OemName-PAUTH"
+    $PK = "$outputDir\$OemName-RootPK"
+    $PKPri = "$outputDir\private\$OemName-RootPK"
+    $KEK = "$outputDir\$OemName-KEK"
+    $KEKPri = "$outputDir\private\$OemName-KEK"
+    $KMCI = "$outputDir\$OemName-KMCI"
+    $KMCIPri = "$outputDir\private\$OemName-KMCI"
     $UMCI = "$outputDir\$OemName-UMCI"
     $UMCIPri = "$outputDir\private\$OemName-UMCI"
     $BitlockerDRA = "$outputDir\$OemName-DRA"
@@ -144,6 +145,7 @@ function New-IoTOEMCerts {
         & $MakeCert -r -pe -n "CN=$OemName Root" -ss CA -sr CurrentUser -a sha256 -len 4096 -cy authority -sky signature -sv "$RootPri.pvk" "$Root.cer"
         & $pvkpfx -pvk "$RootPri.pvk" -spc "$Root.cer" -pfx "$RootPri.pfx"
     }
+    Import-IoTCertificate "$Root.cer" Root
 
     $ReApply = Test-Path "$CAPri.pfx"
     if ($ReApply -eq $False) {
@@ -154,18 +156,19 @@ function New-IoTOEMCerts {
 
     $ReApply = Test-Path "$PCAPri.pfx"
     if ($ReApply -eq $False) {
+        $year = Get-Date -Format "yyyy"
         Publish-Status "Creating $PCAPri.pfx"
-        & $MakeCert -pe -n "CN=$OemName Production PCA 2016" -ss CA -sr CurrentUser -a sha256 -len 4096 -cy authority -sky signature -iv "$CAPri.pvk" -ic "$CA.cer" -sv "$PCAPri.pvk" "$PCA.cer"
+        & $MakeCert -pe -n "CN=$OemName Production PCA $year" -ss CA -sr CurrentUser -a sha256 -len 4096 -cy authority -sky signature -iv "$CAPri.pvk" -ic "$CA.cer" -sv "$PCAPri.pvk" "$PCA.cer"
         & $pvkpfx -pvk "$PCAPri.pvk" -spc "$PCA.cer" -pfx "$PCAPri.pfx"
     }
 
-    $ReApply = Test-Path "$SIPolicySignerPri.pfx"
+    $ReApply = Test-Path "$KMCIPri.pfx"
     if ($ReApply -eq $False) {
-        Publish-Status "Creating $SIPolicySignerPri.pfx"
-        & $MakeCert -pe -n "CN=$OemName Lockdown Policy Authority, E=Info@$OemName-Name.com" -sr CurrentUser -a sha256 -len 2048 -cy end -sky signature -iv "$PCAPri.pvk" -ic "$PCA.cer" -sv "$SIPolicySignerPri.pvk" "$SIPolicySigner.cer"
-        & $pvkpfx -pvk "$SIPolicySignerPri.pvk" -spc "$SIPolicySigner.cer" -pfx "$SIPolicySignerPri.pfx"
+        Publish-Status "Creating $KMCIPri.pfx"
+        & $MakeCert -pe -n "CN=$OemName KMCI Codesigning, E=Info@$OemName-Name.com" -sr CurrentUser -a sha256 -len 2048 -cy end -eku 1.3.6.1.5.5.7.3.3 -sky signature -iv "$PCAPri.pvk" -ic "$PCA.cer" -sv "$KMCIPri.pvk" "$KMCI.cer"
+        & $pvkpfx -pvk "$KMCIPri.pvk" -spc "$KMCI.cer" -pfx "$KMCIPri.pfx"
     }
-    Import-IoTCertificate "$SIPolicySigner.cer" Update
+    Import-IoTCertificate "$KMCI.cer" Kernel
 
     $ReApply = Test-Path "$UMCIPri.pfx"
     if ($ReApply -eq $False) {
@@ -175,21 +178,25 @@ function New-IoTOEMCerts {
     }
     Import-IoTCertificate "$UMCI.cer" User
 
+    #Making PK a root cert
     $ReApply = Test-Path "$PKPri.pfx"
     if ($ReApply -eq $False) {
         Publish-Status "Creating $PKPri.pfx"
-        & $MakeCert -pe -n "CN=$OemName Platform Key" -sr CurrentUser -a sha256 -len 2048 -cy end -sky signature -iv "$PCAPri.pvk" -ic "$PCA.cer" -sv "$PKPri.pvk"  "$PK.cer"
+        & $MakeCert -r -pe -n "CN=$OemName Root Platform Key" -ss CA -sr CurrentUser -a sha256 -len 4096 -cy authority -sky signature -sv "$PKPri.pvk"  "$PK.cer"
         & $pvkpfx -pvk "$PKPri.pvk" -spc "$PK.cer" -pfx "$PKPri.pfx"
     }
     Import-IoTCertificate "$PK.cer" PlatformKey
+    Import-IoTCertificate "$PK.cer" Root
 
+    #KEK is derived out of PK instead of PCA
     $ReApply = Test-Path "$KEKPri.pfx"
     if ($ReApply -eq $False) {
         Publish-Status "Creating $KEKPri.pfx"
-        & $MakeCert -pe -n "CN=$OemName Secure Boot" -sr CurrentUser -a sha256 -len 2048 -cy end -sky signature -iv "$PCAPri.pvk" -ic "$PCA.cer" -sv "$KEKPri.pvk"  "$KEK.cer"
+        & $MakeCert -pe -n "CN=$OemName KEK Secure Boot" -sr CurrentUser -a sha256 -len 4096 -cy end -sky signature -iv "$PKPri.pvk" -ic "$PK.cer" -sv "$KEKPri.pvk"  "$KEK.cer"
         & $pvkpfx -pvk "$KEKPri.pvk" -spc "$KEK.cer" -pfx "$KEKPri.pfx"
     }
     Import-IoTCertificate "$KEK.cer" KeyExchangeKey
+    Import-IoTCertificate "$KEK.cer" Update
 
     $ReApply = Test-Path "$BitlockerDRAPri.pfx"
     if ($ReApply -eq $False) {

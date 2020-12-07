@@ -196,7 +196,7 @@ function Add-IoTAppxPackage {
             catch {
                 $msg = $_.Exception.Message
                 Publish-Error "$msg"
-            }            
+            }
         }
         $provxml_cer.AddRootCertificate("$pkgdir\$($AppxName).cer")
     }
@@ -1008,7 +1008,8 @@ function Add-IoTDeviceGuard {
 
     foreach ($cert in $kernelCerts) {
         Publish-Status "KernelCert : $cert"
-        Add-SignerRule -CertificatePath $cert -FilePath $auditPolicy -kernel
+        # Add kernel certs for kernel and user mode
+        Add-SignerRule -CertificatePath $cert -FilePath $auditPolicy -kernel -user
     }
     Pop-Location
     # Add OEM Certificates
@@ -1024,7 +1025,8 @@ function Add-IoTDeviceGuard {
     }
     $updateCerts = ( $certs | Get-Item).FullName
     foreach ($cert in $updateCerts) {
-        Add-SignerRule -CertificatePath $cert -FilePath $auditPolicy -update
+        # Add update certs for kernel and user mode as well
+        Add-SignerRule -CertificatePath $cert -FilePath $auditPolicy -update -kernel -user
     }
 
     # Add 'user' certs
@@ -1065,7 +1067,8 @@ function Add-IoTDeviceGuard {
     if ($kernelCerts) {
         foreach ($cert in $kernelCerts) {
             Publish-Status "KernelCert : $cert"
-            Add-SignerRule -CertificatePath $cert -FilePath $auditPolicy -kernel
+            # Add kernel certs for kernel and user mode
+            Add-SignerRule -CertificatePath $cert -FilePath $auditPolicy -kernel -user
         }
     }
     else {
@@ -1263,6 +1266,7 @@ function Add-IoTSecureBoot {
         Publish-Error "$msg"
     }
     Pop-Location
+    Add-IoTRootCerts
 }
 
 function Add-IoTBitLocker {
@@ -1358,6 +1362,92 @@ function Add-IoTBitLocker {
     Pop-Location
 }
 
+function Add-IoTRootCerts {
+    <#
+    .SYNOPSIS
+    Generates the RootCerts package (Security.RootCerts) contents based on the workspace specifications.
+
+    .DESCRIPTION
+    Generates the RootCerts package (Security.RootCerts) contents based on the workspace specifications. You will need to import the required certificates into the workspace before using this command. 
+
+    .EXAMPLE
+    Add-IoTRootCerts
+
+    .NOTES
+    See Import-IoTCertificate before using this function.
+
+    .LINK
+    [Import-IoTCertificate](Import-IoTCertificate.md)
+    #>
+
+    if ($null -eq $env:IoTWsXml) {
+        Publish-Error "IoTWorkspace is not opened. Use Open-IoTWorkspace"
+    }
+    $wkspace = New-IoTWorkspaceXML $env:IoTWsXml
+    $settingsdoc = $wkspace.XmlDoc
+    $cfgnode = $settingsdoc.IoTWorkspace.Security.SIPolicy
+    if ($null -eq $cfgnode) {
+        Publish-Error "Security settings are not defined in the workspace"
+        return
+    }
+
+    Publish-Status "Generating RootCerts ..."
+    $secdir = "$env:COMMON_DIR\Packages\Security.RootCerts"
+    if (!(Test-Path $secdir)) {
+        #Import the package from the sample workspace
+        New-Item $secdir -type directory | Out-Null
+    }
+
+    $certdir = "$env:IOTWKSPACE\Certs"
+    Push-Location -Path $certdir
+
+    # Add root certs
+    $rootcerts = @()
+    $rootcerts += ($cfgnode.Root.Cert | Get-Item).FullName
+
+    try {
+        $wmwriter = New-IoTWMWriter $secdir Security RootCerts -Force
+        $wmwriter.Start("MainOS")
+
+        foreach ($cert in $rootcerts){
+            $thumbprint = (Get-PfxCertificate -FilePath $cert).Thumbprint
+            # Convert the certificate into registry format.
+            # Import the cert into a cert store.  Get blob from registry.  Delete the cert from cert store.
+            [string]$blob = ""
+            try {
+                Import-Certificate -FilePath $cert -CertStoreLocation Cert:\LocalMachine\My
+                $intblob = (Get-ItemProperty HKLM:\SOFTWARE\Microsoft\SystemCertificates\My\Certificates\$thumbprint).Blob
+
+                # convert 'intblob' from array to 'int' to a continuous string of hex values
+                $blob = (($intblob | ForEach-Object { $_.ToString("x2") }) -join '')
+            }
+            finally {
+                Remove-Item -Path Cert:\LocalMachine\My\$thumbprint
+            }
+            $regkeyvals = , ("Blob", "REG_BINARY", $blob)
+            $wmwriter.AddRegKeys("`$(hklm.software)\Microsoft\SystemCertificates\ROOT\Certificates\$thumbprint", $regkeyvals)
+        }
+        $wmwriter.Finish()
+        Publish-Success "New Security.RootCerts created at $secdir"
+    }
+    catch {
+        $msg = $_.Exception.Message
+        Publish-Error "$msg"
+    }
+    # Update the feature manifest with this package entry
+    try {
+        $fmxml = "$env:COMMON_DIR\Packages\OEMCOMMONFM.xml"
+        $fm = New-IoTFMXML $fmxml
+        $fm.AddOEMPackage("%PKGBLD_DIR%", "%OEM_NAME%.Security.RootCerts.cab", "Base")
+        Publish-Success "Security.RootCerts added to OEMCOMMONFM xml as a base feature"
+    }
+    catch {
+        $msg = $_.Exception.Message
+        Publish-Error "$msg";
+    }
+
+    Pop-Location
+}
 function Add-IoTZipPackage {
     <#
     .SYNOPSIS

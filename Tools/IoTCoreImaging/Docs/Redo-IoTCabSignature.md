@@ -13,7 +13,7 @@ Resigns the cab file and its contents / cat files with the certificate set in th
 ## SYNTAX
 
 ```
-Redo-IoTCabSignature [-Path] <String> [-DestinationPath] <String> [<CommonParameters>]
+Redo-IoTCabSignature [-Path] <String> [-DestinationPath] <String> [-CabOnly] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -55,6 +55,21 @@ Aliases:
 Required: True
 Position: 2
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CabOnly
+Optional switch parameter, if defined only the cab is resigned skipping the binaries inside the cab.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

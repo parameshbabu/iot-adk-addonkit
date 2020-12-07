@@ -31,10 +31,10 @@ For signing purpose
 
 ### EXAMPLE 1
 ```
-Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-UEFISB.cer KeyExchangeKey
+Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-KEK.cer KeyExchangeKey
 ```
 
-Imports OEM-UEFISB.cer as a KeyExchangeKey certificate for secure boot policy.
+Imports OEM-KEK.cer as a KeyExchangeKey certificate for secure boot policy.
 The cert is also copied to the workspace certs folder.
 
 ### EXAMPLE 2
@@ -55,10 +55,10 @@ The cert is also copied to the workspace certs folder.
 
 ### EXAMPLE 4
 ```
-Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-PAUTH.cer Update
+Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-KEK.cer Update
 ```
 
-Imports OEM-PAUTH.cer as a update certificate for device guard policy.
+Imports OEM-KEK.cer as a update certificate for device guard policy.
 The cert is also copied to the workspace certs folder.
 
 ### EXAMPLE 5

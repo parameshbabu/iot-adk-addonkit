@@ -56,10 +56,11 @@ function Invoke-IoTWorkspace {
             $corekitver = (Get-ItemProperty -Path $key).Version
             $corekitver = $corekitver.Replace("10.1.", "10.0.")
             [System.Environment]::SetEnvironmentVariable("IOTCORE_VER", $corekitver)
-            if ($corekitver.Contains('17763')) {
+            $corevers = $corekitver.Split(".")
+            if (($corevers[2] -eq 17763) -and ($corevers[3] -ge 1577)) {
                 Publish-Success "$arch IoT Core kit version $corekitver found"
             }
-            else { Publish-Error "$corekitver IoT Core kit is not supported. Please install 1809 version (10.0.17763.x)" }
+            else { Publish-Error "$corekitver IoT Core kit is not supported. Please install 1809 version 10.0.17763.1577 or higher" }
         }
         else { Publish-Warning "$arch IoT Core kit not found" }
     }

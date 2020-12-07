@@ -21,13 +21,13 @@
         </Element>
       </Elements>
     </Object>
-    <!--  Allow Flight Signing Certificate -->
+    <!--  Allow Test Signing Certificate -->
     <Object SaveKeyToRegistry="false">
       <FriendlyName>Global Settings Group</FriendlyName>
       <Elements>
         <Element>
           <DataType>
-            <WellKnownType>Allow Flight Signatures</WellKnownType>
+            <WellKnownType>Allow Pre-release Signatures</WellKnownType>
           </DataType>
           <ValueType>
             <BooleanValue>true</BooleanValue>
@@ -35,6 +35,21 @@
         </Element>
       </Elements>
     </Object>
+
+
+    <Object SaveKeyToRegistry="false">
+      <FriendlyName>Windows Boot Manager</FriendlyName>
+      <Elements>
+        <Element>
+          <DataType>
+            <WellKnownType>Allow Pre-release Signatures</WellKnownType>
+          </DataType>
+          <ValueType>
+            <BooleanValue>true</BooleanValue>
+          </ValueType>
+        </Element>
+      </Elements>
+    </Object>
+
   </Objects>
 </BootConfigurationDatabase>
-

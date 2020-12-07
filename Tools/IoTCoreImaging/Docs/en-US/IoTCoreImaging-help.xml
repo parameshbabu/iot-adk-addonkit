@@ -3367,9 +3367,9 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-UEFISB.cer KeyExchangeKey</dev:code>
+        <dev:code>Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-KEK.cer KeyExchangeKey</dev:code>
         <dev:remarks>
-          <maml:para>Imports OEM-UEFISB.cer as a KeyExchangeKey certificate for secure boot policy. The cert is also copied to the workspace certs folder.</maml:para>
+          <maml:para>Imports OEM-KEK.cer as a KeyExchangeKey certificate for secure boot policy. The cert is also copied to the workspace certs folder.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -3388,9 +3388,9 @@
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
-        <dev:code>Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-PAUTH.cer Update</dev:code>
+        <dev:code>Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-KEK.cer Update</dev:code>
         <dev:remarks>
-          <maml:para>Imports OEM-PAUTH.cer as a update certificate for device guard policy. The cert is also copied to the workspace certs folder.</maml:para>
+          <maml:para>Imports OEM-KEK.cer as a update certificate for device guard policy. The cert is also copied to the workspace certs folder.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
