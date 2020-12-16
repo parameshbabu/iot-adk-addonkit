@@ -25,13 +25,7 @@ Powershell version of the iot-adk-addonkit extends the functionality with furthe
 ## What's new in 7.0
 
 * Supports Windows 10 IoT Core version 10.0.17763.1577 (11B update) onwards.
-* Support of OEM Signed drivers for retail images : The scripts are updated to support generation of appropriate sample oem certificates and sample projects updated to showcase the oem signing process. The core image building processes are not changed and additional requirements are now enforced for supporting oem signed drivers in  retail images.
-* New requirements are
-    * Secure boot and Device guard features are mandatory to support oem signed drivers
-    * Device guard policy signer 
-      * should be a root certificate or PCAs directly off the root
-      * should be at least RSA3k and use SHA256 as the digest algorithm 
-    * The root certs should be included in the image 
+* Support of OEM Signed drivers for retail images : The scripts are updated to support generation of appropriate sample oem certificates and sample projects updated to showcase the oem signing process. 
 
 * Changes to functions
     * New-IoTOEMCerts
@@ -41,6 +35,7 @@ Powershell version of the iot-adk-addonkit extends the functionality with furthe
     * Add-IoTSecureBoot - Invokes Add-IoTRootCerts to add the root certificates to image.
     * Add-IoTDeviceGuard - All kernel mode signers are also added to usermode by default
     * Add-IoTRootCerts - New method to add the root certs as a Security.RootCerts package. Security.RootCerts is included by default in OEMCOMMONFM.xml. 
+    * Import-IoTOEMCertificate - Supports "Root" certificate import
     * Redo-IoTCabSignature - Supports CabOnly flag to skip re-signing of the binaries inside the cab
 * Other significant changes
     * oemcustomization.cmd updated to invoke secureboot/bitlocker on every boot allowing ability to update secureboot independently
