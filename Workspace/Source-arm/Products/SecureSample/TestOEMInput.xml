@@ -45,7 +45,7 @@
       <Feature>IOT_USBFN_CLASS_EXTENSION</Feature>
       <Feature>IOT_POWERSHELL</Feature>
       <!--Feature>IOT_ALLJOYN_APP</Feature-->
-      <Feature>IOT_ONBOARDING_APP</Feature>
+      <!--Feature>IOT_ONBOARDING_APP</Feature-->
       <!--Feature>IOT_FONTS_CHINESE_EXTENDED</Feature-->
       <Feature>IOT_APP_TOOLKIT</Feature>
       <Feature>IOT_FFU_FLASHMODE</Feature>
@@ -101,7 +101,7 @@
       <Feature>PROV_AUTO</Feature>
       <!--Feature>SEC_BITLOCKER</Feature-->
       <Feature>SEC_SECUREBOOT_TEST</Feature>
-      <!--Feature>SEC_DEVICEGUARD_TEST</Feature-->
+      <Feature>SEC_DEVICEGUARD_TEST</Feature>
       <Feature>CUSTOM_SMBIOS</Feature>
     </OEM>
   </Features>

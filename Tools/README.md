@@ -2,16 +2,48 @@
 
 Powershell version of the iot-adk-addonkit extends the functionality with further validation / verification steps in the imaging process.
 
-* [What's new in 6.0](#whats-new-in-60)
-* [Get started](#get-started)
-* [Create a basic image](#create-a-basic-image)
-* [Add your packages to your image](#add-your-packages-to-your-image)
-  * [Adding open source Powershell](#adding-open-source-powershell)
-  * [Adding security packages](#adding-security-packages)
-* [Building a retail image](#building-a-retail-image)
-* [Work with existing workspace](#work-with-existing-workspace)
-* [Work with Device Update Center](#work-with-device-update-center)
-* [Supported powershell commands](#supported-powershell-commands)
+- [Powershell version of IoT-ADK-Addonkit](#powershell-version-of-iot-adk-addonkit)
+  - [What's new in 7.0](#whats-new-in-70)
+  - [What's new in 6.0](#whats-new-in-60)
+  - [Get started](#get-started)
+  - [Create a basic image](#create-a-basic-image)
+  - [Add your packages to your image](#add-your-packages-to-your-image)
+    - [Adding open source Powershell](#adding-open-source-powershell)
+    - [Adding security packages](#adding-security-packages)
+  - [Building a retail image](#building-a-retail-image)
+  - [Work with existing workspace](#work-with-existing-workspace)
+  - [Work with Device Update Center](#work-with-device-update-center)
+  - [Supported powershell commands](#supported-powershell-commands)
+    - [Workspace commands](#workspace-commands)
+    - [Build commands](#build-commands)
+    - [Environment commands](#environment-commands)
+    - [Device Update Center commands](#device-update-center-commands)
+    - [FFU commands](#ffu-commands)
+    - [Signing/Test commands](#signingtest-commands)
+    - [Class documentation](#class-documentation)
+
+## What's new in 7.0
+
+* Supports Windows 10 IoT Core version 10.0.17763.1577 (11B update) onwards.
+* Support of OEM Signed drivers for retail images : The scripts are updated to support generation of appropriate sample oem certificates and sample projects updated to showcase the oem signing process. 
+
+* Changes to functions
+    * New-IoTOEMCerts
+      * PK is a separate root key and KEK is derived from PK.
+      * PK / KEK key length is 4096 and uses SHA256 digest algorithm
+      * New KMCI certificate with the code signing eku created for signing drivers (OEM signing) and the same is used for signing drivers and the cab files. (See RetailSignToolParam in IoTWorkspace.xml).
+    * Add-IoTSecureBoot - Invokes Add-IoTRootCerts to add the root certificates to image.
+    * Add-IoTDeviceGuard - All kernel mode signers are also added to usermode by default
+    * Add-IoTRootCerts - New method to add the root certs as a Security.RootCerts package. Security.RootCerts is included by default in OEMCOMMONFM.xml. 
+    * Import-IoTOEMCertificate - Supports "Root" certificate import
+    * Redo-IoTCabSignature - Supports CabOnly flag to skip re-signing of the binaries inside the cab
+* Other significant changes
+    * oemcustomization.cmd updated to invoke secureboot/bitlocker on every boot allowing ability to update secureboot independently
+    * SIPolicy_Template.xml updated to add *Enabled:Inherit Default Policy*. This is a place holder to enable Microsoft update Windows code signers in future.
+    * Custom.BCD.xml updated to enable Test signing, this is required to support the first boot scenario and once secureboot is configured, test signing is disabled by default. Flight signing removed as Windows is always retail signed.
+    * setup.secureboot.cmd, the registry key updated to *DeviceGuardSecureBootSetupv2* to differentiate from earlier secure boot systems.
+    * IoTWorkspace.xml updated to use the right certificates that are generated. Note that the first update policy signer will be used for signing device guard policies. 
+
 
 ## What's new in 6.0
 
@@ -259,13 +291,16 @@ For testing purposes, following commands are provided to create and install the 
 
     ```powershell
     # PlatformKey and KeyExchangeKey mandatory for SecureBoot
-    Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-PK.cer PlatformKey
-    Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-UEFISB.cer KeyExchangeKey
+    Import-IoTCertificate $env:SAMPLEWKS\Certs\Contoso-PK.cer PlatformKey
+    Import-IoTCertificate $env:SAMPLEWKS\Certs\Contoso-KEK.cer KeyExchangeKey
     # DataRecoveryAgent mandatory for Bitlocker
-    Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-DRA.cer DataRecoveryAgent
+    Import-IoTCertificate $env:SAMPLEWKS\Certs\Contoso-DRA.cer DataRecoveryAgent
     # Update mandatory for Device Guard
-    Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-PAUTH.cer Update
-    Import-IoTCertificate $env:SAMPLEWKS\Certs\OEM-UMCI.cer User
+    # Note : use KEK as the update signer
+    Import-IoTCertificate $env:SAMPLEWKS\Certs\Contoso-KEK.cer Update
+    # import the oem driver signer as kernel mode signer (KMCI)
+    Import-IoTCertificate $env:SAMPLEWKS\Certs\Contoso-KMCI.cer Kernel
+    Import-IoTCertificate $env:SAMPLEWKS\Certs\Contoso-UMCI.cer User
     ```
 
 4. You can now create the security packages using [Add-IoTSecureBoot](IoTCoreImaging/Docs/Add-IoTSecureBoot.md),[Add-IoTDeviceGuard](IoTCoreImaging/Docs/Add-IoTDeviceGuard.md) and [Add-IoTBitLocker](IoTCoreImaging/Docs/Add-IoTBitLocker.md)
@@ -451,6 +486,7 @@ The supported commands are listed below in logical groups.
 |[Add-IoTDeviceGuard](IoTCoreImaging/Docs/Add-IoTDeviceGuard.md) | -  | Adds device guard package  |
 |[Add-IoTSecureBoot](IoTCoreImaging/Docs/Add-IoTSecureBoot.md) | -  | Adds secureboot package for the product  |
 |[Add-IoTBitLocker](IoTCoreImaging/Docs/Add-IoTBitLocker.md) | -  | Adds bitlocker package for the product  |
+|[Add-IoTRootCerts](IoTCoreImaging/Docs/Add-IoTRootCerts.md)| - | Adds the root certificates |
 |[Add-IoTProductFeature](IoTCoreImaging/Docs/Add-IoTProductFeature.md) | addfid  | Adds feature id to the product's oeminput xml file  |
 |[Remove-IoTProductFeature](IoTCoreImaging/Docs/Remove-IoTProductFeature.md) | removefid  | Removes feature id from the product's oeminput xml file  |
 |[Add-IoTCEPAL](IoTCoreImaging/Docs/Add-IoTCEPAL.md) | addcepal  | **Preview:** Adds CEPALFM.xml into the Test and Retail OEMInput.xml files for product. See [CE Migration](https://aka.ms/cemigration) for more details |

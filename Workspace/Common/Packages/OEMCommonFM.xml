@@ -5,6 +5,7 @@
     <!-- This package defines in the OEM Package Version  -->
     <PackageFile Path="%PKGBLD_DIR%" Name="%OEM_NAME%.Registry.Version.cab" />
     <PackageFile Path="%PKGBLD_DIR%" Name="%OEM_NAME%.Appx.Certs.cab" />
+    <PackageFile Path="%PKGBLD_DIR%" Name="%OEM_NAME%.Security.RootCerts.cab" />
   </BasePackages>
   <Features>
     <OEM>

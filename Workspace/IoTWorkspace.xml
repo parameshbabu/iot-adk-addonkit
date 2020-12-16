@@ -15,7 +15,7 @@
         <EVSignToolParam />
 
         <!--/s my /i "Issuer" /n "Subject" /ac "C:\CrossCertRoot.cer" /fd SHA256-->
-        <RetailSignToolParam />
+        <RetailSignToolParam> /s my /i "Contoso Production PCA 2020" /n "Contoso KMCI Codesigning" /fd SHA256</RetailSignToolParam>
     </Config>
     <Env Name="arm">
         <BSPVersion>10.0.0.0</BSPVersion>
@@ -36,10 +36,10 @@
     <Security>
         <SecureBoot>
             <PlatformKey>
-                <Cert>OEM-PK.cer</Cert>
+                <Cert>Contoso-RootPK.cer</Cert>
             </PlatformKey>
             <KeyExchangeKey>
-                <Cert>OEM-UEFISB.cer</Cert>
+                <Cert>Contoso-KEK.cer</Cert>
             </KeyExchangeKey>
             <Database>
                 <Test/>
@@ -48,24 +48,32 @@
         </SecureBoot>
         <BitLocker>
             <DataRecoveryAgent>
-                <Cert>OEM-DRA.cer</Cert>
+                <Cert>Contoso-DRA.cer</Cert>
             </DataRecoveryAgent>
         </BitLocker>
         <SIPolicy>
+            <Root>
+                <Cert>OEM-Root.cer</Cert>
+                <Cert>Contoso-Root.cer</Cert>
+                <Cert>Contoso-RootPK.cer</Cert>
+            </Root>
             <Update>
+                <Cert>Contoso-KEK.cer</Cert>
                 <Cert>OEM-PAUTH.cer</Cert>
             </Update>
             <User>
                 <Test/>
                 <Retail>
                     <Cert>OEM-UMCI.cer</Cert>
-                    <Cert>MicrosoftCrossCert2019.cer</Cert>                    
+                    <Cert>MicrosoftCrossCert2019.cer</Cert>
+                    <Cert>Contoso-UMCI.cer</Cert>
                 </Retail>
             </User>
             <Kernel>
                 <Test/>
                 <Retail>
                     <Cert>MicrosoftCrossCert2019.cer</Cert>
+                    <Cert>Contoso-KMCI.cer</Cert>
                 </Retail>
             </Kernel>
         </SIPolicy>

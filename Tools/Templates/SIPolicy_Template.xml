@@ -19,7 +19,11 @@
     <Rule>
       <Option>Enabled:UMCI</Option>
     </Rule>
+    <Rule>
+      <Option>Enabled:Inherit Default Policy</Option>
+    </Rule>
   </Rules>
+  
   <!--EKUS-->
   <EKUs />
   <!--File Rules-->

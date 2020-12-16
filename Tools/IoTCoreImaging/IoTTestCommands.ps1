@@ -306,6 +306,9 @@ function Redo-IoTCabSignature {
     .PARAMETER DestinationPath
     Path where the resigned cabs are stored.
 
+    .PARAMETER CabOnly
+    Optional switch parameter, if defined only the cab is resigned skipping the binaries inside the cab.
+
     .EXAMPLE
     Redo-IoTCabSignature C:\QCSBSP C:\QCBSP-Signed
 
@@ -323,7 +326,9 @@ function Redo-IoTCabSignature {
         # Product Configuration to process
         [Parameter(Position = 1, Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        [String]$DestinationPath
+        [String]$DestinationPath,
+        [Parameter(Position = 2, Mandatory = $false)]
+        [Switch]$CabOnly
     )
     New-DirIfNotExist $DestinationPath
     $excludesign = ".HalExt"
@@ -339,11 +344,13 @@ function Redo-IoTCabSignature {
         New-Item -Path $tempdir -ItemType Container | Out-Null
         Write-Debug "pkgsigntool unpack : $tempdir"
         pkgsigntool unpack $cabfile.FullName /out:$tempdir | Out-Null
-        if ($filename.Contains($excludesign)) {
-            Write-Verbose "Skipping signing for $filename ($excludesign)"
-        }
-        else {
-            Add-IoTSignature $tempdir *.sys, *.dll
+        if (!$CabOnly){
+            if ($filename.Contains($excludesign)) {
+                Write-Verbose "Skipping signing for $filename ($excludesign)"
+            }
+            else {
+                Add-IoTSignature $tempdir *.sys, *.dll
+            }
         }
         Write-Debug "pkgsigntool update : $tempdir"
         pkgsigntool update $tempdir  | Out-Null

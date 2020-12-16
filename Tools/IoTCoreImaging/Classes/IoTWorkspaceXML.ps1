@@ -71,6 +71,7 @@ class IoTWorkspaceXML {
         $xmlwriter.WriteEndElement() # BitLocker element
        
         $xmlwriter.WriteStartElement("SIPolicy")
+        $xmlwriter.WriteElementString("Root", "")
         $xmlwriter.WriteElementString("Update", "")
         $xmlwriter.WriteStartElement("User")
         $xmlwriter.WriteElementString("Test", "")
@@ -265,8 +266,9 @@ class IoTWorkspaceXML {
         $this.Save()
     }
 
-    [Boolean] AddCertificate([string] $certfile, [string]$certnode, [Boolean]$istest) {
+    [Boolean] AddCertificate([string] $certfile, [string] $certnode, [Boolean] $istest) {
 
+        $retval = $true
         if (-not (Test-Path $certfile -Filter *.cer )) {
             Publish-Error "$certfile not found"
             return $false
@@ -278,31 +280,43 @@ class IoTWorkspaceXML {
         if ($srcpath -ne $DirName){
             Copy-Item -Path $certfile -Destination $DirName\Certs\
         }
+        # Add Root node if not present
+        $root = $this.XmlDoc.IoTWorkspace.Security.SIPolicy.Root 
+        if ($null -eq $root) {
+            $SIPolicynode = $this.XmlDoc.IoTWorkspace.Security.SIPolicy
+            $root = $this.XmlDoc.CreateElement("Root","")
+            $SIPolicynode.AppendChild($root)
+            $this.Save()
+        }
+
         $node = $this.XmlDoc.GetElementsByTagName("$certnode")
-        if ($null -eq $node){
+        if ($node){
+            $cername = Split-Path -Path $certfile -Leaf
+            $nodesTestRetail = @("Database","User","Kernel")
+            if ($nodesTestRetail.Contains($certnode)){
+                if ($istest){
+                    $node = $node.GetElementsByTagName("Test")
+                }
+                else {
+                    $node = $node.GetElementsByTagName("Retail")
+                }
+            }
+            $certnode = $node.GetElementsByTagName("Cert") |  Where-Object { ($_.InnerText) -ieq $cername }
+            if ($certnode) {
+                Publish-Error "Cert already defined"
+                return $false
+            }
+            $newcert = $this.XmlDoc.CreateElement("Cert","")
+            $newcert.InnerText = $cername
+            $node.AppendChild($newcert)
+            Write-Debug "$newcert added"
+            $this.Save()
+            $retval = $true
+        }
+        else {
             Publish-Error "Unsupported CertNode : $certnode."
-            return $false
+            $retval = $false
         }
-        $cername = Split-Path -Path $certfile -Leaf
-        $nodesTestRetail = @("Database","User","Kernel")
-        if ($nodesTestRetail.Contains($certnode)){
-            if ($istest){
-                $node = $node.GetElementsByTagName("Test")
-            }
-            else {
-                $node = $node.GetElementsByTagName("Retail")
-            }
-        }
-        $certnode = $node.GetElementsByTagName("Cert") |  Where-Object { ($_.InnerText) -ieq $cername }
-        if ($certnode) {
-            Publish-Error "Cert already defined"
-            return $false
-        }
-        $newcert = $this.XmlDoc.CreateElement("Cert","")
-        $newcert.InnerText = $cername
-        $node.AppendChild($newcert)
-        Write-Debug "$newcert added"
-        $this.Save()
-        return $true
-    }    
+        return $retval
+    }
 }
