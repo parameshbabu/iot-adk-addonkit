@@ -18,7 +18,7 @@ The iot-adk-addonkit is now in Powershell and supports additional features inclu
 ### 17763-v7 Branch
 
 Starting with Windows 10 IoT Core release [10.0.17763.1577](https://support.microsoft.com/help/4586793/windows-10-update-kb4586793), OEM signing is supported for retail images. 
-The Existing cross-certificate based retail signing will continue to be supported and will end with the expiry of published SHA1 Microsoft Cross-Cert roots ( See [Cross-Certificate List](https://docs.microsoft.com/windows-hardware/drivers/install/cross-certificates-for-kernel-mode-code-signing#cross-certificate-list) for the expiry dates). 
+The Existing cross-certificate based retail signing will continue to be supported and will end with the expiry of published SHA1 Microsoft Cross-Cert roots ( See [Cross-Certificate List](https://docs.microsoft.com/windows-hardware/drivers/install/cross-certificates-for-kernel-mode-code-signing#cross-certificate-list) for the expiry dates). The existing drivers in the image will continue to work and this expiry will only impact new driver signing process.
 See [Microsoft Security Advisory 2880823](https://docs.microsoft.com/en-us/security-updates/SecurityAdvisories/2016/2880823) for more details on SHA1.
 
 
@@ -32,7 +32,7 @@ The core image building processes are not changed and additional requirements ar
     * The root certs should be included in the image 
 
 See [What's new in 7.0](./Tools/README.md#whats-new-in-70) for the changes in the toolkit.
-The existing drivers in the image will continue to work and this expiry will only impact new driver signing process. The recommendation is to move to OEM signing process with SHA2 certs as soon as possible.
+The recommendation is to move to OEM signing process with SHA2 certs as soon as possible.
 
 ### Older Versions: **Not Supported**
 
